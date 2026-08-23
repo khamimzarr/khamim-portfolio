@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
+import Header from "@/components/Header";
 
 export default function Home() {
   const heroPainting = "https://upload.wikimedia.org/wikipedia/commons/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg";
@@ -86,35 +87,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full min-h-screen">
-      <header className="w-full bg-[#c4c3b6] sticky top-0 z-40 border-b border-[#dfdcd5]/60 backdrop-blur-[2px]">
-        <div className="w-full flex items-center justify-between px-6 md:px-10 h-[52px]">
-          <a href="#" aria-label="KHAMIM ZARKASYI" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-full border-[1.5px] border-black flex items-center justify-center">
-              <span className="font-[--font-davinci] text-[13px] font-medium tracking-[-0.5px]">K</span>
-            </div>
-            <span className="hidden md:inline font-[--font-helvetica-now] text-[11px] tracking-[0.14em] uppercase font-medium text-black">
-              Khamim Zarkasyi — Folio
-            </span>
-          </a>
-          <nav className="flex items-center gap-5 md:gap-7">
-            <a href="mailto:khamimzarrr@gmail.com" className="hidden md:inline font-[Inter] text-[12px] font-normal text-black hover:underline underline-offset-4">
-              khamimzarrr@gmail.com
-            </a>
-            <a href="https://github.com/khamimzarr" target="_blank" className="font-[Inter] text-[12px] font-normal text-black hover:underline underline-offset-4">
-              GitHub
-            </a>
-            <a href="https://instagram.com/bukann_bapakmu" target="_blank" className="font-[Inter] text-[12px] font-normal text-black hover:underline underline-offset-4">
-              Instagram
-            </a>
-            <a href="#karya" className="hidden md:inline font-[Inter] text-[12px] font-normal text-black hover:underline underline-offset-4">
-              Karya
-            </a>
-            <a href="#exhibition" className="font-[Inter] text-[12px] font-normal text-black hover:underline underline-offset-4">
-              Exhibition
-            </a>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       {/* HERO */}
       <section className="relative w-full bg-[#c4c3b6] flex flex-col items-center pt-16 md:pt-24 pb-0 overflow-hidden border-b border-[#dfdcd5] texture-putty">
