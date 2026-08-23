@@ -1,8 +1,8 @@
 # 📜 HANDOFF — Khamim Portfolio (Renaissance Gallery)
 
-> **Status:** Tier 1 DONE & live. Tinggal Tier 2 kalau ada foto asli.
+> **Status:** Tier 1 DONE + foto asli LIVE. Sisa Tier 2 polish.
 
-**Terakhir update:** 23 Aug 2026
+**Terakhir update:** 23 Aug 2026 — 23:42 WIB
 
 ---
 
@@ -23,6 +23,19 @@
 
 ## ✅ Yang Sudah Selesai
 
+### Hobi — Foto Asli (23 Aug 2026 23:42) — DEPLOYED ✅
+- [x] **7 foto asli dari Download** di-kompres ke `public/hobi/` (800x800, 65-201KB):
+  - `foto-random.jpg` (132K) — random foto.jpg
+  - `bersepeda.jpg` (201K) — bersepeda.jpg (42M → 201K)
+  - `tanaman.jpg` (141K) — tanaman di halaman.jpg
+  - `ikan.jpg` (84K) — ikan aquarium.jpg
+  - `coding.jpg` (96K) — coding.jpg
+  - `ngopi.jpg` (115K) — ngopi.jpg (26M → 115K)
+  - `foto-bunga.jpg` (65K) — foto bunga.jpg → still life about section
+- [x] `page.tsx` vignettes ganti dari Unsplash ke `/hobi/*.jpg` + still life, captions "Foto asli — ..."
+- [x] `next/image` dengan `width=400 height=400 sizes=200px`, circular crop dipertahankan
+- [x] Vercel deploy `BEz5oSXF` — `https://khamim-portfolio.vercel.app` HTTP 200, semua `/hobi/*.jpg` 200
+
 ### Tier 1 (23 Aug 2026) — DEPLOYED
 - [x] **Wordmark brutal crop** — `KHAMIMZAR` single word `374px` (`fontSize: 374px, letterSpacing: -3.37px, lineHeight: 0.84`) + `130vw / -15vw` crop, mobile `17vw`
 - [x] **Images → next/image** — `next.config.ts` `remotePatterns: [images.unsplash.com, upload.wikimedia.org]` + `width=400 height=400 sizes=200px`
@@ -41,16 +54,12 @@
 
 ---
 
-## 📋 TODO — Tier 2 (Nanti)
+## 📋 TODO — Tier 2 (Sisa Polish)
 
-> Lanjut kalau Khamim sudah kasih **6 foto asli** (foto random, sepeda, tanaman, aquarium, coding, ngopi).
+> Foto asli sudah DONE — sisa polish kecil.
 
 ### Prioritas Tier 2
-- [ ] **Ganti 6 foto Unsplash dengan foto asli**
-  - Lokasi: `src/app/page.tsx` → `vignettes[]` → tiap `img`
-  - Cara: upload foto ke `public/hobi/` lalu ganti URL, atau kirim link
-  - Tetap circular 200px, `object-cover`, hover scale
-
+- [x] **Ganti 6 foto Unsplash dengan foto asli** — DONE (lihat di atas)
 - [ ] **OG Image + Favicon `K`**
   - Buat `src/app/opengraph-image.tsx` (Next.js dynamic OG)
   - Ganti `src/app/favicon.ico` jadi circled `K` (1.5px stroke, sama kayak header)
@@ -121,4 +130,4 @@ git remote -v   # sekarang tanpa token
 
 ## 📝 Next Session Prompt
 
-> Lanjut project `khamim-portfolio` dari `HANDOFF.md` ini. Tier 1 done, live di https://khamim-portfolio.vercel.app, repo https://github.com/khamimzarr/khamim-portfolio. Kerjakan Tier 2: ganti foto hobi, OG Image, favicon K, hamburger mobile, analytics, SEO polish. Jangan ubah DESIGN.md tokens.
+> Lanjut project `khamim-portfolio` dari `HANDOFF.md` ini. Tier 1 + foto asli done, live di https://khamim-portfolio.vercel.app, repo https://github.com/khamimzarr/khamim-portfolio. Sisa Tier 2 polish: OG Image, favicon K, hamburger mobile, analytics, SEO.
