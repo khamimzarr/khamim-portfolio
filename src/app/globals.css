@@ -99,12 +99,7 @@ body {
   clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
 }
 
-/* Wordmark brutal crop: extend beyond viewport */
-.wordmark-brutal {
-  width: 130vw;
-  margin-left: -15vw;
-  text-align: center;
-}
+/* Wordmark: responsive, max 374px spec, simetris crop via overflow-hidden */
 
 /* Scroll reveal */
 @keyframes revealUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }

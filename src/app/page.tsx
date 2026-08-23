@@ -127,13 +127,10 @@ export default function Home() {
 
         <div className="w-full overflow-hidden select-none pt-10 md:pt-14 leading-none relative">
           <div
-            className="wordmark-brutal whitespace-nowrap font-medium text-black"
-            style={{ fontFamily: "var(--font-davinci)", fontSize: "374px", lineHeight: 0.84, letterSpacing: "-3.37px" }}
+            className="w-full whitespace-nowrap text-center font-medium text-black"
+            style={{ fontFamily: "var(--font-davinci)", fontSize: "clamp(48px, 16.5vw, 374px)", lineHeight: 0.84, letterSpacing: "-0.035em" }}
           >
-            <span className="hidden md:inline">KHAMIMZAR</span>
-            <span className="md:hidden" style={{ fontSize: "17vw", letterSpacing: "-0.04em" }}>
-              KHAMIMZAR
-            </span>
+            KHAMIMZAR
           </div>
           <div className="w-full h-[1px] bg-[#dfdcd5] mt-6 md:mt-10" />
           <div className="w-full flex justify-between px-6 md:px-10 py-3 font-[Inter] text-[9px] tracking-[0.18em] uppercase text-[#595855]">
