@@ -9,43 +9,43 @@ export default function Home() {
       title: "Foto Hal Random",
       latin: "Fragmenta Temporis",
       desc: "Menangkap yang terlewat — cahaya random yang kebetulan jujur.",
-      img: "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&q=80&auto=format&fit=crop",
-      caption: "Camera — street random, golden hour",
+      img: "/hobi/foto-random.jpg",
+      caption: "Foto asli — jepretan random Khamim",
     },
     {
       title: "Bersepeda",
       latin: "Iter Matutinum",
       desc: "Ritual roda di pagi sunyi — gerak adalah doa yang paling sederhana.",
-      img: "https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80&auto=format&fit=crop",
-      caption: "Bicycle — road & sunrise ritual",
+      img: "/hobi/bersepeda.jpg",
+      caption: "Foto asli — goes pagi",
     },
     {
       title: "Merawat Tanaman",
       latin: "Cultura Silens",
       desc: "Merawat diam — daun mengajarkan kesabaran yang tidak dimiliki notifikasi.",
-      img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80&auto=format&fit=crop",
-      caption: "Houseplant — green, hands, grow slow",
+      img: "/hobi/tanaman.jpg",
+      caption: "Foto asli — tanaman di halaman",
     },
     {
       title: "Ikan Hias & Aquarium",
       latin: "Cathedralis Vitrea",
       desc: "Katedral kaca — cahaya menari di air, waktu melambat di balik gelembung.",
-      img: "https://images.unsplash.com/photo-1544552866-d3ed42536cfd?w=600&q=80&auto=format&fit=crop",
-      caption: "Aquarium — tropical fish in glass light",
+      img: "/hobi/ikan.jpg",
+      caption: "Foto asli — aquarium di rumah",
     },
     {
       title: "Vibes Coding",
       latin: "Calligraphia Codex",
       desc: "Kode sebagai kaligrafi — bukan sekadar sintaks, tapi suasana yang mengalir.",
-      img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80&auto=format&fit=crop",
-      caption: "Laptop — code, vibes, late night build",
+      img: "/hobi/coding.jpg",
+      caption: "Foto asli — setup vibes coding",
     },
     {
       title: "Ngopi + Nge-project",
       latin: "Amarum Lucidum",
       desc: "Pahit yang menyalakan ide — ngopi sambil ngulik project, wkwk tapi serius.",
-      img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80&auto=format&fit=crop",
-      caption: "Coffee — black, laptop, project session",
+      img: "/hobi/ngopi.jpg",
+      caption: "Foto asli — ngopi sambil nge-project",
     },
   ];
 
@@ -368,9 +368,9 @@ export default function Home() {
 
             <div className="rounded-[9px] overflow-hidden border border-[#dfdcd5] bg-[#c4c3b6] p-3">
               <div className="rounded-[6px] overflow-hidden h-[220px] relative">
-                <Image src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80&auto=format&fit=crop" alt="Houseplant still life" width={600} height={220} className="w-full h-full object-cover" />
+                <Image src="/hobi/foto-bunga.jpg" alt="Foto asli — bunga di halaman" width={600} height={220} className="w-full h-full object-cover" />
               </div>
-              <p className="font-[Inter] text-[9px] tracking-[0.16em] uppercase text-[#595855] pt-3 px-1">Still Life — Merawat tanaman, cahaya sore di daun</p>
+              <p className="font-[Inter] text-[9px] tracking-[0.16em] uppercase text-[#595855] pt-3 px-1">Still Life — Foto asli — bunga di halaman Khamim</p>
             </div>
           </div>
         </div>
