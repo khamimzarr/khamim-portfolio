@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Header from "@/components/Header";
+import Reveal from "@/components/Reveal";
+import Ticker from "@/components/Ticker";
 
 export default function Home() {
   const heroPainting = "https://upload.wikimedia.org/wikipedia/commons/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg";
@@ -91,7 +93,7 @@ export default function Home() {
 
       {/* HERO */}
       <section className="relative w-full bg-[#c4c3b6] flex flex-col items-center pt-16 md:pt-24 pb-0 overflow-hidden border-b border-[#dfdcd5] texture-putty">
-        <div className="w-full max-w-[820px] px-6 flex flex-col items-center text-center gap-6 relative reveal">
+        <div className="w-full max-w-[820px] px-6 flex flex-col items-center text-center gap-6 relative">
           <p className="font-[Inter] text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-medium text-[#595855]">
             Renaissance gallery on putty paper — Portfolio No. 01
           </p>
@@ -130,7 +132,7 @@ export default function Home() {
             className="w-full whitespace-nowrap text-center font-medium text-black"
             style={{ fontFamily: "var(--font-davinci)", fontSize: "clamp(48px, 16.5vw, 374px)", lineHeight: 0.84, letterSpacing: "-0.035em" }}
           >
-            KHAMIMZAR
+            <span className="wordmark-carve">KHAMIMZAR</span>
           </div>
           <div className="w-full h-[1px] bg-[#dfdcd5] mt-6 md:mt-10" />
           <div className="w-full flex justify-between px-6 md:px-10 py-3 font-[Inter] text-[9px] tracking-[0.18em] uppercase text-[#595855]">
@@ -186,6 +188,8 @@ export default function Home() {
         </div>
       </section>
 
+      <Ticker />
+
       {/* KARYA — Bone cards */}
       <section id="karya" className="w-full bg-[#e7e5e4] border-y border-[#dfdcd5] px-6 md:px-10 py-14 md:py-20">
         <div className="max-w-[1120px] mx-auto flex flex-col gap-8">
@@ -238,7 +242,7 @@ export default function Home() {
           <span>Exhibition — 06 Rituals</span>
           <span>Putty on Ink · Flat · No Shadow</span>
         </div>
-        <div className="w-full flex flex-col items-center text-center gap-4 pb-12 md:pb-16 reveal">
+        <Reveal className="w-full flex flex-col items-center text-center gap-4 pb-12 md:pb-16">
           <h2 className="font-[Playfair_Display] text-[42px] md:text-[94px] font-medium leading-[0.84] tracking-[-0.85px]">
             HIDUP — DI<br />KURASI
           </h2>
@@ -247,23 +251,32 @@ export default function Home() {
             <span className="text-white/90"> Hover lingkaran untuk melihat detail.</span>
           </p>
           <p className="font-[Playfair_Display] italic text-[15px] md:text-[18px] text-white/70">“Every shadow is proof of the light that once passed through it.”</p>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-10 max-w-[1120px] mx-auto">
-          {vignettes.map((v) => (
-            <div key={v.title} className="flex flex-col items-center text-center gap-4 group reveal reveal-d2">
-              <p className="font-[Playfair_Display] text-[18px] md:text-[22px] leading-[1.33] tracking-[-0.11px] font-normal">{v.title}</p>
-              <p className="font-[Inter] text-[9px] tracking-[0.18em] uppercase text-white/40 -mt-3">{v.latin}</p>
-              <div className="relative w-[200px] h-[200px] rounded-full overflow-hidden bg-[#808080]">
-                <Image src={v.img} alt={v.caption} width={400} height={400} sizes="200px" className="w-full h-full object-cover scale-[1.08] group-hover:scale-[1.12] transition-all duration-700" />
-              </div>
-              <p className="font-[Inter] text-[12px] leading-[1.5] text-white/60 max-w-[26ch] px-2">{v.desc}</p>
-              <p className="font-[Inter] text-[9px] tracking-[0.14em] uppercase text-white/30">{v.caption}</p>
-              <div className="flex items-center gap-2 pt-1">
-                <Hexagon active />
-                <Hexagon />
-                <Hexagon />
-              </div>
+          {vignettes.map((v, i) => (
+            <div key={v.title} className="vignette flex flex-col items-center text-center gap-4 group" style={{ transitionDelay: `${(i * 90)}ms` }}>
+              <Reveal className="flex flex-col items-center text-center gap-4">
+                <p className="font-[Playfair_Display] text-[18px] md:text-[22px] leading-[1.33] tracking-[-0.11px] font-normal">{v.title}</p>
+              </Reveal>
+              <Reveal
+                className="flex flex-col items-center text-center gap-4"
+                style={{ transitionDelay: `${(i * 90) + 60}ms` }}
+              >
+                <p className="font-[Inter] text-[9px] tracking-[0.18em] uppercase text-white/40 -mt-3">{v.latin}</p>
+                <div className="v-image relative w-[200px] h-[200px] rounded-full overflow-hidden bg-[#808080]">
+                  <Image src={v.img} alt={v.caption} width={400} height={400} sizes="200px" className="w-full h-full object-cover" />
+                </div>
+                <p className="font-[Inter] text-[12px] leading-[1.5] text-white/60 max-w-[26ch] px-2">{v.desc}</p>
+                <p className="v-caption font-[Inter] text-[9px] tracking-[0.14em] uppercase text-white/30">{v.caption}</p>
+              </Reveal>
+              <Reveal style={{ transitionDelay: `${(i * 90) + 120}ms` }}>
+                <div className="flex items-center gap-2 pt-1">
+                  <Hexagon active />
+                  <Hexagon />
+                  <Hexagon />
+                </div>
+              </Reveal>
             </div>
           ))}
         </div>
@@ -274,6 +287,8 @@ export default function Home() {
           </a>
         </div>
       </section>
+
+      <Ticker />
 
       {/* ABOUT */}
       <section className="w-full bg-[#e7e5e4] border-y border-[#dfdcd5] px-6 md:px-10 py-14 md:py-20">
@@ -345,6 +360,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <Ticker />
 
       <footer className="w-full bg-[#ebebeb] border-t border-[#dfdcd5] px-6 md:px-10 py-10">
         <div className="max-w-[1120px] mx-auto flex flex-col gap-8">
