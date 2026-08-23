@@ -284,8 +284,8 @@ export default function Home() {
             <div key={v.title} className="flex flex-col items-center text-center gap-4 group reveal reveal-d2">
               <p className="font-[Playfair_Display] text-[18px] md:text-[22px] leading-[1.33] tracking-[-0.11px] font-normal">{v.title}</p>
               <p className="font-[Inter] text-[9px] tracking-[0.18em] uppercase text-white/40 -mt-3">{v.latin}</p>
-              <div className="relative w-[200px] h-[200px] rounded-full overflow-hidden bg-[#808080] border border-white/10 group-hover:border-white/20 transition-colors">
-                <Image src={v.img} alt={v.caption} width={400} height={400} sizes="200px" className="w-full h-full object-cover group-hover:scale-[1.04] transition-all duration-700" />
+              <div className="relative w-[200px] h-[200px] rounded-full overflow-hidden bg-[#808080]">
+                <Image src={v.img} alt={v.caption} width={400} height={400} sizes="200px" className="w-full h-full object-cover scale-[1.08] group-hover:scale-[1.12] transition-all duration-700" />
               </div>
               <p className="font-[Inter] text-[12px] leading-[1.5] text-white/60 max-w-[26ch] px-2">{v.desc}</p>
               <p className="font-[Inter] text-[9px] tracking-[0.14em] uppercase text-white/30">{v.caption}</p>
