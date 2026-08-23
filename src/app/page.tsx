@@ -102,7 +102,7 @@ export default function Home() {
           </h1>
           <p className="font-[Inter] text-[15px] leading-[1.5] text-[#595855] max-w-[520px]">
             Saya <span className="text-black font-medium">Khamim Zarkasyi</span> — foto hal random, bersepeda, merawat tanaman & aquarium, vibes coding, dan ngopi sambil mengerjakan project.
-            Semua dikurasi seperti koleksi museum: hangat, flat, jujur.
+            Semua aku rawat seperti koleksi museum: hangat, flat, dan jujur — karena hidup yang paling sederhana biasanya yang paling layak dipajang.
           </p>
           <div className="flex items-center gap-7 pt-1 font-[Inter] text-[12px] md:text-[16px] font-medium tracking-[0.04em] text-black">
             <span>Based: Indonesia</span>
@@ -200,7 +200,7 @@ export default function Home() {
                 Kode & <em className="italic font-normal">kertas</em> yang sudah dipajang
               </h2>
               <p className="font-[Inter] text-[13px] leading-[1.5] text-[#595855] max-w-[520px]">
-                Dua featured + dua archive — live di Vercel, source di GitHub. Vibe coding yang jadi beneran kepajang.
+                Empat karya kecil yang tumbuh dari ngopi & vibes coding — live di Vercel, source terbuka di GitHub. Dari catatan harian jadi halaman yang beneran dikunjungi.
               </p>
             </div>
             <a href="https://github.com/khamimzarr" target="_blank" className="hidden md:inline-flex shrink-0 bg-black text-white font-[Inter] text-[12px] px-[17px] py-[9px] rounded-[28.8px]">lihat semua di GitHub →</a>
@@ -300,8 +300,7 @@ export default function Home() {
             </h3>
             <div className="font-[Inter] text-[15px] leading-[1.6] text-[#595855] flex flex-col gap-4">
               <p>
-                Halo, aku <strong className="text-black font-medium">Khamim Zarkasyi</strong>. Hari-hariku sederhana: motret hal random yang menurut orang lain biasa aja, sepedaan biar kepala adem,
-                nyiram tanaman, ngasih makan ikan hias sambil ngeliatin aquarium kayak ngeliatin galeri kaca, vibes coding sampai lupa waktu, dan ngopi sambil ngerjain project — wkwk, tapi jadi.
+                Halo, aku <strong className="text-black font-medium">Khamim Zarkasyi</strong>. Hari-hariku sederhana — motret hal random yang menurut orang lain biasa aja, sepedaan biar kepala adem, nyiram tanaman, ngasih makan ikan hias sambil ngeliatin aquarium kayak ngeliatin galeri kaca. Lalu vibes coding sampai lupa waktu, dan ngopi sambil ngerjain project — wkwk, tapi jadi.
               </p>
               <p>
                 Website ini aku bikin dengan bahasa galeri Renaissance — <span className="text-black">Putty #c4c3b6</span> sebagai kanvas hangat,
