@@ -23,3 +23,6 @@ npm install
 npm run build
 npm run dev
 ```
+
+## Handoff
+Lihat [HANDOFF.md](./HANDOFF.md) untuk lanjut Tier 2.
