@@ -201,26 +201,46 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {projects.map((p) => (
-              <a key={p.name} href={p.href} target="_blank" className={`group bg-white border border-[#dfdcd5] rounded-[9px] p-6 flex flex-col gap-4 hover:border-black/20 transition-colors ${p.featured ? "md:col-span-1" : ""}`}>
-                <div className="flex justify-between items-start gap-4">
+              <div
+                key={p.name}
+                className={`group relative bg-white border border-[#dfdcd5] rounded-[9px] p-6 flex flex-col gap-4 hover:border-black/20 transition-colors ${p.featured ? "md:col-span-1" : ""}`}
+              >
+                {/* Klik kartu = ke website (vercel). Klik "github ↗" = ke repo */}
+                <a
+                  href={p.vercel ?? p.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Buka website ${p.name}`}
+                  className="absolute inset-0 rounded-[9px] z-0"
+                />
+                <div className="relative z-10 flex justify-between items-start gap-4 pointer-events-none">
                   <div className="flex items-center gap-2">
                     <span className={`w-2 h-2 rounded-full ${p.featured ? "bg-black" : "bg-[#c4c3b6]"}`} />
                     <span className="font-[Inter] text-[9px] tracking-[0.16em] uppercase text-[#595855]">{p.lang}</span>
                     {p.featured && <span className="font-[Inter] text-[9px] tracking-[0.14em] uppercase bg-black text-white rounded-full px-2 py-0.5">Featured</span>}
                   </div>
-                  <span className="font-[Inter] text-[10px] text-[#808080] group-hover:text-black transition-colors">github ↗</span>
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pointer-events-auto font-[Inter] text-[10px] text-[#808080] group-hover:text-black hover:underline underline-offset-4 transition-colors relative"
+                  >
+                    github ↗
+                  </a>
                 </div>
-                <h3 className="font-[Playfair_Display] text-[22px] leading-[1.1] tracking-[-0.11px] font-medium group-hover:tracking-[-0.14px] transition-all">{p.name}</h3>
-                <p className="font-[Inter] text-[13px] leading-[1.5] text-[#595855]">{p.desc}</p>
-                <div className="flex flex-wrap gap-2 pt-1">
+                <h3 className="relative z-10 pointer-events-none font-[Playfair_Display] text-[22px] leading-[1.1] tracking-[-0.11px] font-medium group-hover:tracking-[-0.14px] transition-all">
+                  {p.name}
+                </h3>
+                <p className="relative z-10 pointer-events-none font-[Inter] text-[13px] leading-[1.5] text-[#595855]">{p.desc}</p>
+                <div className="relative z-10 flex flex-wrap gap-2 pt-1 pointer-events-none">
                   <span className="font-[Inter] text-[11px] border border-[#dfdcd5] rounded-full px-3 py-1 group-hover:border-black/15 transition-colors">{p.name}</span>
                   {p.vercel && (
-                    <a href={p.vercel} target="_blank" className="font-[Inter] text-[11px] bg-[#c4c3b6] border border-transparent rounded-full px-3 py-1 hover:bg-black hover:text-white transition-colors">
+                    <span className="font-[Inter] text-[11px] bg-[#c4c3b6] border border-transparent rounded-full px-3 py-1 group-hover:bg-black group-hover:text-white transition-colors">
                       live ↗
-                    </a>
+                    </span>
                   )}
                 </div>
-              </a>
+              </div>
             ))}
           </div>
           <div className="flex md:hidden justify-center">
