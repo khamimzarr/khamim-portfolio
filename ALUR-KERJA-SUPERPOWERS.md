@@ -44,11 +44,16 @@ Jangan langsung `git init` / nulis code.
    - **Spike** = "bisa gak?" — cukup 2-3 kalimat probe → minta nod → investigasi murah
    - **Bounded** = ubah 1 flow yang sudah ada (contoh: tambah field foto di Setup) — tanya 1 per 1 → desain pendek di chat → **STOP, tunggu `gas`**
    - **Architectural** = web/webapp baru + BE (contoh: `ruang-resepsi` + `api/*` + `Blob`) — tanya bertahap → 2-3 pendekatan + rekomendasi → desain per section → tulis spec → tunggu `gas`
-3. Hidden complexity naik kelas → upgrade path, ulangi gate.
+3. **Tanya sumber desain — WAJIB sebelum bikin desain apa pun:**
+   > "Kamu sudah punya design atau mau aku yang buatkan? (A) Aku sudah ada — kirim Figma/link/gambar/referensi (B) Tolong bikinin — sebut warna/style/vibe yang kamu mau"
+   - Tunggu jawaban user dulu. Jika (A): pakai design user sebagai acuan, jangan override. Jika (B): kamu propose 2-3 opsi style (sesuai konteks) lalu minta pilih.
+   - Baru setelah ini susun/present desain → hard gate `gas`.
+4. Hidden complexity naik kelas → upgrade path, ulangi gate.
 
 Contoh chat (kayak `foto prewed A` 24 Aug):
 ```
 Ini Bounded — 1 foto hero upload file, compress canvas 900px JPEG 0.6 ~40KB, param foto di URL.
+Kamu sudah punya design untuk foto hero ini atau mau aku yang bikinin? (A) ada Figma/referensi (B) aku bikinin
 Setuju desain ini aku eksekusi? Balas gas untuk lanjut.
 ```
 Baru setelah `gas` → lanjut Fase 1.
