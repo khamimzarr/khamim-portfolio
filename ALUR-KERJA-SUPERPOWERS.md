@@ -2,6 +2,24 @@
 
 > Companion dari `ALUR-KERJA-PROJECT-BARU.md`. Bedanya: **ini jalur full Superpowers** (brainstorming → plans → build → verify → deploy → push → portfolio). Copy-paste aja — replikasi persis `ruang-resepsi` 24 Aug 2026 (A+backend: 1 foto prewed + `/u/:id` 7-hari, HTML + Vercel Functions & Blob).
 
+## Ringkasan Tabel (Quick View) — gak bikin bingung
+
+> Tabel ini **cuma ringkasan** biar cepat koreksi. Yang jadi **sumber kebenaran tetap detail per fase di bawahnya**. Detail override tabel kalau beda — jadi gak bingung.
+
+| Fase | Nama | Skill | Apa terjadi | Gate `gas`? | Guard biar gak nimpa | Output |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **0** | **Ide → Brainstorming** | `brainstorming` + `using-superpowers` | Klasifikasi **Spike / Bounded / Architectural** → **WAJIB TANYA DULU:** `Kamu sudah punya design atau mau aku yang buatkan? (A) Aku sudah ada — kirim Figma/link (B) Tolong bikinin — sebut warna/vibe` → tunggu jawabanmu | **YA — HARD GATE** | - | Desain pendek di chat |
+| **1** | **Rencana** | `writing-plans` jika Architectural | Architectural → `docs/superpowers/specs/YYYY-MM-DD-topik-design.md`<br>Bounded → desain chat 3-6 paragraf | **YA** | - | Spec |
+| **2** | **Eksekusi** | `subagent-driven-development` atau `executing-plans` + `test-driven-development` | FE: `index.html`<br>BE: `api/*` + `vercel.json /u/:id` + `package.json @vercel/blob` + compress foto `900px q0.6` | Tidak | - | Code `~/nama-project` |
+| **3** | **Verifikasi** | `verification-before-completion` | `node --check`, `npm run build`, `curl` live cek `foto`, `+62`, `QR`, `musik` | **YA** | - | `JS OK` `API OK` |
+| **4** | **Deploy Vercel — CREATE NEW (Jangan Timpa)** | - | **Vercel sudah terintegrasi** — **WAJIB bikin project baru, bukan timpa yang lama**<br>Guard: cek `.vercel/project.json` harus `== $PROJ` else `rm -rf .vercel` → `vercel --prod --yes` di folder baru = create new `nama-project` di `voiddarkfire` | Tidak | **Anti-timpa:** cek `.vercel/project.json` + `vercel ls` sebelum deploy | Live baru `READY` (bukan overwrite) |
+| **5** | **Git → Push** | - | `git init -b main` → `add` (`.gitignore: .vercel,*.bak,node_modules,package-lock,.env*`) → `commit` → `POST /user/repos` jika `404` → `remote https://$GITHUB_TOKEN@...` → `push -u` → `remote set-url https://github...` | Tidak | Cek `curl /repos/khamimzarr/$PROJ` `404` baru create | `github.com/khamimzarr/$PROJ` |
+| **6** | **Portfolio — Karya** | - | `tambah-karya.sh "$PROJ" "$DESC" "$LANG" "$LIVE"` → `npm run build ✓` → `add/commit/push portfolio` → `vercel --prod --yes` (deploy portfolio, bukan nimpa project baru) | Tidak | - | `Karya — 03→04` live |
+| **7** | **Keamanan Token** | - | `unset GITHUB_TOKEN` → `env` bersih → `remote -v` tanpa `ghp_` → revoke di `github.com/settings/tokens` | **WAJIB** | - | `env bersih` |
+| **8** | **Auto-update ALUR** | - | **Otomatis** setelah Fase 7: `scripts/update-alur.sh "$PROJ" "$DESC" "BE|FE"` → append entry baru ke `## Contoh Real` (tanggal, stack, live, projectId). **Append-only, tidak menimpa** project lama | Tidak | `grep -q $PROJ` skip jika sudah ada | File terupdate + siap `git push` |
+
+> Trigger kamu (dua-duanya jalan): `baca ALUR-KERJA-SUPERPOWER.md saya mau buat project baru "nama-project — ide"` atau `SUPERPOWERS` (pakai S).
+
 ## Kapan Pakai Skill Apa
 
 | Situasi | Skill |
@@ -20,7 +38,7 @@
 
 ## Prasyarat
 
-- Node `v26`, `vercel login` ke team `voiddarkfire` (`vercel whoami` → `khamimzar-2499`)
+- Node `v26`, **Vercel sudah terintegrasi penuh** — `vercel whoami` langsung `khamimzar-2499` di team `voiddarkfire` (skip `vercel login`, langsung `vercel --prod --yes` + `vercel blob create-store`)
 - Token GitHub `ghp_...` — buat di https://github.com/settings/tokens/new:
   - Untuk **create/push biasa**: centang `repo`
   - Untuk **hapus repo**: tambah `delete_repo` (flux: `Tdrive`, `Clouds` kemarin butuh ini)
@@ -190,27 +208,44 @@ curl -s https://nama-project.vercel.app/ | grep -o 'qrcodejs[^"]*\|sender-wa[^"]
 
 ---
 
-## Fase 4 — Blob / Env + Deploy Vercel
+## Fase 4 — Deploy Vercel — CREATE NEW (Jangan Timpa)
+
+> **Aturan anti-timpa:** setiap project baru = `vercel` **create new project**, bukan overwrite yang lama. Vercel sudah terintegrasi full — langsung pakai.
 
 ```bash
 cd ~/nama-project
 
-# Jika pakai Blob (1 foto prewed — A)
+# 0) Guard biar gak nimpa project lama — WAJIB sebelum vercel --prod
+if [ -f .vercel/project.json ]; then
+  echo "⚠️ .vercel sudah ada:"
+  cat .vercel/project.json | python3 -c "import json; print('linked project:', json.load(open('.vercel/project.json')).get('projectName'))"
+  # Harus == nama-project. Kalau beda (mis. masih ruang-resepsi padahal mau buat catatan-harian) → abort!
+  # Fix: rm -rf .vercel   # atau vercel link --project nama-baru --yes
+  # Jangan pernah vercel --prod di folder ruang-resepsi untuk project baru!
+fi
+vercel ls 2>&1 | grep -q "nama-project" && echo "project nama-project sudah ada di Vercel — cek nama!" || echo "new project — akan create"
+# Folder baru ~/nama-baru (belum ada .vercel) → vercel --prod --yes otomatis create new project di voiddarkfire
+
+# 1) Jika pakai Blob (1 foto prewed — A)
 vercel blob create-store nama-project-store --access public --yes
 # → auto .env.local: BLOB_READ_WRITE_TOKEN + vercel env set Production/Preview/Development
 cat .env.local | head -n 2
 vercel blob list-stores 2>&1 | head -n 10
 vercel env ls 2>&1 | head -n 20
 
-# Deploy
+# 2) Deploy — CREATE NEW
 vercel --prod --yes
-# catat: https://nama-project-xxxx-voiddarkfire.vercel.app → alias https://nama-project.vercel.app
+# harus create: https://nama-project-xxxx-voiddarkfire.vercel.app → alias https://nama-project.vercel.app
+# BUKAN nimpa ruang-resepsi!
 sleep 3; curl -s https://nama-project.vercel.app/ | head -n 20
-curl -sI https://nama-project.vercel.app/u/TEST123 | head -n 15      # rewrite harus 200
+curl -sI https://nama-project.vercel.app/u/TEST123 | head -n 15      # rewrite harus 200 (untuk /u/:id)
 curl -s "https://nama-project.vercel.app/api/invite?id=TEST123" | head -c 300
 
 # Cron (opsional cek)
 curl -s https://nama-project.vercel.app/api/cleanup | python3 -m json.tool | head
+
+# Verifikasi gak nimpa:
+vercel ls 2>&1 | grep -E "ruang-resepsi|nama-project" | head -n 10
 ```
 
 ---
@@ -296,6 +331,28 @@ Revoke di https://github.com/settings/tokens → Delete → generate baru next t
 
 ---
 
+## Fase 8 — Auto-update ALUR-KERJA-SUPERPOWER.md (Otomatis)
+
+> Setelah Fase 7, **otomatis** update dokumentasi — tidak manual, tidak menimpa entry lama (append-only). Vercel tidak tertimpa karena Fase 4 sudah guard create-new.
+
+```bash
+~/khamim-portfolio/scripts/update-alur.sh "nama-project" "Deskripsi 1 baris — 140char" "BE|FE" "https://nama-project.vercel.app"
+# → cek grep -q nama-project skip jika sudah ada
+# → insert line baru di ## Contoh Real — ruang-resepsi 24 Aug 2026 (append, bukan timpa)
+# → cat ~/khamim-portfolio/ALUR-KERJA-SUPERPOWERS.md | grep -A2 "## Contoh Real"
+# Dipanggil otomatis di akhir alur — kamu gak perlu edit manual
+```
+
+Script `scripts/update-alur.sh`:
+- Input: `PROJ`, `DESC`, `STACK` (FE/BE), `LIVE`
+- Cari blok `## Contoh Real` di `ALUR-KERJA-SUPERPOWERS.md`, append ````
+PROJ — YYYY-MM-DD | STACK | LIVE | projectId
+````
+- Jika `PROJ` sudah ada → skip (idempotent)
+- `cp` sync ke `ALUR-KERJA-SUPERPOWER.md` (alias singular)
+
+---
+
 ## Cheat Sheet — One Liner Full (ganti 5 variabel di atas)
 
 ```bash
@@ -341,7 +398,4 @@ Cleanup repos: Tdrive, 100-Days-Of-ML-Code, Clouds, dompetkua-pp → DELETE 204 
 ```bash
 cat ~/khamim-portfolio/ALUR-KERJA-PROJECT-BARU.md
 cat ~/khamim-portfolio/ALUR-KERJA-SUPERPOWERS.md
-~/khamim-portfolio/scripts/tambah-karya.sh --help
-vercel --help | head -n 40
-vercel blob --help | head -n 40
 ```
