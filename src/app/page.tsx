@@ -71,8 +71,8 @@ export default function Home() {
     },
     {
       name: "ruang-resepsi",
-      desc: "Undangan digital pernikahan — satu tautan personal per tamu, kirim via WhatsApp. Frontend-only, tanpa database.",
-      lang: "HTML",
+      desc: "Undangan digital pernikahan — satu link pendek per tamu (/u/:id) via WA, 1 foto prewed & auto-hapus 7 hari. HTML + Vercel Functions & Blob.",
+      lang: "TypeScript",
       href: "https://github.com/khamimzarr/ruang-resepsi",
       vercel: "https://ruang-resepsi.vercel.app",
       featured: true,
