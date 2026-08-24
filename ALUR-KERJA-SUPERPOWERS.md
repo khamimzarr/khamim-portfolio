@@ -13,9 +13,9 @@
 | **2** | **Eksekusi** | `subagent-driven-development` atau `executing-plans` + `test-driven-development` | FE: `index.html`<br>BE: `api/*` + `vercel.json /u/:id` + `package.json @vercel/blob` + compress foto `900px q0.6` | Tidak | - | Code `~/nama-project` |
 | **3** | **Verifikasi** | `verification-before-completion` | `node --check`, `npm run build`, `curl` live cek `foto`, `+62`, `QR`, `musik` | **YA** | - | `JS OK` `API OK` |
 | **4** | **Deploy Vercel — CREATE NEW (Jangan Timpa)** | - | **Vercel sudah terintegrasi** — **WAJIB bikin project baru, bukan timpa yang lama**<br>Guard: cek `.vercel/project.json` harus `== $PROJ` else `rm -rf .vercel` → `vercel --prod --yes` di folder baru = create new `nama-project` di `voiddarkfire` | Tidak | **Anti-timpa:** cek `.vercel/project.json` + `vercel ls` sebelum deploy | Live baru `READY` (bukan overwrite) |
-| **5** | **Git → Push** | - | `git init -b main` → `add` (`.gitignore: .vercel,*.bak,node_modules,package-lock,.env*`) → `commit` → `POST /user/repos` jika `404` → `remote https://$GITHUB_TOKEN@...` → `push -u` → `remote set-url https://github...` | Tidak | Cek `curl /repos/khamimzarr/$PROJ` `404` baru create | `github.com/khamimzarr/$PROJ` |
+| **5** | **Git → Push** | - | `gh auth status` → `git init -b main` → `add` (`.gitignore: .vercel,*.bak,node_modules,package-lock,.env*`) → `commit` → `gh repo create khamimzarr/$PROJ --public --source . --remote origin --push` (skip jika `gh repo view` sudah ada) → `git push -u` | Tidak | Cek `gh repo view khamimzarr/$PROJ` skip create jika sudah ada | `github.com/khamimzarr/$PROJ` |
 | **6** | **Portfolio — Karya** | - | `tambah-karya.sh "$PROJ" "$DESC" "$LANG" "$LIVE"` → `npm run build ✓` → `add/commit/push portfolio` → `vercel --prod --yes` (deploy portfolio, bukan nimpa project baru) | Tidak | - | `Karya — 03→04` live |
-| **7** | **Keamanan Token** | - | `unset GITHUB_TOKEN` → `env` bersih → `remote -v` tanpa `ghp_` → revoke di `github.com/settings/tokens` | **WAJIB** | - | `env bersih` |
+| **7** | **Keamanan Token** | - | `gh auth status` → `env` bersih tanpa `GITHUB_TOKEN` manual → `remote -v` https tanpa `gho_` → token aman di `~/.config/gh/hosts.yml` | **WAJIB** | - | `env bersih` |
 | **8** | **Auto-update ALUR** | - | **Otomatis** setelah Fase 7: `scripts/update-alur.sh "$PROJ" "$DESC" "BE|FE"` → append entry baru ke `## Contoh Real` (tanggal, stack, live, projectId). **Append-only, tidak menimpa** project lama | Tidak | `grep -q $PROJ` skip jika sudah ada | File terupdate + siap `git push` |
 
 > Trigger kamu (dua-duanya jalan): `baca ALUR-KERJA-SUPERPOWER.md saya mau buat project baru "nama-project — ide"` atau `SUPERPOWERS` (pakai S).
@@ -39,14 +39,15 @@
 ## Prasyarat
 
 - Node `v26`, **Vercel sudah terintegrasi penuh** — `vercel whoami` langsung `khamimzar-2499` di team `voiddarkfire` (skip `vercel login`, langsung `vercel --prod --yes` + `vercel blob create-store`)
-- Token GitHub `ghp_...` — buat di https://github.com/settings/tokens/new:
-  - Untuk **create/push biasa**: centang `repo`
-  - Untuk **hapus repo**: tambah `delete_repo` (flux: `Tdrive`, `Clouds` kemarin butuh ini)
+- **GitHub CLI `gh` sudah terintegrasi penuh** — `gh auth status` langsung `khamimzarr` (skip `export GITHUB_TOKEN`, langsung `gh repo create` + `git push`)
+  - Login sekali: `pkg install gh && gh auth login` → `GitHub.com` → `HTTPS` → `Yes` → token `gho_...` auto simpan di `~/.config/gh/hosts.yml`
+  - Scopes: `repo`, `workflow`, `delete_repo` (untuk hapus repo seperti `Tdrive`/`Clouds` kemarin — tambah via `gh auth refresh -s delete_repo`)
+  - Cek: `gh auth status` harus `✓ Logged in to github.com account khamimzarr`
 - Project ada di `~/nama-project` (contoh `~/ruang-resepsi`, `~/my-app`)
 
 Cek cepat:
 ```bash
-node -v; vercel whoami; vercel --version
+node -v; vercel whoami; vercel --version; gh auth status
 ls ~/nama-project | head -n 20
 cat ~/nama-project/vercel.json 2>/dev/null; cat ~/nama-project/package.json 2>/dev/null
 ```
@@ -256,11 +257,12 @@ Ikuti `ALUR-KERJA-PROJECT-BARU.md` persis.
 
 ```bash
 cd ~/nama-project
+gh auth status   # harus ✓ Logged in to github.com account khamimzarr
 if [ ! -d .git ]; then git init -b main; fi
 git config user.name "Khamim Zarkasyi"
 git config user.email "khamimzarrr@gmail.com"
 
-grep -r "ghp_\|sk-\|api_key\|BLOB_READ_WRITE_TOKEN" . --include="*.html" --include="*.js" --include="*.ts" | grep -v node_modules | head
+grep -r "ghp_\|gho_\|sk-\|api_key\|BLOB_READ_WRITE_TOKEN" . --include="*.html" --include="*.js" --include="*.ts" | grep -v node_modules | head
 
 git add .gitignore vercel.json index.html package.json api/ README.md PANDUAN-EDIT.md og-image.png  # sesuaikan
 # atau: git add .   (pastikan .gitignore benar)
@@ -269,18 +271,12 @@ git commit -m "feat: nama-project — deskripsi singkat (FE + BE 7-hari jika ada
 Live: https://nama-project.vercel.app"
 git log --oneline -2
 
-export GITHUB_TOKEN="ghp_xxx"
-curl -s https://api.github.com/repos/khamimzarr/nama-project | grep '"message"'  # 404 = belum ada
-curl -s -X POST https://api.github.com/user/repos -H "Authorization: token $GITHUB_TOKEN" \
-  -d '{"name":"nama-project","description":"Deskripsi 1 baris — 140char","private":false}' | grep '"html_url"'
-
-if git -C ~/nama-project remote get-url origin >/dev/null 2>&1; then
-  git -C ~/nama-project remote set-url origin "https://$GITHUB_TOKEN@github.com/khamimzarr/nama-project.git"
-else
-  git -C ~/nama-project remote add origin "https://$GITHUB_TOKEN@github.com/khamimzarr/nama-project.git"
-fi
-git -C ~/nama-project push -u origin main
-git -C ~/nama-project remote set-url origin https://github.com/khamimzarr/nama-project.git
+# Create repo + push via gh CLI (tanpa export GITHUB_TOKEN)
+gh repo view khamimzarr/nama-project >/dev/null 2>&1 && echo "repo sudah ada — skip create" || gh repo create khamimzarr/nama-project --public --description "Deskripsi 1 baris — 140char" --source . --remote origin --push
+# Jika sudah git init manual & commit sebelum create, alternatif:
+# gh repo create khamimzarr/nama-project --public --description "Deskripsi 1 baris — 140char"
+# git push -u origin main
+git remote -v   # https tanpa gho_/ghp_ — auth via gh credential helper
 ```
 
 ---
@@ -307,7 +303,7 @@ cd ~/khamim-portfolio
 npm run build   # harus ✓ Compiled successfully
 git add src/app/page.tsx
 git commit -m "feat: Karya jadi 04 — tambah nama-project, update copy & footer"
-git push "https://$GITHUB_TOKEN@github.com/khamimzarr/khamim-portfolio.git" main
+gh auth status && git push
 vercel --prod --yes
 sleep 3; curl -s https://khamim-portfolio.vercel.app | grep -o "nama-project\|Karya — 0" | head
 ```
@@ -318,16 +314,20 @@ Hapus dari Karya: hapus object `projects[]`, `karya kecil` `Empat→Tiga`, `Kary
 
 ## Fase 7 — Keamanan Token — WAJIB
 
+> Dengan `gh CLI`, token `gho_...` aman di `~/.config/gh/hosts.yml` — tidak perlu `export GITHUB_TOKEN` manual / paste `ghp_` di remote URL. Tetap verifikasi `env` bersih sebelum selesai.
+
 ```bash
-unset GITHUB_TOKEN
-env | grep GITHUB_TOKEN || echo "env bersih"
-git -C ~/nama-project remote -v      # tanpa ghp_
-git -C ~/khamim-portfolio remote -v  # tanpa ghp_
+gh auth status   # harus ✓ Logged in to github.com account khamimzarr
+# Token gho_... tersimpan aman di ~/.config/gh/hosts.yml — jangan di-commit / di-echo ke log
+# Jika ada sisa env manual dari sesi lama:
+unset GITHUB_TOKEN 2>/dev/null; env | grep -E "GITHUB_TOKEN|ghp_|gho_" || echo "env bersih"
+git -C ~/nama-project remote -v      # https://github.com/... tanpa gho_/ghp_
+git -C ~/khamim-portfolio remote -v  # push via gh credential helper, bukan URL token
 ```
 
-Revoke di https://github.com/settings/tokens → Delete → generate baru next time.
+> Jangan commit `~/.config/gh/hosts.yml` atau echo `gho_` ke log. Re-auth jika perlu: `gh auth refresh` atau `gh auth login` ulang. Hapus scope `delete_repo` jika tidak perlu lagi: `gh auth refresh -s repo,workflow`.
 
-> Jangan commit token ke file, jangan push dengan `https://ghp_...@github.com` tanpa unset.
+> Jika masih punya token lama di https://github.com/settings/tokens → revoke/Delete token `ghp_` yang sudah tidak dipakai (gh pakai `gho_` terpisah di `gh auth`).
 
 ---
 
@@ -364,16 +364,14 @@ vercel blob create-store $PROJ-store --access public --yes 2>&1 | head
 node -e "const h=require('fs').readFileSync('$HOME/$PROJ/index.html','utf8');let m,last='';const re=/<script[^>]*>([\s\S]*?)<\/script>/g;while(m=re.exec(h))if(m[1].trim().length>200)last=m[1]; new Function(last); console.log('JS OK')" && node --check $HOME/$PROJ/api/create.js && echo "API OK"
 # 4) deploy:
 vercel --cwd $HOME/$PROJ --prod --yes
-# 5) git + github:
-export GITHUB_TOKEN="ghp_xxx"
-git -C ~/$PROJ remote add origin "https://$GITHUB_TOKEN@github.com/khamimzarr/$PROJ.git" 2>/dev/null || git -C ~/$PROJ remote set-url origin "https://$GITHUB_TOKEN@github.com/khamimzarr/$PROJ.git"
-git -C ~/$PROJ push -u origin main && git -C ~/$PROJ remote set-url origin https://github.com/khamimzarr/$PROJ.git
-curl -s -X POST https://api.github.com/user/repos -H "Authorization: token $GITHUB_TOKEN" -d "{\"name\":\"$PROJ\",\"description\":\"$REPO_DESC\",\"private\":false}" | grep html_url
+# 5) git + github via gh CLI (tanpa export token):
+gh auth status && gh repo view khamimzarr/$PROJ >/dev/null 2>&1 && echo "repo sudah ada" || gh repo create khamimzarr/$PROJ --public --description "$REPO_DESC" --source $HOME/$PROJ --remote origin --push
+# Jika sudah commit manual sebelum create: cd ~/$PROJ && gh repo create khamimzarr/$PROJ --public --description "$REPO_DESC" && git push -u origin main
 # 6) portfolio:
 ~/khamim-portfolio/scripts/tambah-karya.sh "$PROJ" "$DESC" "$LANG" "$LIVE"
-cd ~/khamim-portfolio && npm run build && git add src/app/page.tsx && git commit -m "feat: Karya jadi XX — tambah $PROJ" && git push "https://$GITHUB_TOKEN@github.com/khamimzarr/khamim-portfolio.git" main && vercel --prod --yes
-# 7) bersihkan:
-unset GITHUB_TOKEN; env | grep GITHUB_TOKEN || echo "env bersih"
+cd ~/khamim-portfolio && npm run build && git add src/app/page.tsx && git commit -m "feat: Karya jadi XX — tambah $PROJ" && gh auth status && git push && vercel --prod --yes
+# 7) verifikasi aman:
+gh auth status; env | grep -E "GITHUB_TOKEN|ghp_|gho_" || echo "env bersih — token aman di ~/.config/gh/hosts.yml"
 ```
 
 ---
