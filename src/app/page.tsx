@@ -147,7 +147,6 @@ export default function Home() {
       {/* CLASSICAL PANEL */}
       <section className="relative w-full overflow-hidden bg-black">
         <div className="relative w-full h-[58vh] md:h-[84vh] overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={heroPainting}
             alt="Renaissance classical painting — The School of Athens"
@@ -187,6 +186,18 @@ export default function Home() {
             Classical Panel — Raphael, The School of Athens (1511) · Full-bleed, no border
           </div>
         </div>
+      </section>
+
+      {/* MOTTO — Tawakal */}
+      <section className="w-full bg-black text-white px-6 md:px-10 py-14 md:py-20">
+        <Reveal className="w-full max-w-[820px] mx-auto flex flex-col items-center text-center gap-6">
+          <p className="font-[Inter] text-[9px] tracking-[0.2em] uppercase text-white/50">Motto — Tawakal</p>
+          <span className="w-10 h-[1px] bg-white/25" />
+          <blockquote className="font-[Playfair_Display] italic text-[21px] md:text-[30px] leading-[1.35] tracking-[-0.2px] text-white max-w-[680px]">
+            “Menitipkan segala cemas dan rencana pada Sang Maha Perencana. Jika langkah ini keliru, biarkan proses meluruskannya. Jika hati ini ragu, biarkan keyakinan menguatkannya. Sebab aku tahu, berserah bukanlah sebuah kekalahan, melainkan puncak dari rasa percaya akan takdir yang lebih indah.”
+          </blockquote>
+          <p className="font-[Playfair_Display] text-[12px] tracking-[0.18em] uppercase text-white/50 pt-1">— Khamim Zarkasyi</p>
+        </Reveal>
       </section>
 
       <Ticker />
