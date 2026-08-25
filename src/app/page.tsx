@@ -79,7 +79,7 @@ export default function Home() {
     },
     {
       name: "structur-md",
-      desc: "Scrape URL statis jadi Markdown instan. Next.js 16 + Supabase Storage + Vercel Serverless (fetch/cheerio). Tema terminal gelap.",
+      desc: "Scrape URL statis -> Markdown instan, atau ekstrak DESIGN.md (warna/font/radius/padding komponen terukur). Next.js 16 + Supabase Storage + Vercel Serverless (fetch/cheerio/postcss). Tema terminal gelap.",
       lang: "TypeScript",
       href: "https://github.com/khamimzarr/structur-md",
       vercel: "https://structur-md.vercel.app",
