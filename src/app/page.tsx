@@ -55,7 +55,7 @@ export default function Home() {
   const projects = [
     {
       name: "hr-ai-review",
-      desc: "AI-powered CV review — upload PDF, dapat analisis HR + scoring. GAS + Vercel, dengan origin validation & CSP.",
+      desc: "Upload PDF CV, langsung dapat analisis & scoring ala HR.",
       lang: "JavaScript",
       href: "https://github.com/khamimzarr/hr-ai-review",
       vercel: "https://hr-ai-review-nine.vercel.app",
@@ -63,7 +63,7 @@ export default function Home() {
     },
     {
       name: "khamim-portfolio",
-      desc: "Renaissance gallery on putty paper — portfolio pribadiku. Putty #c4c3b6, Ink #000000, 374px wordmark, flat & brutal.",
+      desc: "Portfolio pribadi bergaya galeri Renaissance di atas kertas putty.",
       lang: "TypeScript",
       href: "https://github.com/khamimzarr/khamim-portfolio",
       vercel: "https://khamim-portfolio.vercel.app",
@@ -71,7 +71,7 @@ export default function Home() {
     },
     {
       name: "ruang-resepsi",
-      desc: "Undangan digital pernikahan — satu link pendek per tamu (/u/:id) via WA, 1 foto prewed & auto-hapus 7 hari. HTML + Vercel Functions & Blob.",
+      desc: "Undangan digital pernikahan — satu link per tamu, otomatis terhapus dalam 7 hari.",
       lang: "TypeScript",
       href: "https://github.com/khamimzarr/ruang-resepsi",
       vercel: "https://ruang-resepsi.vercel.app",
@@ -79,7 +79,7 @@ export default function Home() {
     },
     {
       name: "structur-md",
-      desc: "Scrape URL statis -> Markdown instan, atau ekstrak DESIGN.md (warna/font/radius/padding komponen terukur). Next.js 16 + Supabase Storage + Vercel Serverless (fetch/cheerio/postcss). Tema terminal gelap.",
+      desc: "Ubah URL statis jadi Markdown instan, plus ekstrak DESIGN.md komponen.",
       lang: "TypeScript",
       href: "https://github.com/khamimzarr/structur-md",
       vercel: "https://structur-md.vercel.app",
