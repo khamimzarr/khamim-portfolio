@@ -276,7 +276,7 @@ export default function Home() {
         </div>
         <Reveal className="w-full flex flex-col items-center text-center gap-4 pb-12 md:pb-16">
           <h2 className="font-[Playfair_Display] text-[42px] md:text-[94px] font-medium leading-[0.84] tracking-[-0.85px]">
-            HIDUP — DI<br />KURASI
+            HIDUP — DI<br /><em className="font-normal italic">KURASI</em>
           </h2>
           <p className="font-[Inter] text-[13px] md:text-[15px] leading-[1.5] text-white/60 max-w-[560px]">
             Enam ritual harian yang aku rawat seperti koleksi galeri — hangat, pelan, dan sedikit filosofis.
