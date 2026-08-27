@@ -19,7 +19,7 @@ const helveticaNow = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://khamim-portfolio.vercel.app"),
+  metadataBase: new URL("https://khamimzar.my.id"),
   title: {
     default: "KHAMIM ZARKASYI — Renaissance Folio",
     template: "%s — Khamim Zarkasyi",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: "KHAMIM ZARKASYI — Renaissance Folio",
     description:
       "A Renaissance gallery portfolio — warm putty, ink black, classical souls. Foto, sepeda, tanaman, aquarium, vibes coding & ngopi.",
-    url: "https://khamim-portfolio.vercel.app",
+    url: "https://khamimzar.my.id",
     siteName: "Khamim Zarkasyi",
     locale: "id_ID",
     type: "website",
