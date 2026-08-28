@@ -55,7 +55,7 @@ export default function Home() {
   const projects = [
     {
       name: "hr-ai-review",
-      desc: "Upload PDF CV, langsung dapat analisis & scoring ala HR.",
+      desc: "Kurator HR di atas kertas putty — unggah PDF CV, terima analisis & skor seteliti tatapan kurator galeri.",
       lang: "JavaScript",
       href: "https://github.com/khamimzarr/hr-ai-review",
       vercel: "https://hr-ai-review-nine.vercel.app",
@@ -63,7 +63,7 @@ export default function Home() {
     },
     {
       name: "ruang-resepsi",
-      desc: "Undangan digital pernikahan — satu link per tamu, otomatis terhapus dalam 7 hari.",
+      desc: "Undangan bagai kartu pameran — satu tautan per tamu, lestari 7 hari lalu memudar seperti tinta yang mengering.",
       lang: "HTML",
       href: "https://github.com/khamimzarr/ruang-resepsi",
       vercel: "https://ruang-resepsi.vercel.app",
@@ -71,7 +71,7 @@ export default function Home() {
     },
     {
       name: "structur-md",
-      desc: "Ubah URL statis jadi Markdown instan, plus ekstrak DESIGN.md komponen.",
+      desc: "Transkripsi URL statis jadi Markdown — ekstrak DESIGN.md & struktur laman layaknya menyalin naskah Renaissance.",
       lang: "TypeScript",
       href: "https://github.com/khamimzarr/structur-md",
       vercel: "https://structur-md.vercel.app",
@@ -79,7 +79,7 @@ export default function Home() {
     },
     {
       name: "dropdeploy",
-      desc: "Instant Deploy .zip ke Vercel & GitHub langsung dari browser (BYOK, 90% client-side).",
+      desc: "Deploy kilat dari browser — jatuhkan .zip, langsung terpajang di Vercel & GitHub (BYOK, 90% client-side).",
       lang: "TypeScript",
       href: "https://github.com/khamimzarr/dropdeploy",
       vercel: "https://dropdeploy.vercel.app",
