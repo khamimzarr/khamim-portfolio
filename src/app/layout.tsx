@@ -39,8 +39,13 @@ export const metadata: Metadata = {
   creator: "Khamim Zarkasyi",
   publisher: "Khamim Zarkasyi",
   icons: {
-    icon: "/icon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
     apple: "/apple-icon.png",
+    shortcut: "/favicon.ico",
   },
   openGraph: {
     title: "KHAMIM ZARKASYI — Renaissance Folio",
