@@ -62,14 +62,6 @@ export default function Home() {
       featured: true,
     },
     {
-      name: "khamim-portfolio",
-      desc: "Portfolio pribadi bergaya galeri Renaissance di atas kertas putty.",
-      lang: "TypeScript",
-      href: "https://github.com/khamimzarr/khamim-portfolio",
-      vercel: "https://khamimzar.my.id",
-      featured: true,
-    },
-    {
       name: "ruang-resepsi",
       desc: "Undangan digital pernikahan — satu link per tamu, otomatis terhapus dalam 7 hari.",
       lang: "TypeScript",
@@ -220,7 +212,7 @@ export default function Home() {
                 Kode & <em className="italic font-normal">kertas</em> yang sudah dipajang
               </h2>
               <p className="font-[Inter] text-[13px] leading-[1.5] text-[#595855] max-w-[520px]">
-                Lima karya kecil yang tumbuh dari ngopi & vibes coding — live di Vercel, source terbuka di GitHub. Dari catatan harian jadi halaman yang beneran dikunjungi.
+                Empat karya kecil yang tumbuh dari ngopi & vibes coding — live di Vercel, source terbuka di GitHub. Dari catatan harian jadi halaman yang beneran dikunjungi.
               </p>
             </div>
             <a href="https://github.com/khamimzarr" target="_blank" className="hidden md:inline-flex shrink-0 bg-black text-white font-[Inter] text-[12px] px-[17px] py-[9px] rounded-[28.8px]">lihat semua di GitHub →</a>
@@ -426,7 +418,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-2">
                 <p className="text-[9px] tracking-[0.18em] uppercase text-[#595855]">Exhibition</p>
-                <a href="#karya" className="hover:underline underline-offset-4">Karya — 05</a>
+                <a href="#karya" className="hover:underline underline-offset-4">Karya — 04</a>
                 <a href="#exhibition" className="hover:underline underline-offset-4">06 Rituals</a>
                 <a href="#" className="hover:underline underline-offset-4">Top — Kembali ke atas</a>
                 <span className="text-[#808080]">Putty #c4c3b6 · Ink #000000</span>
