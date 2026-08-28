@@ -92,7 +92,7 @@ Deploy terakhir: `khamim-portfolio-6c99ir8qm` ● Ready (28 Agu 00:xx WIB)
 | **Metode verifikasi** | **Dual** — TXT DNS + meta tag (HTML tag) — keduanya LIVE |
 | **Token** | `google-site-verification=wK2YTrRAtctmJjl8t_Ax28Aqo2yD7TTr9LGd4olm1gI` |
 | **Sitemap submit** | `https://khamimzar.my.id/sitemap.xml` — **Terkirim 28 Agu 2026** — status awal `Tidak dapat mengambil peta situs` + `0 halaman` — **NORMAL** untuk domain baru, akan jadi `Berhasil` dalam 1-24 jam |
-| **Inspeksi URL** | `https://khamimzar.my.id/` → awalnya `Ups! Ada yang tidak beres` saat `Minta Pengindeksan` — **bug GSC domain baru, bukan error site** — coba lagi **29 Agu pagi** |
+| **Inspeksi URL** | `https://khamimzar.my.id/` → awalnya `Ups! Ada yang tidak beres` saat `Minta Pengindeksan` — **28 Agu 07:3x WIB: Inspeksi → "URL sudah tersedia" (HTML 116k kebaca) → Pengindeksan diminta → "URL telah ditambahkan ke antrean crawl prioritas" ✅** |
 
 ### Cara verifikasi Ulang (jika perlu)
 
@@ -106,9 +106,8 @@ Deploy terakhir: `khamim-portfolio-6c99ir8qm` ● Ready (28 Agu 00:xx WIB)
 2. Token sudah ada di `layout.tsx` → klik Verifikasi → langsung Berhasil
 
 Setelah Verified → **Sitemaps** → submit `https://khamimzar.my.id/sitemap.xml`  
-Besok (29 Agu) → **Inspeksi URL** → `https://khamimzar.my.id/` → **Minta Pengindeksan** (biar cepat crawl)
-
-Cek indexing 2-3 hari: `site:khamimzar.my.id` di google.com
+**28 Agu 07:3x: Inspeksi URL → Tersedia → Minta Pengindeksan → antrean prioritas (jangan submit lagi, tunggu 1-7 hari)**  
+Cek indexing 2-3 hari: `site:khamimzar.my.id` di google.com — **28 Agu cek: belum muncul = NORMAL (domain umur 1 hari)**
 
 ---
 
@@ -149,8 +148,9 @@ termux-job-scheduler --cancel --job-id 207711
 - [ ] Domain masih `khamimzar.my.id` tanpa www jadi utama? `curl -I https://khamimzar.my.id` 200, www 308
 - [ ] DNS IDwebhost masih 2 A + CNAME + TXT? Jangan hapus!
 - [ ] `layout.tsx` masih `khamimzar.my.id` + verification token?
-- [ ] GSC status 29 Agu: Sitemaps jadi `Berhasil`? Halaman ditemukan 1?
-- [ ] `site:khamimzar.my.id` sudah muncul di Google?
+- [x] GSC status 28 Agu 07:3x: Sitemaps terkirim (Tidak dapat mengambil = antri), Inspeksi URL Tersedia (116k), Minta Pengindeksan → antrean prioritas ✅
+- [ ] 29 Agu: Sitemaps jadi `Berhasil`? Halaman ditemukan 1?
+- [ ] `site:khamimzar.my.id` — 28 Agu belum muncul = normal, cek lagi 30-31 Agu (1-7 hari)
 - [ ] Kalau semua hijau → hapus cron reminder atau ganti jadi weekly
 
 ---
