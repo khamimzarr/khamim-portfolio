@@ -64,7 +64,7 @@ export default function Home() {
     {
       name: "ruang-resepsi",
       desc: "Undangan digital pernikahan — satu link per tamu, otomatis terhapus dalam 7 hari.",
-      lang: "TypeScript",
+      lang: "HTML",
       href: "https://github.com/khamimzarr/ruang-resepsi",
       vercel: "https://ruang-resepsi.vercel.app",
       featured: true,
