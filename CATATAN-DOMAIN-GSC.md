@@ -167,3 +167,12 @@ termux-job-scheduler --cancel --job-id 207711
 | GitHub | https://github.com/khamimzarr/khamim-portfolio |
 
 > **Catatan untuk AI next session:** Jangan tanya lagi "domainnya apa?" — sudah `khamimzar.my.id` apex tanpa www. Kalau mau ganti ke www lagi, ubah via `npx vercel api /v9/projects/.../domains` PATCH redirect, jangan ubah DNS. SSL auto-renew 90d. GSC akun `khamimzar@gmail.com` token `wK2YTrR...`.
+
+---
+
+## 7. Polish Lanjut 28 Agu 07:3x
+
+- `layout.tsx` → `alternates.canonical: https://khamimzar.my.id` → `<link rel="canonical" href="https://khamimzar.my.id">` LIVE
+- `page.tsx` → karya `khamim-portfolio` vercel link `khamim-portfolio.vercel.app` → `khamimzar.my.id` (self canonical, tanpa www)
+- Deploy `nfgrjwv9b` ● Ready 16s — canonical + self link verified live
+- Next: Bing Webmaster (opsional) — submit sitemap sama `https://khamimzar.my.id/sitemap.xml`
