@@ -176,3 +176,5 @@ termux-job-scheduler --cancel --job-id 207711
 - `page.tsx` → karya `khamim-portfolio` vercel link `khamim-portfolio.vercel.app` → `khamimzar.my.id` (self canonical, tanpa www)
 - Deploy `nfgrjwv9b` ● Ready 16s — canonical + self link verified live
 - Next: Bing Webmaster (opsional) — submit sitemap sama `https://khamimzar.my.id/sitemap.xml`
+
+- **28 Agu 06:08 WIB: Repo di-private** → `gh repo edit --visibility private` → `PRIVATE` ✅ — site `khamimzar.my.id` tetap 200, Vercel link `github khamimzarr/khamim-portfolio` tetap aktif, auto-deploy tetap jalan
