@@ -66,7 +66,7 @@ export default function Home() {
       desc: "Portfolio pribadi bergaya galeri Renaissance di atas kertas putty.",
       lang: "TypeScript",
       href: "https://github.com/khamimzarr/khamim-portfolio",
-      vercel: "https://khamim-portfolio.vercel.app",
+      vercel: "https://khamimzar.my.id",
       featured: true,
     },
     {

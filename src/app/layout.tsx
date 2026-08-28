@@ -66,6 +66,9 @@ export const metadata: Metadata = {
   verification: {
     google: "wK2YTrRAtctmJjl8t_Ax28Aqo2yD7TTr9LGd4olm1gI",
   },
+  alternates: {
+    canonical: "https://khamimzar.my.id",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
