@@ -2,7 +2,7 @@
 
 Portfolio pribadi [Khamim Zarkasyi](https://github.com/khamimzarr) — warm putty `#c4c3b6`, ink `#000000`, Davinci 374px wordmark, flat, no shadow.
 
-**Live:** https://khamim-portfolio.vercel.app
+**Live:** https://khamimzar.my.id (canonical) — alt https://khamim-portfolio.vercel.app — lihat [CATATAN-DOMAIN-GSC.md](./CATATAN-DOMAIN-GSC.md)
 
 ## Stack
 - Next.js 16 (App Router) + Tailwind 4
@@ -14,7 +14,7 @@ Foto hal random, bersepeda, merawat tanaman, ikan hias & aquarium, vibes coding,
 
 ## Karya
 - hr-ai-review — https://hr-ai-review-nine.vercel.app
-- khamim-portfolio — https://khamim-portfolio.vercel.app
+- khamim-portfolio — https://khamimzar.my.id
 - Clouds — https://clouds-chi.vercel.app
 - dompetkua-pp — https://dompetkua-pp.vercel.app
 
