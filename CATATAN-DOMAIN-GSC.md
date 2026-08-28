@@ -178,3 +178,5 @@ termux-job-scheduler --cancel --job-id 207711
 - Next: Bing Webmaster (opsional) — submit sitemap sama `https://khamimzar.my.id/sitemap.xml`
 
 - **28 Agu 06:08 WIB: Repo di-private** → `gh repo edit --visibility private` → `PRIVATE` ✅ — site `khamimzar.my.id` tetap 200, Vercel link `github khamimzarr/khamim-portfolio` tetap aktif, auto-deploy tetap jalan
+
+- **28 Agu 10:1x WIB: Repo balik PUBLIC** → private bikin Vercel BLOCKED (team VOID Hobby seat) → `vercel logout/login + link + vercel --prod` → deploy `l6dcocj6e` READY alias `khamimzar.my.id` — Karya 05→04 live
