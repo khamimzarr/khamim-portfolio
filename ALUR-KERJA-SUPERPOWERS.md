@@ -388,7 +388,7 @@ GitHub: 26effcc (A+backend) → 06343da (hapus amplop) → push main 204 → htt
 Portfolio: HTML→TypeScript "HTML + Vercel Functions & Blob", build ✓ (11.5s), push 8c2a94a → vercel dpl_Akd8yaCBMsnUwR51KzNcxJUV1df2 → https://khamim-portfolio.vercel.app
 Cleanup repos: Tdrive, 100-Days-Of-ML-Code, Clouds, dompetkua-pp → DELETE 204 → sisa 3 (hr-ai-review, khamim-portfolio, ruang-resepsi)
 structur-md — 2026-08-25 | BE | Scrape URL statis -> Markdown instan. Next.js 16 + Supabase Storage + Vercel Serverless fetch/cheerio. | https://structur-md.vercel.app | prj_9HV6ZhnsCnC6brGrYD37fjtotVLa
-dropdeploy — 2026-08-26 | BE | Instant Deploy .zip ke Vercel & GitHub langsung dari browser (BYOK, 90% client-side). Next.js 16 + Tailwind + NextAuth + JSZip + react-dropzone. | https://dropdeploy.vercel.app | prj_R4FlgqVz8MsBNRrqd48obHaGrE8L
+dropdeploy — 2026-08-26 | BE | Instant Deploy .zip ke Vercel & GitHub langsung dari browser (BYOK, 90% client-side). Next.js 16 + Tailwind + NextAuth + JSZip + react-dropzone. | https://dropdeploy.my.id | prj_R4FlgqVz8MsBNRrqd48obHaGrE8L
 ```
 
 ---

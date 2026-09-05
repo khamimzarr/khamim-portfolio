@@ -82,7 +82,7 @@ export default function Home() {
       desc: "Deploy kilat dari browser — jatuhkan .zip, langsung terpajang di Vercel & GitHub (BYOK, 90% client-side).",
       lang: "TypeScript",
       href: "https://github.com/khamimzarr/dropdeploy",
-      vercel: "https://dropdeploy.vercel.app",
+      vercel: "https://dropdeploy.my.id",
       featured: true,
     },
 
