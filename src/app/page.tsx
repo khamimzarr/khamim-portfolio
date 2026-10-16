@@ -70,7 +70,7 @@ export default function Home() {
   const projects = [
     {
       name: "hr-ai-review",
-      desc: "Kurator HR di atas kertas putty — unggah PDF CV, terima analisis & skor seteliti tatapan kurator galeri.",
+      desc: "Kurator HR di atas kanvas gelap — unggah PDF CV, terima analisis & skor seteliti tatapan kurator galeri.",
       lang: "JavaScript",
       href: "https://github.com/khamimzarr/hr-ai-review",
       vercel: "https://hr-ai-review-nine.vercel.app",
@@ -86,7 +86,7 @@ export default function Home() {
     },
     {
       name: "structur-md",
-      desc: "Transkripsi URL statis jadi Markdown — ekstrak DESIGN.md & struktur laman layaknya menyalin naskah Renaissance.",
+      desc: "Transkripsi URL statis jadi Markdown — ekstrak DESIGN.md & struktur laman seperti membedah source sebuah halaman.",
       lang: "TypeScript",
       href: "https://github.com/khamimzarr/structur-md",
       vercel: "https://structur-md.vercel.app",
@@ -290,70 +290,70 @@ export default function Home() {
       <Ticker />
 
       {/* ABOUT */}
-      <section className="w-full bg-[#e7e5e4] border-y border-[#dfdcd5] px-6 md:px-10 py-14 md:py-20">
-        <div className="max-w-[1120px] mx-auto grid md:grid-cols-[1.15fr_0.85fr] gap-10 md:gap-14 items-start">
+      <section className="w-full bg-slate-canvas px-6 md:px-10 py-20 md:py-28">
+        <div className="max-w-[1200px] mx-auto grid md:grid-cols-[1.15fr_0.85fr] gap-10 md:gap-14 items-start">
           <div className="flex flex-col gap-6">
-            <p className="font-[Inter] text-[9px] tracking-[0.2em] uppercase text-[#595855]">Tentang — About the Keeper</p>
-            <h3 className="font-[Playfair_Display] text-[32px] md:text-[43px] leading-[1.1] tracking-[-0.215px] font-medium">
-              Seorang penjaga hal-hal <em className="italic font-normal">kecil</em> yang tumbuh pelan.
+            <SectionLabel>Tentang — About the Keeper</SectionLabel>
+            <h3 className="font-display text-[32px] md:text-[36px] leading-[1.2] tracking-[1.8px] font-medium text-bone-text">
+              Seorang penjaga hal-hal <span style={{ color: "var(--color-event-violet)" }}>kecil</span> yang tumbuh pelan.
             </h3>
-            <div className="font-[Inter] text-[15px] leading-[1.6] text-[#595855] flex flex-col gap-4">
+            <div className="font-sans text-[16px] leading-[1.56] text-fog-text flex flex-col gap-4">
               <p>
-                Halo, aku <strong className="text-black font-medium">Khamim Zarkasyi</strong>. Hari-hariku sederhana — motret hal random yang menurut orang lain biasa aja, sepedaan biar kepala adem, nyiram tanaman, ngasih makan ikan hias sambil ngeliatin aquarium kayak ngeliatin galeri kaca. Lalu vibes coding sampai lupa waktu, dan ngopi sambil ngerjain project — wkwk, tapi jadi.
+                Halo, aku <strong className="text-bone-text font-medium">Khamim Zarkasyi</strong>. Hari-hariku sederhana — motret hal random yang menurut orang lain biasa aja, sepedaan biar kepala adem, nyiram tanaman, ngasih makan ikan hias sambil ngeliatin aquarium kayak ngeliatin galeri kaca. Lalu vibes coding sampai lupa waktu, dan ngopi sambil ngerjain project — wkwk, tapi jadi.
               </p>
               <p>
-                Website ini aku bikin dengan bahasa galeri Renaissance — <span className="text-black">Putty #c4c3b6</span> sebagai kanvas hangat,
-                <span className="text-black"> Ink #000000</span> sebagai ketegasan, tipografi Davinci & Helvetica Now, tanpa shadow, tanpa gradient.
-                Flat, jujur, seperti kertas museum.
+                Website ini aku bikin dengan <span className="text-bone-text">Slate #1c1e21</span> sebagai kanvas,
+                <span className="text-bone-text"> Lime #a8ff53</span> sebagai satu-satunya aksen, tipografi Geist &amp; Geist Mono, tanpa shadow, tanpa gradient.
+                Flat dan jujur — hanya slate &amp; lime.
               </p>
-              <p className="font-[Playfair_Display] italic text-[16px] text-black">“Time does not preserve great work — great work preserves time.”</p>
+              <p className="font-display italic text-[18px] text-ash-text">“Time does not preserve great work — great work preserves time.”</p>
             </div>
             <div className="flex flex-wrap gap-3 pt-2">
-              <span className="font-[Inter] text-[11px] tracking-[0.12em] uppercase bg-white border border-[#dfdcd5] rounded-full px-4 py-2">Foto Random</span>
-              <span className="font-[Inter] text-[11px] tracking-[0.12em] uppercase bg-white border border-[#dfdcd5] rounded-full px-4 py-2">Bersepeda</span>
-              <span className="font-[Inter] text-[11px] tracking-[0.12em] uppercase bg-white border border-[#dfdcd5] rounded-full px-4 py-2">Tanaman</span>
-              <span className="font-[Inter] text-[11px] tracking-[0.12em] uppercase bg-white border border-[#dfdcd5] rounded-full px-4 py-2">Aquarium</span>
-              <span className="font-[Inter] text-[11px] tracking-[0.12em] uppercase bg-white border border-[#dfdcd5] rounded-full px-4 py-2">Vibes Coding</span>
-              <span className="font-[Inter] text-[11px] tracking-[0.12em] uppercase bg-black text-white rounded-full px-4 py-2">Ngopi & Project</span>
+              <FeaturePill label="Foto Random" accent="#9c9af2" />
+              <FeaturePill label="Bersepeda" accent="#a8ff53" />
+              <FeaturePill label="Tanaman" accent="#afec73" />
+              <FeaturePill label="Aquarium" accent="#fa3abf" />
+              <FeaturePill label="Vibes Coding" accent="#e888f8" />
+              <FeaturePill label="Ngopi & Project" accent="#a8ff53" />
             </div>
           </div>
 
           <div className="flex flex-col gap-6">
-            <div className="bg-white border border-[#dfdcd5] rounded-[9px] p-6 flex flex-col gap-4">
-              <p className="font-[Inter] text-[9px] tracking-[0.18em] uppercase text-[#595855]">Wall Label — Visitor Info</p>
-              <div className="flex flex-col gap-3 font-[Inter] text-[13px] leading-[1.5]">
-                <div className="flex justify-between border-b border-[#ebebeb] pb-3">
-                  <span className="text-[#595855]">Nama</span>
+            <div className="bg-ink-well border border-steel-border rounded-[4px] p-6 flex flex-col gap-4">
+              <SectionLabel>Wall Label — Visitor Info</SectionLabel>
+              <div className="flex flex-col gap-3 font-sans text-[14px] leading-[1.43]">
+                <div className="flex justify-between border-b border-steel-border pb-3">
+                  <span className="text-fog-text">Nama</span>
                   <span className="font-medium">Khamim Zarkasyi</span>
                 </div>
-                <div className="flex justify-between border-b border-[#ebebeb] pb-3">
-                  <span className="text-[#595855]">Email</span>
+                <div className="flex justify-between border-b border-steel-border pb-3">
+                  <span className="text-fog-text">Email</span>
                   <a href="mailto:khamimzarrr@gmail.com" className="font-medium hover:underline underline-offset-4">khamimzarrr@gmail.com</a>
                 </div>
-                <div className="flex justify-between border-b border-[#ebebeb] pb-3">
-                  <span className="text-[#595855]">Instagram</span>
+                <div className="flex justify-between border-b border-steel-border pb-3">
+                  <span className="text-fog-text">Instagram</span>
                   <a href="https://instagram.com/bukann_bapakmu" target="_blank" className="font-medium hover:underline underline-offset-4">@bukann_bapakmu</a>
                 </div>
-                <div className="flex justify-between border-b border-[#ebebeb] pb-3">
-                  <span className="text-[#595855]">GitHub</span>
+                <div className="flex justify-between border-b border-steel-border pb-3">
+                  <span className="text-fog-text">GitHub</span>
                   <a href="https://github.com/khamimzarr" target="_blank" className="font-medium hover:underline underline-offset-4">github.com/khamimzarr</a>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#595855]">Vercel</span>
+                  <span className="text-fog-text">Vercel</span>
                   <span className="font-medium">khamimzar-2499 / voiddarkfire</span>
                 </div>
               </div>
-              <a href="mailto:khamimzarrr@gmail.com" className="mt-2 inline-flex justify-center bg-black text-white font-[Inter] text-[12px] px-[17px] py-[9px] rounded-[28.8px]">
+              <a href="mailto:khamimzarrr@gmail.com" className="mt-2 inline-flex justify-center bg-signal-lime text-ink-well font-sans text-[14px] font-medium px-4 py-2 rounded-[4px]">
                 kirim email
               </a>
-              <p className="font-[Inter] text-[10px] leading-[1.4] text-[#808080] text-center">Balas cepat kalau tidak sedang nyiram tanaman atau ngasih makan ikan.</p>
+              <p className="font-sans text-[14px] leading-[1.43] text-fog-text text-center">Balas cepat kalau tidak sedang nyiram tanaman atau ngasih makan ikan.</p>
             </div>
 
-            <div className="rounded-[9px] overflow-hidden border border-[#dfdcd5] bg-[#c4c3b6] p-3">
-              <div className="rounded-[6px] overflow-hidden h-[220px] relative">
+            <div className="rounded-[4px] overflow-hidden border border-steel-border bg-ink-well p-3">
+              <div className="rounded-[4px] overflow-hidden h-[220px] relative">
                 <Image src="/hobi/foto-bunga.jpg" alt="Foto asli — bunga di halaman" width={600} height={220} className="w-full h-full object-cover" />
               </div>
-              <p className="font-[Inter] text-[9px] tracking-[0.16em] uppercase text-[#595855] pt-3 px-1">Still Life — Foto asli — bunga di halaman Khamim</p>
+              <p className="frame-file pt-3 px-1">Still Life — bunga di halaman Khamim</p>
             </div>
           </div>
         </div>
@@ -361,41 +361,58 @@ export default function Home() {
 
       <Ticker />
 
-      <footer className="w-full bg-[#ebebeb] border-t border-[#dfdcd5] px-6 md:px-10 py-10">
-        <div className="max-w-[1120px] mx-auto flex flex-col gap-8">
+      {/* PAGE-FOOT FEATURE PILLS */}
+      <section className="w-full bg-slate-canvas px-6 md:px-10 pt-16 md:pt-20">
+        <div className="max-w-[1200px] mx-auto flex flex-wrap gap-3 pb-4">
+          <FeaturePill label="Foto Random" accent="#9c9af2" />
+          <FeaturePill label="Bersepeda" accent="#a8ff53" />
+          <FeaturePill label="Tanaman" accent="#afec73" />
+          <FeaturePill label="Aquarium" accent="#fa3abf" />
+          <FeaturePill label="Vibes Coding" accent="#e888f8" />
+          <FeaturePill label="Ngopi & Project" accent="#a8ff53" />
+        </div>
+        <div className="max-w-[1200px] mx-auto">
+          <HairlineDivider />
+        </div>
+      </section>
+
+      <footer className="w-full bg-slate-canvas border-t-0 px-6 md:px-10 py-10">
+        <div className="max-w-[1200px] mx-auto flex flex-col gap-8">
           <div className="flex flex-col md:flex-row justify-between gap-8">
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full border-[1.5px] border-black flex items-center justify-center">
-                  <span className="font-[Playfair_Display] text-[13px] font-medium">K</span>
-                </div>
-                <span className="font-[Playfair_Display] text-[16px] tracking-[-0.02em] font-medium">KHAMIM ZARKASYI</span>
+                <span className="text-signal-lime flex items-center" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                    <path d="M3 1.5 L12 7 L3 12.5 Z" />
+                  </svg>
+                </span>
+                <span className="font-display text-[16px] font-semibold text-bone-text">KHAMIM ZARKASYI</span>
               </div>
-              <p className="font-[Inter] text-[12px] leading-[1.5] text-[#595855] max-w-[36ch]">
-                Renaissance gallery on putty paper. Dibuat dengan Next.js + Tailwind, tinta hitam di atas kertas putty hangat.
+              <p className="font-sans text-[14px] leading-[1.43] text-fog-text max-w-[36ch]">
+                Folio No. 01 — slate &amp; lime. Dibuat dengan Next.js + Tailwind, di atas kanvas gelap dengan satu aksen lime.
               </p>
             </div>
-            <div className="flex gap-10 md:gap-14 font-[Inter] text-[12px]">
+            <div className="flex gap-10 md:gap-14 font-sans text-[14px]">
               <div className="flex flex-col gap-2">
-                <p className="text-[9px] tracking-[0.18em] uppercase text-[#595855]">Social — Ghost Links</p>
+                <SectionLabel>Social — Ghost Links</SectionLabel>
                 <a href="https://instagram.com/bukann_bapakmu" target="_blank" className="hover:underline underline-offset-4">Instagram — @bukann_bapakmu</a>
                 <a href="https://github.com/khamimzarr" target="_blank" className="hover:underline underline-offset-4">GitHub — khamimzarr</a>
                 <a href="mailto:khamimzarrr@gmail.com" className="hover:underline underline-offset-4">Email — khamimzarrr@gmail.com</a>
-                <span className="text-[#808080]">Vercel — khamimzar-2499</span>
+                <span className="text-fog-text">Vercel — khamimzar-2499</span>
               </div>
               <div className="flex flex-col gap-2">
-                <p className="text-[9px] tracking-[0.18em] uppercase text-[#595855]">Exhibition</p>
+                <SectionLabel>Exhibition</SectionLabel>
                 <a href="#karya" className="hover:underline underline-offset-4">Karya — 04</a>
                 <a href="#exhibition" className="hover:underline underline-offset-4">06 Rituals</a>
                 <a href="#" className="hover:underline underline-offset-4">Top — Kembali ke atas</a>
-                <span className="text-[#808080]">Putty #c4c3b6 · Ink #000000</span>
+                <span className="text-fog-text">Slate #1c1e21 · Lime #a8ff53</span>
               </div>
             </div>
           </div>
-          <div className="w-full h-[1px] bg-[#dfdcd5]" />
-          <div className="flex flex-col md:flex-row justify-between gap-3 font-[Inter] text-[10px] tracking-[0.08em] text-[#595855]">
-            <span>© 2026 Khamim Zarkasyi. Set in Playfair Display (Davinci) & Inter (Helvetica Now). No gradients, no shadows — only putty & ink.</span>
-            <span className="tracking-[0.14em] uppercase">Made with ngopi & vibes coding wkwk</span>
+          <HairlineDivider />
+          <div className="flex flex-col md:flex-row justify-between gap-3 font-sans text-[14px] leading-[1.43] text-fog-text">
+            <span>© 2026 Khamim Zarkasyi. Set in Inter, Geist &amp; Geist Mono. No shadows, no gradients — only slate &amp; lime.</span>
+            <span>Made with ngopi &amp; vibes coding wkwk</span>
           </div>
         </div>
       </footer>

@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     siteName: "Khamim Zarkasyi",
     locale: "id_ID",
     type: "website",
-    images: [{ url: "/og/og-cover.png", width: 1200, height: 630, alt: "KHAMIM ZARKASYI — Renaissance Folio" }],
+    images: [{ url: "/og/og-cover.png", width: 1200, height: 630, alt: "KHAMIM ZARKASYI — Folio No. 01" }],
   },
   twitter: {
     card: "summary_large_image",
