@@ -1,37 +1,43 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const davinci = Playfair_Display({
-  variable: "--font-davinci",
+const display = Inter({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
-const helveticaNow = Inter({
-  variable: "--font-helvetica-now",
+const sans = Geist({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500"],
+  display: "swap",
+});
+
+const mono = Geist_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["300", "400"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://khamimzar.my.id"),
   title: {
-    default: "KHAMIM ZARKASYI — Renaissance Folio",
+    default: "KHAMIM ZARKASYI — Folio No. 01",
     template: "%s — Khamim Zarkasyi",
   },
   description:
-    "Portfolio pribadi Khamim Zarkasyi — foto hal random, bersepeda, merawat tanaman & ikan hias, vibes coding, ngopi sambil ngerjain project. Renaissance gallery on putty paper.",
+    "Portfolio pribadi Khamim Zarkasyi — enam ritual harian: foto hal random, bersepeda, merawat tanaman & ikan hias, vibes coding, dan ngopi sambil ngerjain project.",
   keywords: [
     "Khamim Zarkasyi",
     "portfolio",
     "frontend developer",
-    "Renaissance",
-    "putty",
+    "developer",
     "Indonesia",
     "vibes coding",
   ],
@@ -48,9 +54,9 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    title: "KHAMIM ZARKASYI — Renaissance Folio",
+    title: "KHAMIM ZARKASYI — Folio No. 01",
     description:
-      "A Renaissance gallery portfolio — warm putty, ink black, classical souls. Foto, sepeda, tanaman, aquarium, vibes coding & ngopi.",
+      "A six-ritual portfolio — foto, sepeda, tanaman, aquarium, vibes coding & ngopi. Slate & lime, flat, no shadow.",
     url: "https://khamimzar.my.id",
     siteName: "Khamim Zarkasyi",
     locale: "id_ID",
@@ -59,9 +65,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "KHAMIM ZARKASYI — Renaissance Folio",
+    title: "KHAMIM ZARKASYI — Folio No. 01",
     description:
-      "A Renaissance gallery portfolio — warm putty, ink black, classical souls.",
+      "A six-ritual portfolio — foto, sepeda, tanaman, aquarium, vibes coding & ngopi.",
     images: ["/og/og-cover.png"],
   },
   robots: {
@@ -78,8 +84,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={`${davinci.variable} ${helveticaNow.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#c4c3b6]">
+    <html lang="id" className={`${display.variable} ${sans.variable} ${mono.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-slate-canvas">
         {children}
         <Analytics />
         <SpeedInsights />
