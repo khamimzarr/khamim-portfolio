@@ -53,10 +53,10 @@ export default function Header() {
           <a href="mailto:khamimzarrr@gmail.com" className="font-sans text-[14px] text-cloud-text hover:text-bone-text transition-colors">
             khamimzarrr@gmail.com
           </a>
-          <a href="https://github.com/khamimzarr" target="_blank" className="font-sans text-[14px] text-cloud-text hover:text-bone-text transition-colors">
+          <a href="https://github.com/khamimzarr" target="_blank" rel="noopener noreferrer" className="font-sans text-[14px] text-cloud-text hover:text-bone-text transition-colors">
             GitHub
           </a>
-          <a href="https://instagram.com/bukann_bapakmu" target="_blank" className="font-sans text-[14px] text-cloud-text hover:text-bone-text transition-colors">
+          <a href="https://instagram.com/bukann_bapakmu" target="_blank" rel="noopener noreferrer" className="font-sans text-[14px] text-cloud-text hover:text-bone-text transition-colors">
             Instagram
           </a>
           <a href="#karya" className="font-sans text-[14px] text-cloud-text hover:text-bone-text transition-colors">

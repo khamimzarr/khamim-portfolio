@@ -128,10 +128,10 @@ export default function Home() {
             <a href="mailto:khamimzarrr@gmail.com" className="inline-flex items-center justify-center bg-signal-lime text-ink-well font-sans text-[14px] font-medium px-4 py-2 rounded-[4px]">
               hubungi via email
             </a>
-            <a href="https://github.com/khamimzarr" target="_blank" className="inline-flex items-center justify-center border border-steel-border bg-transparent text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">
+            <a href="https://github.com/khamimzarr" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center border border-steel-border bg-transparent text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">
               github / khamimzarr
             </a>
-            <a href="https://instagram.com/bukann_bapakmu" target="_blank" className="inline-flex items-center justify-center border border-steel-border bg-transparent text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">
+            <a href="https://instagram.com/bukann_bapakmu" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center border border-steel-border bg-transparent text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">
               @bukann_bapakmu
             </a>
           </div>
@@ -187,7 +187,7 @@ export default function Home() {
                 Empat karya yang tumbuh dari ngopi & vibes coding — live di Vercel, source terbuka di GitHub. Dari catatan harian jadi halaman yang beneran dikunjungi.
               </p>
             </div>
-            <a href="https://github.com/khamimzarr" target="_blank" className="hidden md:inline-flex shrink-0 border border-steel-border text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">lihat semua di GitHub →</a>
+            <a href="https://github.com/khamimzarr" target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex shrink-0 border border-steel-border text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">lihat semua di GitHub →</a>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -231,7 +231,7 @@ export default function Home() {
             ))}
           </div>
           <div className="flex md:hidden justify-center">
-            <a href="https://github.com/khamimzarr" target="_blank" className="inline-flex border border-steel-border text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">lihat semua di GitHub →</a>
+            <a href="https://github.com/khamimzarr" target="_blank" rel="noopener noreferrer" className="inline-flex border border-steel-border text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">lihat semua di GitHub →</a>
           </div>
         </div>
       </section>
@@ -331,11 +331,11 @@ export default function Home() {
                 </div>
                 <div className="flex justify-between border-b border-steel-border pb-3">
                   <span className="text-fog-text">Instagram</span>
-                  <a href="https://instagram.com/bukann_bapakmu" target="_blank" className="font-medium hover:underline underline-offset-4">@bukann_bapakmu</a>
+                  <a href="https://instagram.com/bukann_bapakmu" target="_blank" rel="noopener noreferrer" className="font-medium hover:underline underline-offset-4">@bukann_bapakmu</a>
                 </div>
                 <div className="flex justify-between border-b border-steel-border pb-3">
                   <span className="text-fog-text">GitHub</span>
-                  <a href="https://github.com/khamimzarr" target="_blank" className="font-medium hover:underline underline-offset-4">github.com/khamimzarr</a>
+                  <a href="https://github.com/khamimzarr" target="_blank" rel="noopener noreferrer" className="font-medium hover:underline underline-offset-4">github.com/khamimzarr</a>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-fog-text">Vercel</span>
@@ -394,8 +394,8 @@ export default function Home() {
             <div className="flex gap-10 md:gap-14 font-sans text-[14px]">
               <div className="flex flex-col gap-2">
                 <SectionLabel>Social — Ghost Links</SectionLabel>
-                <a href="https://instagram.com/bukann_bapakmu" target="_blank" className="hover:underline underline-offset-4">Instagram — @bukann_bapakmu</a>
-                <a href="https://github.com/khamimzarr" target="_blank" className="hover:underline underline-offset-4">GitHub — khamimzarr</a>
+                <a href="https://instagram.com/bukann_bapakmu" target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4">Instagram — @bukann_bapakmu</a>
+                <a href="https://github.com/khamimzarr" target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4">GitHub — khamimzarr</a>
                 <a href="mailto:khamimzarrr@gmail.com" className="hover:underline underline-offset-4">Email — khamimzarrr@gmail.com</a>
                 <span className="text-fog-text">Vercel — khamimzar-2499</span>
               </div>

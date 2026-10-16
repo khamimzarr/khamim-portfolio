@@ -136,6 +136,15 @@ body {
 }
 ::selection { background: var(--color-signal-lime); color: var(--color-ink-well); }
 
+/* Keyboard focus — visible on all interactive elements */
+:focus-visible {
+  outline: 2px solid var(--color-signal-lime);
+  outline-offset: 2px;
+}
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible {
+  border-radius: 4px;
+}
+
 /* Hairline divider — the only separator in the system */
 .hairline {
   height: 1px;
