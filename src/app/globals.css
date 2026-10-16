@@ -143,6 +143,17 @@ body {
   background: var(--color-steel-border);
 }
 
+/* Small uppercase label that sits above a section title */
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: 0.4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--color-fog-text);
+}
+
 /* Mono label used under each exhibition frame */
 .frame-file {
   font-family: var(--font-mono);
