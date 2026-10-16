@@ -174,6 +174,27 @@ body {
   flex: none;
 }
 
+/* Code pane — the recessed Inset surface that reads as an editor window */
+.code-pane {
+  background: var(--color-ink-well);
+  border: 1px solid var(--color-steel-border);
+  border-radius: 4px;
+  padding: 24px;
+}
+.code-pane-file {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.43;
+  color: var(--color-fog-text);
+  margin-bottom: 16px;
+}
+.code-pane-line {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.43;
+  white-space: pre;
+}
+
 /* Mono label used under each exhibition frame */
 .frame-file {
   font-family: var(--font-mono);
