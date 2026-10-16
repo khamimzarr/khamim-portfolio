@@ -2,11 +2,12 @@
 
 const ITEMS = [
   "KHAMIMZAR",
-  "PUTTY #C4C3B6",
-  "INK #000000",
-  "RENAISSANCE ON PUTTY PAPER",
-  "DAVINCI 374px",
-  "HELVETICA NOW 12px",
+  "FOLIO NO. 01",
+  "SLATE #1C1E21",
+  "LIME #A8FF53",
+  "GEIST MONO 14PX",
+  "RADIUS 4PX",
+  "HAIRLINE 1PX",
   "FOTO",
   "SEPEDA",
   "TANAMAN",
@@ -19,9 +20,9 @@ function Track({ ariaHidden }: { ariaHidden: boolean }) {
   return (
     <div className="ticker-track" aria-hidden={ariaHidden}>
       {ITEMS.map((t, i) => (
-        <span key={`${t}-${i}`} className="font-[Inter] text-[11px] tracking-[0.2em] uppercase text-[#595855]">
+        <span key={`${t}-${i}`} className="font-mono text-[14px] tracking-[0.04em] uppercase text-fog-text">
           {t}
-          <span className="ml-[2.5rem] text-black opacity-30">◆</span>
+          <span className="ml-[2.5rem] text-graphite-hairline">//</span>
         </span>
       ))}
     </div>
@@ -30,7 +31,7 @@ function Track({ ariaHidden }: { ariaHidden: boolean }) {
 
 export default function Ticker() {
   return (
-    <div className="ticker w-full bg-[#e7e5e4] border-y border-[#dfdcd5] py-3 overflow-hidden">
+    <div className="ticker w-full bg-slate-canvas border-y border-steel-border py-3 overflow-hidden">
       <Track ariaHidden={false} />
       <Track ariaHidden={true} />
     </div>
