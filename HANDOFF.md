@@ -1,9 +1,9 @@
-# 📜 HANDOFF — Khamim Portfolio (Renaissance Gallery)
+# 📜 HANDOFF — Khamim Portfolio (Folio No. 01 · Slate & Lime)
 
-> **Status:** FITUR KOMPLIT & LIVE. Tier 1 ✔ + Foto asli ✔ + Tier 2 ✔ + Animasi ✔ + Copy ✔.
-> Tinggal opsional polish lanjutan (SEO bemper, blog, testimon, upgrade Speed Insights).
+> **Status:** RE-SKIN SELESAI (slate & lime, 16 Okt 2026). Build/lint/tsc hijau, 9/9 test hijau. Belum di-deploy.
+> Catatan: bagian historis di bawah (Tier 1/2) masih menyebut sistem putty/Renaissance — itu rekaman sejarah, bukan kondisi sekarang.
 
-> **Tanggal update:** 24 Aug 2026 — semua commit ter-push ke GitHub (remote HEAD `9f3bf7a`).
+> **Tanggal update:** 16 Okt 2026 — re-skin Trigger.dev (slate/lime). Baca `docs/superpowers/specs/2026-10-16-triggerdev-reskin-design.md` dulu.
 
 ---
 
@@ -86,13 +86,29 @@ src/app/
 ├── icon.svg          # favicon K (primary)
 └── apple-icon.png    # iOS icon
 src/components/
-├── Header.tsx        # 'use client' — nav + hamburger mobile
-├── Reveal.tsx        # 'use client' — IntersectionObserver wrapper utk scroll-reveal (tambah class .in-view)
-└── Ticker.tsx        # 'use client' — strip berjalan
+├── Header.tsx          # 'use client' — nav + hamburger mobile + CTA lime
+├── Reveal.tsx          # 'use client' — IntersectionObserver wrapper utk scroll-reveal (tambah class .in-view)
+├── Ticker.tsx          # 'use client' — marquee Geist Mono 14px, pemisah //
+├── SectionLabel.tsx    # label uppercase kecil (dipakai ~10x)
+├── FeaturePill.tsx     # pill 9999px + ikon titik warna (prop `accent`)
+├── CodePane.tsx        # pane kode Inset + sorot sintaks
+└── HairlineDivider.tsx # garis 1px
+src/lib/
+└── code-tokens.ts      # type TokenKind/CodeLine + TOKEN_COLOR (satu sumber warna sintaks)
 ```
+
+**Verifikasi di device ini (WAJIB dibaca sebelum nulis test):**
+- `node --test` **tidak bisa** impor file `.tsx` (`ERR_UNKNOWN_FILE_EXTENSION`). Tidak ada `tsx`/`esbuild`/`sucrase` di `node_modules`. Test hanya untuk modul `.ts`.
+- Assertion konten dijalankan terhadap HTML hasil build: `.next/server/app/index.html` → **`npm run build` dulu**, kalau tidak test berbohong.
+- React meng-escape `&` jadi `&amp;` di HTML. Assertion `"ngopi & vibes"` harus pakai `&amp;`.
+- `/tmp` **tidak writable**. Redirect log ke `$HOME`, mis. `npm run build > "$HOME/.build.log" 2>&1`.
+- Jalankan test dengan glob: `node --test tests/*.test.ts` (`node --test tests/` gagal).
+- Perintah verifikasi lengkap: `node --test tests/*.test.ts` · `npx tsc --noEmit` · `npm run lint` · `npm run build`
 
 **Pengaturan penting `globals.css`:**
 - `.reveal { opacity:0; ... }` butuh `.reveal.in-view` dari `<Reveal>` client. **Jangan** taruh class `reveal` polos di markup server tanpa bungkus komponen — element akan tetap `opacity:0`.
+- `.frame` / `.f-image` / `.f-caption` adalah kelas hover foto. `.frame-file` label mono. Jangan di-rename.
+- Halaman gelap dari **token**, bukan dari `dark:` variant. Tidak ada `@custom-variant dark` dan tidak ada class `dark` — sengaja, supaya tampilan tidak berubah mengikuti setting terang/gelap HP.
 - `.vignette` hover pakai `.v-image` & `.v-caption` — jangan di-remame sembarangan.
 
 ---
@@ -144,13 +160,20 @@ unset GITHUB_TOKEN
 
 ---
 
-## 🎨 DESIGN.md Tokens (jangan diubah)
+## 🎨 Token Sistem Baru — Slate & Lime (16 Okt 2026)
 
-- **Putty** `#c4c3b6` canvas · **Ink** `#000000` · **Bone** `#e7e5e4` · **Chalk** `#ebebeb` · **Vellum** `#dfdcd5` · **Graphite** `#595855` · **Ash** `#808080` · **Paper** `#ffffff`
-- **Davinci** = Playfair Display 400/500 (display 374/94/52px) · **Helvetica Now** = Inter 400/500 (9-26px utility)
-- **Radius:** cards 9px, buttons 28.8px, links 2px · **No shadow, no gradient, flat only**
-- **Wordmark:** cap `374px / 0.84 / -3.37px` — tapi sekarang pakai `clamp(48px,16.5vw,374px)` biar responsif
-- **Imagery:** circular 200px + full-bleed classical panel
+> Re-skin penuh dari "Renaissance putty" ke sistem Trigger.dev. Spec: `docs/superpowers/specs/2026-10-16-triggerdev-reskin-design.md`. Rencana: `docs/superpowers/plans/2026-10-16-triggerdev-reskin.md`. **Baca spec dulu sebelum mengubah visual.**
+
+- **Surfaces (2 level saja):** Canvas `#1c1e21` (`--color-slate-canvas`) · Inset `#121317` (`--color-ink-well`)
+- **Teks:** primary `#e5e7eb` (bone) · secondary `#d7d9dd` (cloud) · tertiary `#878c99` (fog) · muted `#b5b8c0` (ash)
+- **Hairline:** `#272a2e` (normal) · `#3b3e45` (tegas) — selalu 1px
+- **Aksen:** Lime `#a8ff53` (fill tombol kecil + glyph + 1 huruf wordmark) · Highlight headline: Event Violet `#7655fd`
+- **Palet sintaks (HANYA di code pane & ikon pill):** `#9c9af2` `#fa3abf` `#afec73` `#d9f07c` `#e888f8` `#f43f5e`
+- **Font:** **Inter** = display (`--font-display`) · **Geist** = body/UI (`--font-sans`) · **Geist Mono** = kode (`--font-mono`). Satoshi tidak ada di Google Fonts → Inter dipakai sebagai substitusi resmi.
+- **Radius:** rectangular 4px · pill 9999px · **No shadow, no gradient, no texture, no notch**
+- **Teks minimal 14px** (aturan keras) · page max-width 1200px · section gap 80-120px
+- **Wordmark:** `KHAMIMZAR` `clamp(48px, 9vw, 140px)`, tracking `0.05em`, huruf `R` terakhir lime
+- **Imagery:** frame foto radius 4px + hairline, rasio kotak; code pane Ink Well menggantikan panel lukisan full-bleed
 
 ---
 

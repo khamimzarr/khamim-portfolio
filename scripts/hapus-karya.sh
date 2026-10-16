@@ -14,8 +14,8 @@ Contoh: hapus-karya.sh "Clouds"
 
 Yang diubah:
   1. Hapus object dari projects[]
-  2. Update "Empat karya kecil" -> "Tiga karya kecil"
-  3. Update "Karya — 04" -> "Karya — 03"
+  2. Update "Empat karya yang tumbuh..." -> "Tiga karya yang tumbuh..."
+     (footer tidak lagi memuat hitungan karya — tidak ada yang diubah di sana)
 HELP
   exit 0
 fi
@@ -60,15 +60,14 @@ if n == 0:
     print(f"❌ Gagal hapus {proj}")
     sys.exit(1)
 
-# update copy karya kecil
-c2 = re.sub(re.escape(kata_curr) + r' karya kecil', kata_next + ' karya kecil', c2, count=1)
-# update footer Karya — 0X
-c2 = re.sub(r'Karya — 0\d', f'Karya — {next_pad}', c2)
+# update copy karya yang tumbuh
+c2 = re.sub(re.escape(kata_curr) + r' karya yang tumbuh dari ngopi & vibes coding',
+            kata_next + ' karya yang tumbuh dari ngopi & vibes coding', c2, count=1)
 
 with open(page, 'w') as f:
     f.write(c2)
 print(f"✓ Terhapus — Karya sekarang {next_pad} ({kata_next})")
 PY
 
-grep -E 'name:|Karya —|karya kecil' "$PAGE" | head -20
+grep -E 'name:|karya yang tumbuh' "$PAGE" | head -20
 echo "Lanjut: cd ~/khamim-portfolio && npm run build && git commit -am \"feat: Karya jadi $NEXT_PAD — hapus $PROJ\""

@@ -109,7 +109,7 @@ export default function Home() {
       {/* HERO */}
       <section className="relative w-full bg-slate-canvas flex flex-col items-center pt-16 md:pt-24 pb-0 overflow-hidden border-b border-steel-border">
         <div className="w-full max-w-[1200px] px-6 flex flex-col items-center text-center gap-6 relative">
-          <SectionLabel>Portfolio — Folio No. 01 · Dev &amp; Daily Rituals</SectionLabel>
+          <SectionLabel>Portfolio — Folio No. 01 · Dev & Daily Rituals</SectionLabel>
           <h1 className="font-display text-[34px] md:text-[60px] font-medium leading-[1.05] tracking-[3px] text-bone-text text-center">
             Hidup aku <span style={{ color: "var(--color-event-violet)" }}>build</span> pelan-pelan — satu ritual sehari
           </h1>
@@ -122,7 +122,7 @@ export default function Home() {
             <span className="w-1 h-1 rounded-full bg-graphite-hairline" />
             <span>Est. 2026</span>
             <span className="w-1 h-1 rounded-full bg-graphite-hairline" />
-            <span>Slate &amp; Lime</span>
+            <span>Slate & Lime</span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <a href="mailto:khamimzarrr@gmail.com" className="inline-flex items-center justify-center bg-signal-lime text-ink-well font-sans text-[14px] font-medium px-4 py-2 rounded-[4px]">
@@ -184,7 +184,7 @@ export default function Home() {
                 Yang sudah aku <em className="italic font-normal" style={{ color: "var(--color-event-violet)" }}>deploy</em> & rawat
               </h2>
               <p className="font-sans text-[16px] leading-[1.56] text-fog-text max-w-[520px]">
-                Empat karya yang tumbuh dari ngopi &amp; vibes coding — live di Vercel, source terbuka di GitHub. Dari catatan harian jadi halaman yang beneran dikunjungi.
+                Empat karya yang tumbuh dari ngopi & vibes coding — live di Vercel, source terbuka di GitHub. Dari catatan harian jadi halaman yang beneran dikunjungi.
               </p>
             </div>
             <a href="https://github.com/khamimzarr" target="_blank" className="hidden md:inline-flex shrink-0 border border-steel-border text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">lihat semua di GitHub →</a>
@@ -240,7 +240,7 @@ export default function Home() {
       <section id="exhibition" className="w-full bg-slate-canvas px-6 md:px-10 py-20 md:py-28">
         <div className="w-full max-w-[1200px] mx-auto flex justify-between items-start pb-8">
           <SectionLabel>Exhibition — 06 Rituals</SectionLabel>
-          <SectionLabel>Slate &amp; Lime · Flat · No Shadow</SectionLabel>
+          <SectionLabel>Slate & Lime · Flat · No Shadow</SectionLabel>
         </div>
         <Reveal className="w-full flex flex-col items-center text-center gap-4 pb-12 md:pb-16">
           <h2 className="font-display text-[42px] md:text-[60px] font-semibold leading-[1] tracking-[3px] text-bone-text">
@@ -302,8 +302,8 @@ export default function Home() {
               </p>
               <p>
                 Website ini aku bikin dengan <span className="text-bone-text">Slate #1c1e21</span> sebagai kanvas,
-                <span className="text-bone-text"> Lime #a8ff53</span> sebagai satu-satunya aksen, tipografi Geist &amp; Geist Mono, tanpa shadow, tanpa gradient.
-                Flat dan jujur — hanya slate &amp; lime.
+                <span className="text-bone-text"> Lime #a8ff53</span> sebagai satu-satunya aksen, tipografi Geist & Geist Mono, tanpa shadow, tanpa gradient.
+                Flat dan jujur — hanya slate & lime.
               </p>
               <p className="font-display italic text-[18px] text-ash-text">“Time does not preserve great work — great work preserves time.”</p>
             </div>
@@ -388,7 +388,7 @@ export default function Home() {
                 <span className="font-display text-[16px] font-semibold text-bone-text">KHAMIM ZARKASYI</span>
               </div>
               <p className="font-sans text-[14px] leading-[1.43] text-fog-text max-w-[36ch]">
-                Folio No. 01 — slate &amp; lime. Dibuat dengan Next.js + Tailwind, di atas kanvas gelap dengan satu aksen lime.
+                Folio No. 01 — slate & lime. Dibuat dengan Next.js + Tailwind, di atas kanvas gelap dengan satu aksen lime.
               </p>
             </div>
             <div className="flex gap-10 md:gap-14 font-sans text-[14px]">
@@ -410,8 +410,8 @@ export default function Home() {
           </div>
           <HairlineDivider />
           <div className="flex flex-col md:flex-row justify-between gap-3 font-sans text-[14px] leading-[1.43] text-fog-text">
-            <span>© 2026 Khamim Zarkasyi. Set in Inter, Geist &amp; Geist Mono. No shadows, no gradients — only slate &amp; lime.</span>
-            <span>Made with ngopi &amp; vibes coding wkwk</span>
+            <span>© 2026 Khamim Zarkasyi. Set in Inter, Geist & Geist Mono. No shadows, no gradients — only slate & lime.</span>
+            <span>Made with ngopi & vibes coding wkwk</span>
           </div>
         </div>
       </footer>

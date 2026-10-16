@@ -22,8 +22,8 @@ Opsi:
 
 Yang diubah di src/app/page.tsx:
   1. Tambah object ke projects[]
-  2. Update "Tiga karya kecil" -> "Empat karya kecil" (angka kata)
-  3. Update "Karya — 03" -> "Karya — 04" (footer)
+  2. Update "Tiga karya yang tumbuh..." -> "Empat karya yang tumbuh..." (angka kata)
+     (footer tidak lagi memuat hitungan karya — tidak ada yang diubah di sana)
 
 Setelah ini:
   cd ~/khamim-portfolio && npm run build && git add src/app/page.tsx && git commit -m "feat: Karya jadi XX — tambah my-app"
@@ -104,18 +104,14 @@ entry = f'''
 new_block = block.rstrip() + entry + "\n"
 new_content = content[:m.start(2)] + new_block + content[m.start(3):]
 
-# 2. Update "X karya kecil" — ganti kata_curr -> kata_next (hanya 1x di section Karya)
-# copy portfolio: "Tiga karya kecil yang tumbuh..."
+# 2. Update "X karya yang tumbuh dari ngopi & vibes coding" — ganti kata_curr -> kata_next (1x di section Karya)
 if kata_curr in new_content:
-    new_content = re.sub(re.escape(kata_curr) + r' karya kecil', kata_next + ' karya kecil', new_content, count=1)
+    new_content = re.sub(re.escape(kata_curr) + r' karya yang tumbuh dari ngopi & vibes coding',
+                         kata_next + ' karya yang tumbuh dari ngopi & vibes coding', new_content, count=1)
 else:
     # fallback: cari pola generik angka kata
-    new_content = re.sub(r'\b(Satu|Dua|Tiga|Empat|Lima|Enam|Tujuh|Delapan|Sembilan|Sepuluh|Sebelas|Dua belas) karya kecil\b', kata_next + ' karya kecil', new_content, count=1)
-
-# 3. Update "Karya — 0X" di footer — ganti semua kemunculan bernomor
-new_content = re.sub(r'Karya — 0\d', f'Karya — {next_pad}', new_content)
-# juga handle tanpa nol: Karya — 3 -> Karya — 04 (jaga konsisten 2 digit)
-new_content = re.sub(r'Karya — (\d)(?!\d)', lambda x: f'Karya — {int(x.group(1)):02d}' if int(x.group(1)) != int(next_pad) else f'Karya — {next_pad}', new_content)
+    new_content = re.sub(r'\b(Satu|Dua|Tiga|Empat|Lima|Enam|Tujuh|Delapan|Sembilan|Sepuluh|Sebelas|Dua belas) karya yang tumbuh dari ngopi & vibes coding\b',
+                         kata_next + ' karya yang tumbuh dari ngopi & vibes coding', new_content, count=1)
 
 with open(page, 'w') as f:
     f.write(new_content)
@@ -125,7 +121,7 @@ PY
 
 echo ""
 echo "✓ Selesai. Cek:"
-grep -E 'name:|Karya —|karya kecil' "$PAGE" | head -20
+grep -E 'name:|karya yang tumbuh' "$PAGE" | head -20
 echo ""
 echo "Lanjut:"
 echo "  cd ~/khamim-portfolio && npm run build"
