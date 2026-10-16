@@ -176,26 +176,26 @@ export default function Home() {
       <Ticker />
 
       {/* KARYA — Bone cards */}
-      <section id="karya" className="w-full bg-[#e7e5e4] border-y border-[#dfdcd5] px-6 md:px-10 py-14 md:py-20">
-        <div className="max-w-[1120px] mx-auto flex flex-col gap-8">
+      <section id="karya" className="w-full bg-ink-well border-y border-steel-border px-6 md:px-10 py-20 md:py-28">
+        <div className="max-w-[1200px] mx-auto flex flex-col gap-8">
           <div className="flex justify-between items-end gap-6">
             <div className="flex flex-col gap-3">
-              <p className="font-[Inter] text-[9px] tracking-[0.2em] uppercase text-[#595855]">Karya — Selected Works</p>
-              <h2 className="font-[Playfair_Display] text-[32px] md:text-[52px] font-medium leading-[1] tracking-[-0.47px]">
-                Kode & <em className="italic font-normal">kertas</em> yang sudah dipajang
+              <SectionLabel>Karya — Selected Works</SectionLabel>
+              <h2 className="font-display text-[32px] md:text-[48px] font-medium leading-[1.11] tracking-[2.4px] text-bone-text">
+                Yang sudah aku <em className="italic font-normal" style={{ color: "var(--color-event-violet)" }}>deploy</em> & rawat
               </h2>
-              <p className="font-[Inter] text-[13px] leading-[1.5] text-[#595855] max-w-[520px]">
-                Empat karya kecil yang tumbuh dari ngopi & vibes coding — live di Vercel, source terbuka di GitHub. Dari catatan harian jadi halaman yang beneran dikunjungi.
+              <p className="font-sans text-[16px] leading-[1.56] text-fog-text max-w-[520px]">
+                Empat karya yang tumbuh dari ngopi &amp; vibes coding — live di Vercel, source terbuka di GitHub. Dari catatan harian jadi halaman yang beneran dikunjungi.
               </p>
             </div>
-            <a href="https://github.com/khamimzarr" target="_blank" className="hidden md:inline-flex shrink-0 bg-black text-white font-[Inter] text-[12px] px-[17px] py-[9px] rounded-[28.8px]">lihat semua di GitHub →</a>
+            <a href="https://github.com/khamimzarr" target="_blank" className="hidden md:inline-flex shrink-0 border border-steel-border text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">lihat semua di GitHub →</a>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {projects.map((p) => (
               <div
                 key={p.name}
-                className={`group relative bg-white border border-[#dfdcd5] rounded-[9px] p-6 flex flex-col gap-4 hover:border-black/20 transition-colors ${p.featured ? "md:col-span-1" : ""}`}
+                className={`group relative bg-ink-well border border-steel-border rounded-[4px] p-6 flex flex-col gap-4 hover:border-graphite-hairline transition-colors ${p.featured ? "md:col-span-1" : ""}`}
               >
                 {/* Klik kartu = ke website (vercel). Klik "github ↗" = ke repo */}
                 <a
@@ -203,62 +203,58 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Buka website ${p.name}`}
-                  className="absolute inset-0 rounded-[9px] z-0"
+                  className="absolute inset-0 rounded-[4px] z-0"
                 />
                 <div className="relative z-10 flex justify-between items-start gap-4 pointer-events-none">
                   <div className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full ${p.featured ? "bg-black" : "bg-[#c4c3b6]"}`} />
-                    <span className="font-[Inter] text-[9px] tracking-[0.16em] uppercase text-[#595855]">{p.lang}</span>
-                    {p.featured && <span className="font-[Inter] text-[9px] tracking-[0.14em] uppercase bg-black text-white rounded-full px-2 py-0.5">Featured</span>}
+                    <span className={`w-2 h-2 rounded-full ${p.featured ? "bg-signal-lime" : "bg-graphite-hairline"}`} />
+                    <span className="font-mono text-[14px] uppercase text-fog-text">{p.lang}</span>
+                    {p.featured && <span className="font-sans text-[14px] font-medium bg-signal-lime text-ink-well rounded-[4px] px-2 py-0.5">Featured</span>}
                   </div>
                   <a
                     href={p.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="pointer-events-auto font-[Inter] text-[10px] text-[#808080] group-hover:text-black hover:underline underline-offset-4 transition-colors relative"
+                    className="pointer-events-auto font-mono text-[14px] text-fog-text group-hover:text-bone-text hover:underline underline-offset-4 transition-colors relative"
                   >
                     github ↗
                   </a>
                 </div>
-                <h3 className="relative z-10 pointer-events-none font-[Playfair_Display] text-[22px] leading-[1.1] tracking-[-0.11px] font-medium group-hover:tracking-[-0.14px] transition-all">
+                <h3 className="relative z-10 pointer-events-none font-display text-[24px] leading-[1.38] font-medium text-bone-text">
                   {p.name}
                 </h3>
-                <p className="relative z-10 pointer-events-none font-[Inter] text-[13px] leading-[1.5] text-[#595855]">{p.desc}</p>
+                <p className="relative z-10 pointer-events-none font-sans text-[16px] leading-[1.56] text-fog-text">{p.desc}</p>
                 <div className="relative z-10 flex flex-wrap gap-2 pt-1 pointer-events-none">
-                  <span className="font-[Inter] text-[11px] border border-[#dfdcd5] rounded-full px-3 py-1 group-hover:border-black/15 transition-colors">{p.name}</span>
-                  {p.vercel && (
-                    <span className="font-[Inter] text-[11px] bg-[#c4c3b6] border border-transparent rounded-full px-3 py-1 group-hover:bg-black group-hover:text-white transition-colors">
-                      live ↗
-                    </span>
-                  )}
+                  <span className="font-mono text-[14px] border border-steel-border rounded-full px-3 py-1 text-fog-text group-hover:border-graphite-hairline transition-colors">{p.name}</span>
+                  {p.vercel && <FeaturePill label="live ↗" accent="#a8ff53" />}
                 </div>
               </div>
             ))}
           </div>
           <div className="flex md:hidden justify-center">
-            <a href="https://github.com/khamimzarr" target="_blank" className="inline-flex bg-black text-white font-[Inter] text-[12px] px-[17px] py-[9px] rounded-[28.8px]">lihat semua di GitHub →</a>
+            <a href="https://github.com/khamimzarr" target="_blank" className="inline-flex border border-steel-border text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">lihat semua di GitHub →</a>
           </div>
         </div>
       </section>
 
       {/* DARK EXHIBITION */}
-      <section id="exhibition" className="w-full bg-black text-white px-6 md:px-10 py-14 md:py-20">
-        <div className="w-full flex justify-between items-start font-[Inter] text-[9px] tracking-[0.18em] uppercase text-white/50 pb-8">
-          <span>Exhibition — 06 Rituals</span>
-          <span>Putty on Ink · Flat · No Shadow</span>
+      <section id="exhibition" className="w-full bg-slate-canvas px-6 md:px-10 py-20 md:py-28">
+        <div className="w-full max-w-[1200px] mx-auto flex justify-between items-start pb-8">
+          <SectionLabel>Exhibition — 06 Rituals</SectionLabel>
+          <SectionLabel>Slate &amp; Lime · Flat · No Shadow</SectionLabel>
         </div>
         <Reveal className="w-full flex flex-col items-center text-center gap-4 pb-12 md:pb-16">
-          <h2 className="font-[Playfair_Display] text-[42px] md:text-[94px] font-medium leading-[0.84] tracking-[-0.85px]">
-            HIDUP — DI<br /><em className="font-normal italic">KURASI</em>
+          <h2 className="font-display text-[42px] md:text-[60px] font-semibold leading-[1] tracking-[3px] text-bone-text">
+            HIDUP — DI<br /><span style={{ color: "var(--color-event-violet)" }}>KURASI</span>
           </h2>
-          <p className="font-[Inter] text-[13px] md:text-[15px] leading-[1.5] text-white/60 max-w-[560px]">
-            Enam ritual harian yang aku rawat seperti koleksi galeri — hangat, pelan, dan sedikit filosofis.
-            <span className="text-white/90"> Hover lingkaran untuk melihat detail.</span>
+          <p className="font-sans text-[16px] md:text-[18px] leading-[1.5] text-fog-text max-w-[600px]">
+            Enam ritual harian yang aku rawat satu per satu — hangat, pelan, dan sedikit filosofis.
+            <span className="text-cloud-text"> Hover frame untuk melihat detail.</span>
           </p>
-          <p className="font-[Playfair_Display] italic text-[15px] md:text-[18px] text-white/70">“Every shadow is proof of the light that once passed through it.”</p>
+          <p className="font-display italic text-[18px] text-ash-text">“Every shadow is proof of the light that once passed through it.”</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-10 max-w-[1120px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-10 max-w-[1200px] mx-auto">
           {frames.map((v, i) => (
             <div key={v.title} className="frame flex flex-col items-center text-center gap-4 group" style={{ transitionDelay: `${(i * 90)}ms` }}>
               <Reveal className="flex flex-col items-center text-center gap-4">
@@ -269,25 +265,23 @@ export default function Home() {
                 style={{ transitionDelay: `${(i * 90) + 60}ms` }}
               >
                 <p className="frame-file -mt-3">{v.file}</p>
-                <div className="f-image relative w-[200px] h-[200px] rounded-full overflow-hidden bg-graphite-hairline">
-                  <Image src={v.img} alt={v.caption} width={400} height={400} sizes="200px" className="w-full h-full object-cover" />
+                <div className="f-image relative w-full aspect-square rounded-[4px] overflow-hidden border border-steel-border bg-ink-well">
+                  <Image src={v.img} alt={v.caption} width={600} height={600} sizes="(max-width: 768px) 100vw, 360px" className="w-full h-full object-cover" />
                 </div>
-                <p className="font-[Inter] text-[12px] leading-[1.5] text-white/60 max-w-[26ch] px-2">{v.desc}</p>
+                <p className="font-sans text-[16px] leading-[1.56] text-fog-text max-w-[32ch] px-2">{v.desc}</p>
                 <p className="f-caption font-sans text-[14px] text-fog-text">{v.caption}</p>
               </Reveal>
               <Reveal style={{ transitionDelay: `${(i * 90) + 120}ms` }}>
-                <div className="flex items-center gap-2 pt-1">
-                  <Hexagon active />
-                  <Hexagon />
-                  <Hexagon />
-                </div>
+                <p className="font-mono text-[14px] text-fog-text pt-1">
+                  {String(i + 1).padStart(2, "0")} / 06
+                </p>
               </Reveal>
             </div>
           ))}
         </div>
 
         <div className="w-full flex justify-center pt-12 md:pt-16">
-          <a href="mailto:khamimzarrr@gmail.com" className="inline-flex bg-white text-black font-[Inter] text-[12px] px-[17px] py-[9px] rounded-[28.8px]">
+          <a href="mailto:khamimzarrr@gmail.com" className="inline-flex bg-signal-lime text-ink-well font-sans text-[14px] font-medium px-4 py-2 rounded-[4px]">
             ngopi sambil ngobrol project →
           </a>
         </div>
@@ -406,13 +400,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  );
-}
-
-function Hexagon({ active = false }: { active?: boolean }) {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-      <path d="M6 1 L10.5 3.5 L10.5 8.5 L6 11 L1.5 8.5 L1.5 3.5 Z" stroke={active ? "white" : "rgba(255,255,255,0.35)"} strokeWidth="1.2" fill={active ? "white" : "transparent"} />
-    </svg>
   );
 }
