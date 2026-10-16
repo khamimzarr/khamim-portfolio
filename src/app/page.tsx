@@ -3,49 +3,64 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Reveal from "@/components/Reveal";
 import Ticker from "@/components/Ticker";
+import SectionLabel from "@/components/SectionLabel";
+import FeaturePill from "@/components/FeaturePill";
+import CodePane from "@/components/CodePane";
+import HairlineDivider from "@/components/HairlineDivider";
+import type { CodeLine } from "@/lib/code-tokens";
+
+const HERO_CODE: CodeLine[] = [
+  [{ text: "// folio.ts — khamimzar", kind: "comment" }],
+  [{ text: "const", kind: "keyword" }, { text: " ", kind: "default" }, { text: "rituals", kind: "variable" }, { text: " = [", kind: "default" }],
+  [{ text: "  \"foto-random\"", kind: "string" }, { text: ", ", kind: "default" }, { text: "\"bersepeda\"", kind: "string" }, { text: ", ", kind: "default" }, { text: "\"tanaman\"", kind: "string" }, { text: ",", kind: "default" }],
+  [{ text: "  \"aquarium\"", kind: "string" }, { text: ", ", kind: "default" }, { text: "\"vibes-coding\"", kind: "string" }, { text: ", ", kind: "default" }, { text: "\"ngopi\"", kind: "string" }, { text: ",", kind: "default" }],
+  [{ text: "] as const", kind: "default" }, { text: " ", kind: "default" }, { text: "readonly", kind: "type" }],
+  [{ text: "", kind: "default" }],
+  [{ text: "function", kind: "keyword" }, { text: " ", kind: "default" }, { text: "build", kind: "variable" }, { text: "(kind: ", kind: "default" }, { text: "\"slowly\"", kind: "type" }, { text: "): ", kind: "default" }, { text: "string", kind: "type" }, { text: " {", kind: "default" }],
+  [{ text: "  return", kind: "keyword" }, { text: " rituals.join(", kind: "default" }, { text: "\" + \"", kind: "string" }, { text: ") + ", kind: "default" }, { text: "\" - \"", kind: "string" }, { text: " + kind;", kind: "default" }],
+  [{ text: "}", kind: "default" }],
+];
 
 export default function Home() {
-  const heroPainting = "https://upload.wikimedia.org/wikipedia/commons/4/49/%22The_School_of_Athens%22_by_Raffaello_Sanzio_da_Urbino.jpg";
-
-  const vignettes = [
+  const frames = [
     {
       title: "Foto Hal Random",
-      latin: "Fragmenta Temporis",
+      file: "foto-random.jpg",
       desc: "Menangkap yang terlewat — cahaya random yang kebetulan jujur.",
       img: "/hobi/foto-random.jpg",
       caption: "Foto asli — jepretan random Khamim",
     },
     {
       title: "Bersepeda",
-      latin: "Iter Matutinum",
+      file: "ride-pagi.sh",
       desc: "Ritual roda di pagi sunyi — gerak adalah doa yang paling sederhana.",
       img: "/hobi/bersepeda.jpg",
       caption: "Foto asli — goes pagi",
     },
     {
       title: "Merawat Tanaman",
-      latin: "Cultura Silens",
+      file: "tanaman.care",
       desc: "Merawat diam — daun mengajarkan kesabaran yang tidak dimiliki notifikasi.",
       img: "/hobi/tanaman.jpg",
       caption: "Foto asli — tanaman di halaman",
     },
     {
       title: "Ikan Hias & Aquarium",
-      latin: "Cathedralis Vitrea",
+      file: "aquarium.md",
       desc: "Katedral kaca — cahaya menari di air, waktu melambat di balik gelembung.",
       img: "/hobi/ikan.jpg",
       caption: "Foto asli — aquarium di rumah",
     },
     {
       title: "Vibes Coding",
-      latin: "Calligraphia Codex",
+      file: "coding.vibes",
       desc: "Kode sebagai kaligrafi — bukan sekadar sintaks, tapi suasana yang mengalir.",
       img: "/hobi/coding.jpg",
       caption: "Foto asli — setup vibes coding",
     },
     {
       title: "Ngopi + Nge-project",
-      latin: "Amarum Lucidum",
+      file: "ngopi-project.log",
       desc: "Pahit yang menyalakan ide — ngopi sambil ngulik project, wkwk tapi serius.",
       img: "/hobi/ngopi.jpg",
       caption: "Foto asli — ngopi sambil nge-project",
@@ -93,110 +108,68 @@ export default function Home() {
       <Header />
 
       {/* HERO */}
-      <section className="relative w-full bg-[#c4c3b6] flex flex-col items-center pt-16 md:pt-24 pb-0 overflow-hidden border-b border-[#dfdcd5] texture-putty">
-        <div className="w-full max-w-[820px] px-6 flex flex-col items-center text-center gap-6 relative">
-          <p className="font-[Inter] text-[10px] md:text-[11px] tracking-[0.22em] uppercase font-medium text-[#595855]">
-            Renaissance gallery on putty paper — Portfolio No. 01
-          </p>
-          <h1 className="font-[Playfair_Display] text-[34px] md:text-[52px] font-medium leading-[1] tracking-[-0.47px] text-black text-center">
-            Hidup di-<em className="font-normal italic">kurasi</em> sebagai <br />seni rupa harian
+      <section className="relative w-full bg-slate-canvas flex flex-col items-center pt-16 md:pt-24 pb-0 overflow-hidden border-b border-steel-border">
+        <div className="w-full max-w-[1200px] px-6 flex flex-col items-center text-center gap-6 relative">
+          <SectionLabel>Portfolio — Folio No. 01 · Dev &amp; Daily Rituals</SectionLabel>
+          <h1 className="font-display text-[34px] md:text-[60px] font-medium leading-[1.05] tracking-[3px] text-bone-text text-center">
+            Hidup aku <span style={{ color: "var(--color-event-violet)" }}>build</span> pelan-pelan — satu ritual sehari
           </h1>
-          <p className="font-[Inter] text-[15px] leading-[1.5] text-[#595855] max-w-[520px]">
-            Saya <span className="text-black font-medium">Khamim Zarkasyi</span> — foto hal random, bersepeda, merawat tanaman & aquarium, vibes coding, dan ngopi sambil mengerjakan project.
-            Semua aku rawat seperti koleksi museum: hangat, flat, dan jujur — karena hidup yang paling sederhana biasanya yang paling layak dipajang.
+          <p className="font-sans text-[18px] leading-[1.5] text-fog-text max-w-[600px]">
+            Saya <span className="text-bone-text font-medium">Khamim Zarkasyi</span> — foto hal random, bersepeda, merawat tanaman & aquarium, vibes coding, dan ngopi sambil mengerjakan project.
+            Semua aku rawat seperti koleksi: hangat, flat, dan jujur — karena hidup yang paling sederhana biasanya yang paling layak dipajang.
           </p>
-          <div className="flex items-center gap-7 pt-1 font-[Inter] text-[12px] md:text-[16px] font-medium tracking-[0.04em] text-black">
+          <div className="flex items-center gap-6 pt-1 font-sans text-[14px] font-medium tracking-[0.4px] text-cloud-text">
             <span>Based: Indonesia</span>
-            <span className="w-1 h-1 rounded-full bg-black/40" />
+            <span className="w-1 h-1 rounded-full bg-graphite-hairline" />
             <span>Est. 2026</span>
-            <span className="w-1 h-1 rounded-full bg-black/40" />
-            <span>Putty & Ink</span>
+            <span className="w-1 h-1 rounded-full bg-graphite-hairline" />
+            <span>Slate &amp; Lime</span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <a href="mailto:khamimzarrr@gmail.com" className="inline-flex items-center justify-center bg-black text-white font-[Inter] text-[12px] font-normal px-[17px] py-[9px] rounded-[28.8px]">
+            <a href="mailto:khamimzarrr@gmail.com" className="inline-flex items-center justify-center bg-signal-lime text-ink-well font-sans text-[14px] font-medium px-4 py-2 rounded-[4px]">
               hubungi via email
             </a>
-            <a href="https://github.com/khamimzarr" target="_blank" className="inline-flex items-center justify-center border border-black/15 bg-transparent text-black font-[Inter] text-[12px] font-normal px-[17px] py-[9px] rounded-[28.8px] hover:bg-black hover:text-white transition-colors">
+            <a href="https://github.com/khamimzarr" target="_blank" className="inline-flex items-center justify-center border border-steel-border bg-transparent text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">
               github / khamimzarr
             </a>
-            <a href="https://instagram.com/bukann_bapakmu" target="_blank" className="inline-flex items-center justify-center border border-black/15 bg-transparent text-black font-[Inter] text-[12px] font-normal px-[17px] py-[9px] rounded-[28.8px] hover:bg-black hover:text-white transition-colors">
+            <a href="https://instagram.com/bukann_bapakmu" target="_blank" className="inline-flex items-center justify-center border border-steel-border bg-transparent text-cloud-text font-sans text-[14px] px-4 py-2 rounded-[4px] hover:border-graphite-hairline hover:text-bone-text transition-colors">
               @bukann_bapakmu
             </a>
           </div>
-          <p className="font-[Inter] text-[11px] tracking-[0.12em] uppercase text-[#595855] pt-1">
-            “ In restraint we find grandeur; in silence, the masterpiece speaks. ”
-          </p>
         </div>
 
-        <div className="w-full overflow-hidden select-none pt-10 md:pt-14 leading-none relative">
+        <div className="w-full overflow-hidden select-none pt-12 md:pt-16 leading-none relative">
           <div
-            className="w-full whitespace-nowrap text-center font-medium text-black"
-            style={{ fontFamily: "var(--font-davinci)", fontSize: "clamp(48px, 16.5vw, 374px)", lineHeight: 0.84, letterSpacing: "-0.035em" }}
+            className="w-full whitespace-nowrap text-center font-semibold"
+            style={{ fontFamily: "var(--font-display)", fontSize: "clamp(48px, 9vw, 140px)", lineHeight: 1, letterSpacing: "0.05em", color: "var(--color-bone-text)" }}
           >
-            <span className="wordmark-carve">KHAMIMZAR</span>
+            <span className="wordmark-carve">KHAMIMZA<span style={{ color: "var(--color-signal-lime)" }}>R</span></span>
           </div>
-          <div className="w-full h-[1px] bg-[#dfdcd5] mt-6 md:mt-10" />
-          <div className="w-full flex justify-between px-6 md:px-10 py-3 font-[Inter] text-[9px] tracking-[0.18em] uppercase text-[#595855]">
-            <span>Folio — Putty #C4C3B6 / Ink #000000</span>
-            <span className="hidden md:inline">Davinci 374px · Helvetica Now 12px · Radius 28.8px</span>
-            <span>© 2026 Khamim Zarkasyi</span>
+          <div className="w-full max-w-[1200px] mx-auto px-6 md:px-10 pt-8 md:pt-12 pb-12">
+            <CodePane lines={HERO_CODE} filename="folio.ts" />
           </div>
         </div>
       </section>
 
-      {/* CLASSICAL PANEL */}
-      <section className="relative w-full overflow-hidden bg-black">
-        <div className="relative w-full h-[58vh] md:h-[84vh] overflow-hidden">
-          <img
-            src={heroPainting}
-            alt="Renaissance classical painting — The School of Athens"
-            className="w-full h-full object-cover object-center opacity-[0.95]"
-          />
-          <div className="absolute inset-0 pointer-events-none border-y border-white/10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
-          <div className="absolute inset-0 flex items-center justify-center p-6">
-            <div className="notched-card relative bg-black text-white w-[92%] max-w-[420px] md:w-[420px] aspect-square flex flex-col justify-between p-6 md:p-7 overflow-hidden" style={{ borderRadius: "9px" }}>
-              <div className="flex justify-between items-start">
-                <p className="font-[Inter] text-[9px] tracking-[0.18em] uppercase opacity-60">Exhibition Card — 01</p>
-                <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center">
-                  <span className="font-[Playfair_Display] text-[12px]">K</span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-4">
-                <h3 className="font-[Playfair_Display] text-[26px] leading-[1.1] tracking-[-0.13px] font-medium">
-                  Menatap dunia <br />
-                  <span className="italic font-normal">seperti pigura</span>
-                </h3>
-                <p className="font-[Inter] text-[12px] leading-[1.5] text-white/70 max-w-[32ch]">
-                  Foto hal random bukan soal estetika sempurna — tapi soal berhenti sejenak dan membiarkan hal kecil jadi pameran pribadi.
-                </p>
-                <div className="flex gap-2 pt-1 flex-wrap">
-                  <span className="font-[Inter] text-[9px] tracking-[0.16em] uppercase border border-white/15 rounded-full px-3 py-1">Foto</span>
-                  <span className="font-[Inter] text-[9px] tracking-[0.16em] uppercase border border-white/15 rounded-full px-3 py-1">Sepeda</span>
-                  <span className="font-[Inter] text-[9px] tracking-[0.16em] uppercase border border-white/15 rounded-full px-3 py-1">Aquarium</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                <span className="font-[Inter] text-[9px] tracking-[0.18em] uppercase opacity-60">SCROLL — jelajahi koleksi</span>
-                <span className="font-[Inter] text-[9px] tracking-[0.18em] uppercase">01 / 06</span>
-              </div>
-            </div>
-          </div>
-          <div className="absolute bottom-4 left-6 md:left-10 font-[Inter] text-[9px] tracking-[0.16em] uppercase text-white/60">
-            Classical Panel — Raphael, The School of Athens (1511) · Full-bleed, no border
-          </div>
+      {/* TERMINAL META STRIP */}
+      <section className="w-full bg-slate-canvas">
+        <HairlineDivider />
+        <div className="w-full max-w-[1200px] mx-auto flex justify-between px-6 md:px-10 py-3 font-mono text-[14px] text-fog-text">
+          <span>terminal pane - scroll to read</span>
+          <span>01 / 06</span>
         </div>
+        <HairlineDivider />
       </section>
 
       {/* MOTTO — Tawakal */}
-      <section className="w-full bg-black text-white px-6 md:px-10 py-14 md:py-20">
-        <Reveal className="w-full max-w-[820px] mx-auto flex flex-col items-center text-center gap-6">
-          <p className="font-[Inter] text-[9px] tracking-[0.2em] uppercase text-white/50">Motto — Tawakal</p>
-          <span className="w-10 h-[1px] bg-white/25" />
-          <blockquote className="font-[Playfair_Display] italic text-[21px] md:text-[30px] leading-[1.35] tracking-[-0.2px] text-white max-w-[680px]">
+      <section className="w-full bg-slate-canvas px-6 md:px-10 py-20 md:py-28">
+        <Reveal className="w-full max-w-[1200px] mx-auto flex flex-col items-center text-center gap-6">
+          <SectionLabel>Motto — Tawakal</SectionLabel>
+          <HairlineDivider className="max-w-[40px]" />
+          <blockquote className="font-display italic text-[21px] md:text-[30px] leading-[1.33] text-bone-text max-w-[680px]">
             “Menitipkan segala cemas dan rencana pada Sang Maha Perencana. Jika langkah ini keliru, biarkan proses meluruskannya. Jika hati ini ragu, biarkan keyakinan menguatkannya. Sebab aku tahu, berserah bukanlah sebuah kekalahan, melainkan puncak dari rasa percaya akan takdir yang lebih indah.”
           </blockquote>
-          <p className="font-[Playfair_Display] text-[12px] tracking-[0.18em] uppercase text-white/50 pt-1">— Khamim Zarkasyi</p>
+          <p className="font-display text-[14px] tracking-[0.4px] uppercase text-fog-text pt-1">— Khamim Zarkasyi</p>
         </Reveal>
       </section>
 
@@ -286,21 +259,21 @@ export default function Home() {
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-10 max-w-[1120px] mx-auto">
-          {vignettes.map((v, i) => (
-            <div key={v.title} className="vignette flex flex-col items-center text-center gap-4 group" style={{ transitionDelay: `${(i * 90)}ms` }}>
+          {frames.map((v, i) => (
+            <div key={v.title} className="frame flex flex-col items-center text-center gap-4 group" style={{ transitionDelay: `${(i * 90)}ms` }}>
               <Reveal className="flex flex-col items-center text-center gap-4">
-                <p className="font-[Playfair_Display] text-[18px] md:text-[22px] leading-[1.33] tracking-[-0.11px] font-normal">{v.title}</p>
+                <p className="font-display text-[18px] md:text-[22px] leading-[1.33] font-normal">{v.title}</p>
               </Reveal>
               <Reveal
                 className="flex flex-col items-center text-center gap-4"
                 style={{ transitionDelay: `${(i * 90) + 60}ms` }}
               >
-                <p className="font-[Inter] text-[9px] tracking-[0.18em] uppercase text-white/40 -mt-3">{v.latin}</p>
-                <div className="v-image relative w-[200px] h-[200px] rounded-full overflow-hidden bg-[#808080]">
+                <p className="frame-file -mt-3">{v.file}</p>
+                <div className="f-image relative w-[200px] h-[200px] rounded-full overflow-hidden bg-graphite-hairline">
                   <Image src={v.img} alt={v.caption} width={400} height={400} sizes="200px" className="w-full h-full object-cover" />
                 </div>
                 <p className="font-[Inter] text-[12px] leading-[1.5] text-white/60 max-w-[26ch] px-2">{v.desc}</p>
-                <p className="v-caption font-[Inter] text-[9px] tracking-[0.14em] uppercase text-white/30">{v.caption}</p>
+                <p className="f-caption font-sans text-[14px] text-fog-text">{v.caption}</p>
               </Reveal>
               <Reveal style={{ transitionDelay: `${(i * 90) + 120}ms` }}>
                 <div className="flex items-center gap-2 pt-1">
