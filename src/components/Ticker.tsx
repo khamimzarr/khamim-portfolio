@@ -22,7 +22,7 @@ function Track({ ariaHidden }: { ariaHidden: boolean }) {
       {ITEMS.map((t, i) => (
         <span key={`${t}-${i}`} className="font-mono text-[14px] tracking-[0.04em] uppercase text-fog-text">
           {t}
-          <span className="ml-[2.5rem] text-graphite-hairline">//</span>
+          <span className="ml-[2.5rem] text-graphite-hairline">{"//"}</span>
         </span>
       ))}
     </div>

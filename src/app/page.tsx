@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import Header from "@/components/Header";
 import Reveal from "@/components/Reveal";
