@@ -88,7 +88,7 @@ export default function Home() {
         <div className="absolute inset-y-0 right-0 z-0 hidden w-[48%] pointer-events-none md:block">
           <HeroScene className="pointer-events-auto w-full h-full" />
         </div>
-        <div className="relative z-10 w-full max-w-[1120px] mx-auto flex flex-col gap-8">
+        <div className="pointer-events-none relative z-10 w-full max-w-[1120px] mx-auto flex flex-col gap-8">
           <Reveal className="flex flex-col gap-6">
             <div className="inline-flex self-start items-center gap-3 bg-[#333336] rounded-[36px] px-4 py-2">
               <span className="font-sans text-[12px] leading-none tracking-[-0.12px] text-[#f5f5f7]">
@@ -103,12 +103,12 @@ export default function Home() {
             </h1>
           </Reveal>
           {/* 3D monogram, mobile: object in flow above the copy */}
-          <HeroScene className="h-[240px] w-full md:hidden" />
+          <HeroScene className="pointer-events-auto h-[240px] w-full md:hidden" />
           <Reveal className="flex flex-col gap-6 max-w-[640px]">
             <p className="font-sans text-[17px] leading-[1.47] tracking-[-0.374px] text-[#f5f5f7]">
               {HERO_LINE}
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="pointer-events-auto flex flex-wrap gap-3">
               <a
                 href="mailto:khamimzarrr@gmail.com"
                 className="inline-flex items-center justify-center min-h-[44px] bg-[#0071e3] text-white font-sans text-[12px] leading-[1.33] tracking-[-0.12px] px-5 py-3 rounded-[9999px]"
