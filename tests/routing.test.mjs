@@ -16,9 +16,9 @@ test("komponen routing ada dan menggantikan paragraf meta", () => {
 
 test("simpul routing memakai label yang disetujui", () => {
   const src = readFileSync(path, "utf8");
-  assert.ok(src.includes("ide"), "left node label missing");
-  assert.ok(src.includes("khamim"), "middle node label missing");
-  assert.ok(src.includes("vibes coding"), "middle sub-label missing");
+  assert.ok(src.includes('label="KHAMIMZAR"'), "left node label missing");
+  assert.ok(src.includes('label="TERMINAL"'), "middle node label missing");
+  assert.ok(src.includes('sub="vibes coding"'), "middle sub-label missing");
   for (const p of PROJECTS) {
     assert.ok(src.includes(p), `output node missing: ${p}`);
   }
