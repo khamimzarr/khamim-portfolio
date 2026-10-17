@@ -5,7 +5,7 @@ import RoutingDiagram from "@/components/RoutingDiagram";
 import Terminal from "@/components/Terminal";
 
 const HERO_LINE =
-  "Khamim Zarkasyi. Yang dipajang di sini: empat project yang sudah live, dan enam kebiasaan harian yang menopangnya.";
+  "Yang dipajang di sini: empat project yang sudah live, dan enam kebiasaan harian yang menopangnya.";
 
 const vignettes = [
   {
@@ -114,10 +114,8 @@ export default function Home() {
           {/* Hero */}
           <section id="top">
             <p className="eyebrow">Console</p>
-            <h1 className="mt-3 text-[34px] font-medium leading-[1.05] tracking-[-0.02em] text-[#e8e8ee] md:text-[52px]">
-              Khamim Zarkasyi.
-            </h1>
-            <p className="mt-4 max-w-[70ch] text-[15px] leading-[1.6] text-[#c0c0c8]">{HERO_LINE}</p>
+            <h1 className="sr-only">Khamim Zarkasyi</h1>
+            <p className="mt-4 max-w-[70ch] text-[17px] leading-[1.6] text-[#c0c0c8]">{HERO_LINE}</p>
 
             <div className="panel mt-8 flex flex-col justify-between gap-6 p-5 md:flex-row md:items-center md:p-6">
               <div>

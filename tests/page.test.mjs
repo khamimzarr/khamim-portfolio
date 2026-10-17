@@ -76,6 +76,13 @@ test("card Data dan card foto memakai perlakuan yang sama", () => {
   assert.ok(panelCards.length >= 2, `expected both cards to share one treatment, found ${panelCards.length}`);
 });
 
+test("nama tidak diulang di judul hero dan baris pembuka", () => {
+  assert.ok(!/<h1(?![^>]*sr-only)[^>]*>[\s\S]{0,80}Khamim Zarkasyi/.test(page), "big visible name still at the top of the hero");
+  assert.ok(page.includes('className="sr-only"'), "no screen-reader h1 keeping the page semantics");
+  assert.ok(!/Khamim Zarkasyi\. Yang dipajang/.test(page), "opening line still repeats the name");
+  assert.ok(page.includes("Khamim Zarkasyi"), "name should still exist in the profile card");
+});
+
 test("suara personal di footer tetap ada", () => {
   assert.ok(page.includes("Made with ngopi & vibes coding wkwk"), "personal footer line missing");
 });
