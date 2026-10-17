@@ -62,6 +62,13 @@ test("tiga dimensi sudah dilepas", () => {
   assert.ok(!/AmbientBackground|HeroScene|KaryaScene/.test(page), "3D still imported");
 });
 
+test("teks Tentang yang lama sudah dihapus", () => {
+  assert.ok(!/Seorang penjaga hal kecil/.test(page), "old heading still present");
+  assert.ok(!/Halo, aku Khamim Zarkasyi/.test(page), "old paragraph still present");
+  assert.ok(page.includes("RoutingDiagram"), "routing diagram should stay in Tentang");
+  assert.ok(page.includes("Still life, bunga di halaman Khamim"), "still life caption should stay");
+});
+
 test("suara personal di footer tetap ada", () => {
   assert.ok(page.includes("Made with ngopi & vibes coding wkwk"), "personal footer line missing");
 });

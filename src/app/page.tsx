@@ -85,7 +85,7 @@ function SectionHead({
 }: {
   index: string;
   label: string;
-  title: string;
+  title?: string;
   description?: string;
 }) {
   return (
@@ -93,9 +93,11 @@ function SectionHead({
       <p className="eyebrow">
         {index} / {label}
       </p>
-      <h2 className="mt-3 text-[26px] font-medium leading-[1.15] tracking-[-0.01em] text-[#e8e8ee] md:text-[34px]">
-        {title}
-      </h2>
+      {title ? (
+        <h2 className="mt-3 text-[26px] font-medium leading-[1.15] tracking-[-0.01em] text-[#e8e8ee] md:text-[34px]">
+          {title}
+        </h2>
+      ) : null}
       {description ? <p className="mt-3 max-w-[70ch] text-[15px] leading-[1.6] text-[#c0c0c8]">{description}</p> : null}
       <div className="rule-dotted mt-6" />
     </div>
@@ -231,80 +233,69 @@ export default function Home() {
 
           {/* Tentang */}
           <section id="tentang" className="scroll-mt-16 pt-16">
-            <SectionHead index="04" label="Tentang" title="Seorang penjaga hal kecil yang tumbuh pelan." />
+            <SectionHead index="04" label="Tentang" />
 
             <Reveal className="panel mt-6 p-4 md:p-6">
               <p className="eyebrow pb-4">Alur</p>
               <RoutingDiagram />
             </Reveal>
 
-            <div className="mt-3 grid items-start gap-3 md:grid-cols-[1.1fr_0.9fr]">
-              <Reveal className="panel flex flex-col gap-4 p-5">
-                <p className="text-[15px] leading-[1.6] text-[#c0c0c8]">
-                  Halo, aku <strong className="font-medium text-[#e8e8ee]">Khamim Zarkasyi</strong>. Hari-hariku sederhana:
-                  motret hal random, sepedaan biar kepala adem, nyiram tanaman, ngasih makan ikan hias sambil ngeliatin
-                  aquarium kayak ngeliatin galeri kaca. Lalu vibes coding sampai lupa waktu, dan ngopi sambil ngerjain
-                  project, wkwk tapi jadi.
-                </p>
+            <div className="mt-3 grid items-start gap-3 md:grid-cols-2">
+              <Reveal className="panel p-5">
+                <p className="eyebrow">Data</p>
+                <dl className="mono mt-4 flex flex-col gap-3 text-[12px] tracking-[0.04em]">
+                  <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
+                    <dt className="text-[#8a8a94]">NAMA</dt>
+                    <dd className="text-[#e8e8ee]">Khamim Zarkasyi</dd>
+                  </div>
+                  <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
+                    <dt className="text-[#8a8a94]">EMAIL</dt>
+                    <dd>
+                      <a href="mailto:khamimzarrr@gmail.com" className="text-[#b8f050] underline underline-offset-4">
+                        khamimzarrr@gmail.com
+                      </a>
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
+                    <dt className="text-[#8a8a94]">INSTAGRAM</dt>
+                    <dd>
+                      <a
+                        href="https://instagram.com/bukann_bapakmu"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#b8f050] underline underline-offset-4"
+                      >
+                        @bukann_bapakmu
+                      </a>
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-[#8a8a94]">GITHUB</dt>
+                    <dd>
+                      <a
+                        href="https://github.com/khamimzarr"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#b8f050] underline underline-offset-4"
+                      >
+                        khamimzarr
+                      </a>
+                    </dd>
+                  </div>
+                </dl>
               </Reveal>
 
-              <Reveal className="flex flex-col gap-3">
-                <div className="panel p-5">
-                  <p className="eyebrow">Data</p>
-                  <dl className="mono mt-4 flex flex-col gap-3 text-[12px] tracking-[0.04em]">
-                    <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
-                      <dt className="text-[#8a8a94]">NAMA</dt>
-                      <dd className="text-[#e8e8ee]">Khamim Zarkasyi</dd>
-                    </div>
-                    <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
-                      <dt className="text-[#8a8a94]">EMAIL</dt>
-                      <dd>
-                        <a href="mailto:khamimzarrr@gmail.com" className="text-[#b8f050] underline underline-offset-4">
-                          khamimzarrr@gmail.com
-                        </a>
-                      </dd>
-                    </div>
-                    <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
-                      <dt className="text-[#8a8a94]">INSTAGRAM</dt>
-                      <dd>
-                        <a
-                          href="https://instagram.com/bukann_bapakmu"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#b8f050] underline underline-offset-4"
-                        >
-                          @bukann_bapakmu
-                        </a>
-                      </dd>
-                    </div>
-                    <div className="flex justify-between gap-4">
-                      <dt className="text-[#8a8a94]">GITHUB</dt>
-                      <dd>
-                        <a
-                          href="https://github.com/khamimzarr"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#b8f050] underline underline-offset-4"
-                        >
-                          khamimzarr
-                        </a>
-                      </dd>
-                    </div>
-                  </dl>
+              <Reveal className="tile p-2">
+                <div className="relative aspect-[16/9] overflow-hidden rounded-[3px]">
+                  <Image
+                    src="/hobi/foto-bunga.jpg"
+                    alt="Foto asli, bunga di halaman"
+                    fill
+                    sizes="(max-width: 768px) 50vw, 45vw"
+                    className="object-cover"
+                  />
                 </div>
-
-                <div className="tile p-2">
-                  <div className="relative aspect-[16/9] overflow-hidden rounded-[3px]">
-                    <Image
-                      src="/hobi/foto-bunga.jpg"
-                      alt="Foto asli, bunga di halaman"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <p className="eyebrow px-1 pt-3">Still life, bunga di halaman Khamim</p>
-                </div>
+                <p className="eyebrow px-1 pt-3">Still life, bunga di halaman Khamim</p>
               </Reveal>
             </div>
           </section>
