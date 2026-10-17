@@ -85,14 +85,13 @@ export default function Home() {
         <div className="w-full max-w-[1120px] mx-auto flex flex-col gap-8">
           <Reveal className="flex flex-col gap-6">
             <div className="inline-flex self-start items-center gap-3 bg-[#333336] rounded-[36px] px-4 py-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0071e3]" />
               <span className="font-sans text-[12px] leading-none tracking-[-0.12px] text-[#f5f5f7]">
                 Based: Indonesia · Est. 2026 · Karya dan hobi
               </span>
             </div>
             <h1
               className="font-sans font-semibold text-[#f5f5f7]"
-              style={{ fontSize: "clamp(48px, 16vw, 240px)", lineHeight: 0.9, letterSpacing: "-0.04em" }}
+              style={{ fontSize: "clamp(40px, 14vw, 168px)", lineHeight: 0.9, letterSpacing: "-0.04em" }}
             >
               KHAMIMZAR
             </h1>
@@ -104,7 +103,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-3">
               <a
                 href="mailto:khamimzarrr@gmail.com"
-                className="inline-flex items-center justify-center bg-[#0071e3] text-white font-sans text-[12px] leading-[1.33] tracking-[-0.12px] px-5 py-3 rounded-[9999px]"
+                className="inline-flex items-center justify-center min-h-[44px] bg-[#0071e3] text-white font-sans text-[12px] leading-[1.33] tracking-[-0.12px] px-5 py-3 rounded-[9999px]"
               >
                 ngopi sambil ngobrol project
               </a>
@@ -112,7 +111,7 @@ export default function Home() {
                 href="https://github.com/khamimzarr"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border border-[#f5f5f7] text-[#f5f5f7] font-sans text-[12px] leading-[1.33] tracking-[-0.12px] px-5 py-3 rounded-[9999px]"
+                className="inline-flex items-center justify-center min-h-[44px] border border-[#f5f5f7] text-[#f5f5f7] font-sans text-[12px] leading-[1.33] tracking-[-0.12px] px-5 py-3 rounded-[9999px]"
               >
                 github / khamimzarr
               </a>

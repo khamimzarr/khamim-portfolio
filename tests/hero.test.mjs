@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 const src = readFileSync("src/app/page.tsx", "utf8");
 
 test("hero memakai panggung gelap dan wordmark clamp baru", () => {
-  assert.ok(src.includes("clamp(48px, 16vw, 240px)"), "wordmark clamp missing");
+  assert.ok(src.includes("clamp(40px, 14vw, 168px)"), "wordmark clamp missing");
   assert.ok(src.includes('id="karya"'), "karya anchor missing");
 });
 

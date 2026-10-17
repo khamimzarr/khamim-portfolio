@@ -71,7 +71,7 @@ export default function Header() {
               href={n.href}
               {...(isExternal(n.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               onClick={() => setOpen(false)}
-              className="font-sans text-[14px] leading-[1.29] tracking-[-0.224px] text-[#f5f5f7] py-3"
+              className="font-sans text-[14px] leading-[1.29] tracking-[-0.224px] text-[#f5f5f7] py-3.5"
             >
               {n.label}
             </a>
