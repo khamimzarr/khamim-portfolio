@@ -94,7 +94,7 @@ export default function Home() {
               </div>
               <div className="flex flex-wrap gap-3">
                 <a href="mailto:khamimzarrr@gmail.com" className="btn-accent min-h-[44px] px-4">
-                  ngopi sambil ngobrol project
+                  Kontak
                 </a>
                 <a
                   href="https://github.com/khamimzarr"
@@ -250,11 +250,6 @@ export default function Home() {
               </Reveal>
             </div>
           </section>
-
-          <footer className="rule-dotted mt-16 flex flex-col justify-between gap-2 pt-6 md:flex-row">
-            <span className="mono text-[11px] tracking-[0.08em] text-[#8a8a94]">© 2026 Khamim Zarkasyi</span>
-            <span className="mono text-[11px] tracking-[0.08em] text-[#8a8a94]">Made with ngopi & vibes coding wkwk</span>
-          </footer>
         </div>
       </main>
     </div>

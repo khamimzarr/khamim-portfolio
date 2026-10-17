@@ -106,6 +106,13 @@ test("kalimat penjelas yang ditandai owner sudah dihapus", () => {
   }
 });
 
-test("suara personal di footer tetap ada", () => {
-  assert.ok(page.includes("Made with ngopi & vibes coding wkwk"), "personal footer line missing");
+test("footer yang ditandai owner sudah dihapus", () => {
+  assert.ok(!page.includes("Made with ngopi & vibes coding wkwk"), "footer signature still present");
+  assert.ok(!page.includes("© 2026 Khamim Zarkasyi"), "footer copyright still present");
+  assert.ok(!page.includes("<footer"), "empty footer element left behind");
+});
+
+test("aksi kontak memakai label Kontak", () => {
+  assert.ok(page.includes("Kontak"), "contact label missing");
+  assert.ok(!page.includes("ngopi sambil ngobrol project"), "old contact label still present");
 });
