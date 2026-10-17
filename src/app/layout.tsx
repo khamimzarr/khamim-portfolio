@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-sans",
+const sans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+const mono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -42,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Khamim Zarkasyi · Karya dan Hobi",
     description:
-      "Empat project yang sudah live dan enam kebiasaan harian, dipajang di satu panggung gelap.",
+      "Empat project yang sudah live dan enam kebiasaan harian, dipajang di satu konsol gelap.",
     url: "https://khamimzar.my.id",
     siteName: "Khamim Zarkasyi",
     locale: "id_ID",
@@ -69,8 +76,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#000000]">
+    <html lang="id" className={`${sans.variable} ${mono.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-[#080808]">
         {children}
         <Analytics />
         <SpeedInsights />

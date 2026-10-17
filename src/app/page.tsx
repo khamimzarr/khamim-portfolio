@@ -1,6 +1,7 @@
 import Image from "next/image";
-import Header from "@/components/Header";
+import Sidebar from "@/components/Sidebar";
 import Reveal from "@/components/Reveal";
+import Terminal from "@/components/Terminal";
 
 const HERO_LINE =
   "Khamim Zarkasyi. Yang dipajang di sini: empat project yang sudah live, dan enam kebiasaan harian yang menopangnya.";
@@ -38,7 +39,7 @@ const vignettes = [
   },
   {
     title: "Ngopi + Nge-project",
-    desc: "Pahit yang menyalakan ide — ngopi sambil ngulik project, wkwk tapi serius.",
+    desc: "Pahit yang menyalakan ide, ngopi sambil ngulik project, wkwk tapi serius.",
     img: "/hobi/ngopi.jpg",
     caption: "Foto asli, ngopi sambil nge-project",
   },
@@ -75,248 +76,242 @@ const projects = [
   },
 ];
 
+function SectionHead({
+  index,
+  label,
+  title,
+  description,
+}: {
+  index: string;
+  label: string;
+  title: string;
+  description?: string;
+}) {
+  return (
+    <div>
+      <p className="eyebrow">
+        {index} / {label}
+      </p>
+      <h2 className="mt-3 text-[26px] font-medium leading-[1.15] tracking-[-0.01em] text-[#e8e8ee] md:text-[34px]">
+        {title}
+      </h2>
+      {description ? <p className="mt-3 max-w-[70ch] text-[15px] leading-[1.6] text-[#c0c0c8]">{description}</p> : null}
+      <div className="rule-dotted mt-6" />
+    </div>
+  );
+}
+
 export default function Home() {
   return (
-    <div className="flex flex-col w-full min-h-screen bg-[#000000]">
-      <Header />
+    <div className="min-h-screen bg-[#080808]">
+      <Sidebar />
 
-      {/* Hero: the wordmark is the object on the stage */}
-      <section className="relative w-full bg-[#000000] px-6 md:px-10 pt-20 md:pt-28 pb-14 overflow-hidden">
-        <div className="w-full max-w-[1120px] mx-auto flex flex-col gap-8">
-          <Reveal className="flex flex-col gap-6">
-            <div className="inline-flex self-start items-center gap-3 bg-[#333336] rounded-[36px] px-4 py-2">
-              <span className="font-sans text-[12px] leading-none tracking-[-0.12px] text-[#f5f5f7]">
-                Based: Indonesia · Est. 2026 · Karya dan hobi
-              </span>
-            </div>
-            <h1
-              className="font-sans font-semibold text-[#f5f5f7]"
-              style={{ fontSize: "clamp(40px, 14vw, 168px)", lineHeight: 0.9, letterSpacing: "-0.04em" }}
-            >
-              KHAMIMZAR
+      <main className="px-5 pb-20 pt-16 md:px-8 lg:ml-[248px] lg:pt-10">
+        <div className="mx-auto flex max-w-[1000px] flex-col">
+          {/* Hero */}
+          <section id="top">
+            <p className="eyebrow">Console</p>
+            <h1 className="mt-3 text-[34px] font-medium leading-[1.05] tracking-[-0.02em] text-[#e8e8ee] md:text-[52px]">
+              Khamim Zarkasyi.
             </h1>
-          </Reveal>
-          <Reveal className="flex flex-col gap-6 max-w-[640px]">
-            <p className="font-sans text-[17px] leading-[1.47] tracking-[-0.374px] text-[#f5f5f7]">
-              {HERO_LINE}
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="mailto:khamimzarrr@gmail.com"
-                className="inline-flex items-center justify-center min-h-[44px] bg-[#0071e3] text-white font-sans text-[12px] leading-[1.33] tracking-[-0.12px] px-5 py-3 rounded-[9999px]"
-              >
-                ngopi sambil ngobrol project
-              </a>
-              <a
-                href="https://github.com/khamimzarr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center min-h-[44px] border border-[#f5f5f7] text-[#f5f5f7] font-sans text-[12px] leading-[1.33] tracking-[-0.12px] px-5 py-3 rounded-[9999px]"
-              >
-                github / khamimzarr
-              </a>
+            <p className="mt-4 max-w-[70ch] text-[15px] leading-[1.6] text-[#c0c0c8]">{HERO_LINE}</p>
+
+            <div className="panel mt-8 flex flex-col justify-between gap-6 p-5 md:flex-row md:items-center md:p-6">
+              <div>
+                <p className="eyebrow">Profile</p>
+                <p className="mt-2 text-[22px] leading-[1.2] text-[#e8e8ee]">Khamim Zarkasyi</p>
+                <p className="mono mt-2 text-[12px] tracking-[0.04em] text-[#8a8a94]">
+                  BASED: INDONESIA · EST. 2026 · KARYA & HOBI
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <a href="mailto:khamimzarrr@gmail.com" className="btn-accent min-h-[44px] px-4">
+                  ngopi sambil ngobrol project
+                </a>
+                <a
+                  href="https://github.com/khamimzarr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-ghost min-h-[44px] px-4"
+                >
+                  github
+                </a>
+              </div>
             </div>
-          </Reveal>
-        </div>
-      </section>
+          </section>
 
-      {/* Motto: Khamim's own words, kept as they are */}
-      <section className="w-full bg-[#000000] px-6 md:px-10 py-16 md:py-20">
-        <Reveal className="w-full max-w-[820px] mx-auto flex flex-col items-center text-center gap-6">
-          <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#86868b]">Motto</p>
-          <blockquote className="font-sans text-[21px] md:text-[28px] leading-[1.35] tracking-[-0.374px] text-[#f5f5f7] max-w-[680px]">
-            “Menitipkan segala cemas dan rencana pada Sang Maha Perencana. Jika langkah ini keliru, biarkan proses meluruskannya. Jika hati ini ragu, biarkan keyakinan menguatkannya. Sebab aku tahu, berserah bukanlah sebuah kekalahan, melainkan puncak dari rasa percaya akan takdir yang lebih indah.”
-          </blockquote>
-          <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#86868b]">Khamim Zarkasyi</p>
-        </Reveal>
-      </section>
+          {/* Terminal */}
+          <section id="terminal" className="scroll-mt-16 pt-16">
+            <SectionHead
+              index="01"
+              label="Terminal"
+              title="Ringkasan karya, versi terminal."
+              description="Perintah di bawah ini mengeluarkan daftar project yang benar-benar live, bukan contoh karangan."
+            />
+            <Reveal className="mt-6">
+              <Terminal />
+            </Reveal>
+          </section>
 
-      {/* Karya */}
-      <section id="karya" className="w-full bg-[#000000] px-6 md:px-10 py-16 md:py-20">
-        <div className="max-w-[1120px] mx-auto flex flex-col gap-10">
-          <Reveal className="flex flex-col gap-3 max-w-[640px]">
-            <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#86868b]">Karya</p>
-            <h2
-              className="font-sans font-semibold text-[#f5f5f7]"
-              style={{ fontSize: "clamp(28px, 5vw, 56px)", lineHeight: 1.07, letterSpacing: "-0.28px" }}
-            >
-              Kode yang sudah dipajang
-            </h2>
-            <p className="font-sans text-[17px] leading-[1.47] tracking-[-0.374px] text-[#86868b]">
-              Empat project yang tumbuh dari ngopi dan vibes coding, live di Vercel dan source terbuka di GitHub.
-            </p>
-          </Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-            {projects.map((p) => (
-              <Reveal key={p.name}>
-                <div className="media-card relative bg-[#111111] p-6 flex flex-col gap-4">
-                  <a
-                    href={p.vercel}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Buka website ${p.name}`}
-                    className="absolute inset-0 rounded-[28px] focus-visible:outline-offset-[-6px]"
-                  />
-                  <div className="relative flex items-center justify-between gap-4 pointer-events-none">
-                    <span className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#86868b]">{p.lang}</span>
+          {/* Karya */}
+          <section id="karya" className="scroll-mt-16 pt-16">
+            <SectionHead
+              index="02"
+              label="Karya"
+              title="Kode yang sudah dipajang"
+              description="Empat project yang tumbuh dari ngopi dan vibes coding, live di Vercel dan source terbuka di GitHub."
+            />
+            <div className="mt-6 grid gap-3 md:grid-cols-2">
+              {projects.map((p, i) => (
+                <article key={p.name} className="tile flex flex-col gap-3 p-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="mono text-[11px] tracking-[0.1em] text-[#8a8a94]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="eyebrow">{p.lang}</span>
+                  </div>
+                  <h3 className="text-[22px] leading-[1.2] text-[#e8e8ee]">{p.name}</h3>
+                  <p className="text-[15px] leading-[1.6] text-[#c0c0c8]">{p.desc}</p>
+                  <div className="mt-auto flex items-center gap-4 pt-1">
+                    <a
+                      href={p.vercel}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mono text-[12px] tracking-[0.04em] text-[#b8f050] underline underline-offset-4"
+                    >
+                      live ↗
+                    </a>
                     <a
                       href={p.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="pointer-events-auto font-sans text-[12px] text-[#f5f5f7] underline underline-offset-4"
+                      className="mono text-[12px] tracking-[0.04em] text-[#8a8a94] underline underline-offset-4"
                     >
                       github
                     </a>
                   </div>
-                  <h3 className="relative pointer-events-none font-sans font-semibold text-[28px] leading-[1.14] tracking-[0.196px] text-[#f5f5f7]">
-                    {p.name}
-                  </h3>
-                  <p className="relative pointer-events-none font-sans text-[17px] leading-[1.47] tracking-[-0.374px] text-[#86868b]">
-                    {p.desc}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+                </article>
+              ))}
+            </div>
+          </section>
 
-      {/* Exhibition */}
-      <section id="exhibition" className="w-full bg-[#000000] px-6 md:px-10 py-16 md:py-20">
-        <div className="max-w-[1120px] mx-auto flex flex-col gap-10">
-          <Reveal className="flex flex-col gap-3 max-w-[640px]">
-            <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#86868b]">Exhibition</p>
-            <h2
-              className="font-sans font-semibold text-[#f5f5f7]"
-              style={{ fontSize: "clamp(28px, 5vw, 56px)", lineHeight: 1.07, letterSpacing: "-0.28px" }}
-            >
-              Enam ritual harian
-            </h2>
-            <p className="font-sans text-[17px] leading-[1.47] tracking-[-0.374px] text-[#86868b]">
-              Enam kebiasaan yang aku rawat seperti koleksi galeri, hangat dan pelan.
-            </p>
-          </Reveal>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
-            {vignettes.map((v) => (
-              <Reveal key={v.title}>
-                <figure className="media-card bg-[#111111]">
-                  <div className="relative w-full aspect-square overflow-hidden">
+          {/* Exhibition */}
+          <section id="exhibition" className="scroll-mt-16 pt-16">
+            <SectionHead
+              index="03"
+              label="Exhibition"
+              title="Enam ritual harian"
+              description="Enam kebiasaan yang aku rawat seperti koleksi galeri, hangat dan pelan."
+            />
+            <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3">
+              {vignettes.map((v, i) => (
+                <figure key={v.title} className="tile overflow-hidden">
+                  <div className="relative aspect-square overflow-hidden">
                     <Image
                       src={v.img}
                       alt={v.caption}
                       fill
                       sizes="(max-width: 768px) 50vw, 33vw"
-                      className="media-image object-cover"
+                      className="object-cover"
                     />
                   </div>
-                  <figcaption className="p-4 flex flex-col gap-1">
-                    <span className="font-sans font-semibold text-[17px] leading-[1.24] tracking-[-0.374px] text-[#f5f5f7]">
-                      {v.title}
+                  <figcaption className="p-4">
+                    <span className="mono text-[11px] tracking-[0.1em] text-[#8a8a94]">
+                      {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="font-sans text-[12px] leading-none tracking-[-0.12px] text-[#86868b]">{v.caption}</span>
-                    <span className="font-sans text-[14px] leading-[1.29] tracking-[-0.224px] text-[#86868b]">{v.desc}</span>
+                    <p className="mt-1 text-[14px] leading-[1.3] text-[#e8e8ee]">{v.title}</p>
+                    <p className="mt-1 text-[12px] leading-[1.4] text-[#8a8a94]">{v.caption}</p>
+                    <p className="mt-2 text-[13px] leading-[1.5] text-[#c0c0c8]">{v.desc}</p>
                   </figcaption>
                 </figure>
+              ))}
+            </div>
+          </section>
+
+          {/* Tentang */}
+          <section id="tentang" className="scroll-mt-16 pt-16">
+            <SectionHead index="04" label="Tentang" title="Seorang penjaga hal kecil yang tumbuh pelan." />
+            <div className="mt-6 grid items-start gap-3 md:grid-cols-[1.1fr_0.9fr]">
+              <Reveal className="panel flex flex-col gap-4 p-5">
+                <p className="text-[15px] leading-[1.6] text-[#c0c0c8]">
+                  Halo, aku <strong className="font-medium text-[#e8e8ee]">Khamim Zarkasyi</strong>. Hari-hariku sederhana:
+                  motret hal random, sepedaan biar kepala adem, nyiram tanaman, ngasih makan ikan hias sambil ngeliatin
+                  aquarium kayak ngeliatin galeri kaca. Lalu vibes coding sampai lupa waktu, dan ngopi sambil ngerjain
+                  project, wkwk tapi jadi.
+                </p>
+                <p className="text-[15px] leading-[1.6] text-[#c0c0c8]">
+                  Halaman ini dibangun seperti konsol gelap: kanvas near-black, satu accent lime, tanpa bayangan. Tipografinya
+                  Geist dan Geist Mono, fotonya foto asli, dan tidak ada angka yang aku karang.
+                </p>
               </Reveal>
-            ))}
-          </div>
+
+              <Reveal className="flex flex-col gap-3">
+                <div className="panel p-5">
+                  <p className="eyebrow">Data</p>
+                  <dl className="mono mt-4 flex flex-col gap-3 text-[12px] tracking-[0.04em]">
+                    <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
+                      <dt className="text-[#8a8a94]">NAMA</dt>
+                      <dd className="text-[#e8e8ee]">Khamim Zarkasyi</dd>
+                    </div>
+                    <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
+                      <dt className="text-[#8a8a94]">EMAIL</dt>
+                      <dd>
+                        <a href="mailto:khamimzarrr@gmail.com" className="text-[#b8f050] underline underline-offset-4">
+                          khamimzarrr@gmail.com
+                        </a>
+                      </dd>
+                    </div>
+                    <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
+                      <dt className="text-[#8a8a94]">INSTAGRAM</dt>
+                      <dd>
+                        <a
+                          href="https://instagram.com/bukann_bapakmu"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#b8f050] underline underline-offset-4"
+                        >
+                          @bukann_bapakmu
+                        </a>
+                      </dd>
+                    </div>
+                    <div className="flex justify-between gap-4">
+                      <dt className="text-[#8a8a94]">GITHUB</dt>
+                      <dd>
+                        <a
+                          href="https://github.com/khamimzarr"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#b8f050] underline underline-offset-4"
+                        >
+                          khamimzarr
+                        </a>
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <div className="tile p-2">
+                  <div className="relative aspect-[16/9] overflow-hidden rounded-[3px]">
+                    <Image
+                      src="/hobi/foto-bunga.jpg"
+                      alt="Foto asli, bunga di halaman"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 40vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <p className="eyebrow px-1 pt-3">Still life, bunga di halaman Khamim</p>
+                </div>
+              </Reveal>
+            </div>
+          </section>
+
+          <footer className="rule-dotted mt-16 flex flex-col justify-between gap-2 pt-6 md:flex-row">
+            <span className="mono text-[11px] tracking-[0.08em] text-[#8a8a94]">© 2026 Khamim Zarkasyi</span>
+            <span className="mono text-[11px] tracking-[0.08em] text-[#8a8a94]">Made with ngopi & vibes coding wkwk</span>
+          </footer>
         </div>
-      </section>
-
-      {/* About: light merchandising surface */}
-      <section className="w-full bg-[#f5f5f7] px-6 md:px-10 py-16 md:py-20">
-        <div className="max-w-[1120px] mx-auto grid md:grid-cols-[1.15fr_0.85fr] gap-10 md:gap-14 items-start">
-          <Reveal className="flex flex-col gap-5">
-            <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#6e6e73]">Tentang</p>
-            <h3
-              className="font-sans font-semibold text-[#1d1d1f]"
-              style={{ fontSize: "clamp(28px, 4vw, 43px)", lineHeight: 1.1, letterSpacing: "-0.215px" }}
-            >
-              Seorang penjaga hal kecil yang tumbuh pelan.
-            </h3>
-            <p className="font-sans text-[17px] leading-[1.47] tracking-[-0.374px] text-[#6e6e73]">
-              Halo, aku <strong className="text-[#1d1d1f] font-semibold">Khamim Zarkasyi</strong>. Hari-hariku sederhana: motret hal random, sepedaan biar kepala adem, nyiram tanaman, ngasih makan ikan hias sambil ngeliatin aquarium kayak ngeliatin galeri kaca. Lalu vibes coding sampai lupa waktu, dan ngopi sambil ngerjain project — wkwk, tapi jadi.
-            </p>
-            <p className="font-sans text-[17px] leading-[1.47] tracking-[-0.374px] text-[#6e6e73]">
-              Halaman ini dibangun seperti panggung produk: latar hitam penuh, satu accent biru, tanpa bayangan. Tipografinya Inter, fotonya foto asli, dan tidak ada angka yang aku karang.
-            </p>
-          </Reveal>
-
-          <Reveal className="flex flex-col gap-4">
-            <div className="bg-[#ffffff] rounded-[28px] p-6 flex flex-col gap-3">
-              <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#6e6e73]">Data</p>
-              <div className="flex justify-between gap-4 font-sans text-[14px] leading-[1.29] tracking-[-0.224px] text-[#1d1d1f]">
-                <span className="text-[#6e6e73]">Nama</span>
-                <span className="font-semibold">Khamim Zarkasyi</span>
-              </div>
-              <div className="hairline-ink flex justify-between gap-4 font-sans text-[14px] leading-[1.29] tracking-[-0.224px] text-[#1d1d1f] pt-3">
-                <span className="text-[#6e6e73]">Email</span>
-                <a href="mailto:khamimzarrr@gmail.com" className="font-semibold text-[#0066cc]">khamimzarrr@gmail.com</a>
-              </div>
-              <div className="hairline-ink flex justify-between gap-4 font-sans text-[14px] leading-[1.29] tracking-[-0.224px] text-[#1d1d1f] pt-3">
-                <span className="text-[#6e6e73]">Instagram</span>
-                <a href="https://instagram.com/bukann_bapakmu" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0066cc]">@bukann_bapakmu</a>
-              </div>
-              <div className="hairline-ink flex justify-between gap-4 font-sans text-[14px] leading-[1.29] tracking-[-0.224px] text-[#1d1d1f] pt-3">
-                <span className="text-[#6e6e73]">GitHub</span>
-                <a href="https://github.com/khamimzarr" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#0066cc]">khamimzarr</a>
-              </div>
-            </div>
-
-            <div className="media-card bg-[#e8e8ed] p-3">
-              <div className="relative w-full aspect-[16/9] rounded-[20px] overflow-hidden">
-                <Image
-                  src="/hobi/foto-bunga.jpg"
-                  alt="Foto asli, bunga di halaman"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-cover"
-                />
-              </div>
-              <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#1d1d1f] pt-3 px-1">
-                Still life, bunga di halaman Khamim
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="w-full bg-[#ffffff] px-6 md:px-10 py-12">
-        <div className="max-w-[1120px] mx-auto flex flex-col gap-6">
-          <div className="flex flex-col md:flex-row justify-between gap-8">
-            <div className="flex flex-col gap-2">
-              <span className="font-sans font-semibold text-[17px] leading-[1.24] tracking-[-0.374px] text-[#1d1d1f]">
-                KHAMIM ZARKASYI
-              </span>
-              <p className="font-sans text-[14px] leading-[1.29] tracking-[-0.224px] text-[#6e6e73] max-w-[36ch]">
-                Karya, foto, dan catatan kecil. Dibangun dengan Next.js dan Tailwind.
-              </p>
-            </div>
-            <div className="flex gap-10 md:gap-14 font-sans text-[14px] leading-[1.29] tracking-[-0.224px]">
-              <div className="flex flex-col gap-2">
-                <a href="https://instagram.com/bukann_bapakmu" target="_blank" rel="noopener noreferrer" className="text-[#0066cc]">
-                  Instagram
-                </a>
-                <a href="https://github.com/khamimzarr" target="_blank" rel="noopener noreferrer" className="text-[#0066cc]">
-                  GitHub
-                </a>
-                <a href="mailto:khamimzarrr@gmail.com" className="text-[#0066cc]">
-                  Email
-                </a>
-              </div>
-              <div className="flex flex-col gap-2">
-                <a href="#karya" className="text-[#0066cc]">Karya</a>
-                <a href="#exhibition" className="text-[#0066cc]">Exhibition</a>
-              </div>
-            </div>
-          </div>
-          <div className="hairline-ink flex flex-col md:flex-row justify-between gap-2 pt-6 font-sans text-[12px] leading-none tracking-[-0.12px] text-[#6e6e73]">
-            <span>© 2026 Khamim Zarkasyi</span>
-            <span>Made with ngopi & vibes coding wkwk</span>
-          </div>
-        </div>
-      </footer>
+      </main>
     </div>
   );
 }
