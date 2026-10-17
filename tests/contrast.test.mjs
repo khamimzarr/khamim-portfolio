@@ -25,10 +25,15 @@ test("pasangan teks yang dipakai lolos WCAG AA (4.5:1)", () => {
   const pairs = [
     ["porcelain", "gallery-black"],
     ["steel", "gallery-black"],
+    ["porcelain", "charcoal-stage"],
+    ["steel", "charcoal-stage"],
     ["ink", "paper"],
     ["graphite", "paper"],
+    ["graphite", "porcelain"],
+    ["ink", "cloud-gray"],
     ["paper", "apple-blue"],
     ["link-blue", "paper"],
+    ["link-blue", "porcelain"],
   ];
   for (const [fg, bg] of pairs) {
     const r = ratio(token(fg), token(bg));
@@ -38,4 +43,8 @@ test("pasangan teks yang dipakai lolos WCAG AA (4.5:1)", () => {
 
 test("steel di permukaan terang gagal, jadi dilarang di sana", () => {
   assert.ok(ratio(token("steel"), token("paper")) < 4.5, "steel on paper unexpectedly passes");
+});
+
+test("link blue di atas charcoal gagal, jadi dilarang di sana", () => {
+  assert.ok(ratio(token("link-blue"), token("charcoal-stage")) < 4.5, "link blue on charcoal unexpectedly passes");
 });

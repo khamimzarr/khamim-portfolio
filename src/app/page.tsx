@@ -155,7 +155,7 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Buka website ${p.name}`}
-                    className="absolute inset-0"
+                    className="absolute inset-0 rounded-[28px] focus-visible:outline-offset-[-6px]"
                   />
                   <div className="relative flex items-center justify-between gap-4 pointer-events-none">
                     <span className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#86868b]">{p.lang}</span>
@@ -163,7 +163,7 @@ export default function Home() {
                       href={p.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="pointer-events-auto font-sans text-[12px] text-[#0066cc]"
+                      className="pointer-events-auto font-sans text-[12px] text-[#f5f5f7] underline underline-offset-4"
                     >
                       github
                     </a>
@@ -273,7 +273,7 @@ export default function Home() {
                   className="object-cover"
                 />
               </div>
-              <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#6e6e73] pt-3 px-1">
+              <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#1d1d1f] pt-3 px-1">
                 Still life, bunga di halaman Khamim
               </p>
             </div>
