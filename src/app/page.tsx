@@ -2,6 +2,7 @@ import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
 import Reveal from "@/components/Reveal";
 import RoutingDiagram from "@/components/RoutingDiagram";
+import MeshBackdrop from "@/components/MeshBackdrop";
 import Terminal from "@/components/Terminal";
 
 const vignettes = [
@@ -182,9 +183,12 @@ export default function Home() {
           <section id="tentang" className="scroll-mt-16 pt-16">
             <SectionHead index="04" label="Tentang" />
 
-            <Reveal className="panel mt-6 p-4 md:p-6">
-              <p className="eyebrow pb-4">Alur</p>
-              <RoutingDiagram />
+            <Reveal className="panel relative mt-6 overflow-hidden p-4 md:p-6">
+              <MeshBackdrop className="pointer-events-none absolute inset-0" />
+              <p className="eyebrow relative pb-4">Alur</p>
+              <div className="relative">
+                <RoutingDiagram />
+              </div>
             </Reveal>
 
             <div className="mt-3 grid items-stretch gap-3 md:grid-cols-2">

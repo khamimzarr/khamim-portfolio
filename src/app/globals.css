@@ -207,6 +207,23 @@ body {
   40%, 100% { stroke: var(--color-line); }
 }
 
+/* Mesh backdrop behind the routing card: two very slow layers so the panel is not flat */
+.mesh-drift {
+  animation: mesh-drift 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes mesh-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-30px, 16px, 0) scale(1.04); }
+}
+.mesh-breathe {
+  animation: mesh-breathe 12s ease-in-out infinite alternate;
+}
+@keyframes mesh-breathe {
+  from { opacity: 0.5; }
+  to { opacity: 0.95; }
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(8px);
@@ -221,5 +238,6 @@ body {
   .caret { animation: none; }
   .route-pulse { animation: none; opacity: 0; }
   .route-node { animation: none; }
+  .mesh-drift, .mesh-breathe { animation: none; }
   html { scroll-behavior: auto; }
 }
