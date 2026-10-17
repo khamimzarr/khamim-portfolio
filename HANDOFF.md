@@ -1,9 +1,7 @@
 # 📜 HANDOFF — Khamim Portfolio (Renaissance Gallery)
 
-> **Status:** FITUR KOMPLIT & LIVE. Tier 1 ✔ + Foto asli ✔ + Tier 2 ✔ + Animasi ✔ + Copy ✔.
-> Tinggal opsional polish lanjutan (SEO bemper, blog, testimon, upgrade Speed Insights).
-
-> **Tanggal update:** 24 Aug 2026 — semua commit ter-push ke GitHub (remote HEAD `9f3bf7a`).
+> **Status:** ROLLBACK SELESAI — design lama (Putty & Ink) LIVE. Branch `rollback-design` aktif, branch `main` tetap menyimpan design Slate & Lime.
+> **Tanggal update:** 16 Okt 2026 — soft rollback + vercel deploy ke branch `rollback-design`.
 
 ---
 
@@ -19,6 +17,21 @@
 | **Instagram** | https://instagram.com/bukann_bapakmu |
 | **Vercel Project** | `khamim-portfolio` → team `voiddarkfire` (prj_p4q2IudMyYWnjHcHGKvOVT615Q5W) |
 | **DESIGN.md** | `/data/data/com.termux/files/home/DESIGN.md` |
+| **Backup rollback** | `~/backup-khamim-portfolio/20261016-094907/rollback-design.sh` |
+
+---
+
+## 🔄 Status Branch
+
+| Branch | Design | Status |
+|--------|--------|--------|
+| `rollback-design` ⭐ | Renaissance Putty & Ink (LIVE) | Branch aktif di Vercel |
+| `main` | Slate & Lime (Trigger.dev re-skin) | Tersimpan, belum di-deploy ulang |
+
+> `git checkout rollback-design` → design lama (putty `#c4c3b6`, Playfair, notched card, grain).<br>
+> `git checkout main` → design baru (slate `#1c1e21`, Geist, lime `#a8ff53`, code pane).
+
+Commit HEAD saat ini (branch `rollback-design`): **`a1c71f9`** — feat: update dropdeploy domain to dropdeploy.my.id
 
 ---
 
@@ -166,4 +179,6 @@ unset GITHUB_TOKEN
 
 ## 📝 Next Session Prompt (COPY-INI BILANG KE AI BARU)
 
-> Lanjutkan project `khamim-portfolio` (Next.js 16 + Tailwind 4) di `~/khamim-portfolio`. Sudah LIVE di https://khamim-portfolio.vercel.app dan pushed ke `github.com/khamimzarr/khamim-portfolio` (HEAD `9f3bf7a`). Baca `HANDOFF.md` sini dulu — semua fitur sudah komplit: wordmark KHAMIMZAR responsif + carve, 6 foto hobi asli, 4 karya, hamburger, OG image, favicon K, animasi (Reveal/Ticker). Jangan tolak: ikuti `DESIGN.md` (putty/ink, flat, no shadow). Untuk butuh token push/data: minta ke owner Khamim (khamimzarrr@gmail.com). Jangan komit secret, jangan ganggu project `hr-ai-review`. Mulai tanpa merombak ulang yang sudah jalan.
+> Lanjutkan project `khamim-portfolio` (Next.js 16 + Tailwind 4) di `~/khamim-portfolio`. Sudah LIVE di https://khamim-portfolio.vercel.app pada branch **`rollback-design`** (HEAD `a1c71f9`) — design Renaissance Putty & Ink. Branch `main` menyimpan design Slate & Lime yang belum di-deploy ulang. Baca `HANDOFF.md` sini dulu — semua fitur sudah komplit: wordmark KHAMIMZAR responsif + carve, 6 foto hobi asli, 4 karya, hamburger, OG image, favicon K, animasi (Reveal/Ticker). Jangan tolak: ikuti `DESIGN.md` (putty/ink, flat, no shadow). Untuk butuh token push/data: minta ke owner Khamim (khamimzarrr@gmail.com). Jangan komit secret, jangan ganggu project `hr-ai-review`. Mulai tanpa merombak ulang yang sudah jalan.
+>
+> **Rollback script:** `~/backup-khamim-portfolio/20261016-094907/rollback-design.sh <check|soft|hard|files|full>` — gunakan `soft` untuk branch baru (aman), `hard` untuk reset main.
