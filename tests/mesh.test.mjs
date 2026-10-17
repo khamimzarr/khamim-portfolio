@@ -21,6 +21,15 @@ test("mesh punya node dan edge, bukan gambar", () => {
   assert.ok(!src.includes("<img"), "mesh should not be an image");
 });
 
+test("mesh bergerak cukup cepat, tidak beku", () => {
+  const drift = css.match(/animation:\s*mesh-drift\s+(\d+(?:\.\d+)?)s/);
+  const breathe = css.match(/animation:\s*mesh-breathe\s+(\d+(?:\.\d+)?)s/);
+  assert.ok(drift, "mesh-drift duration missing");
+  assert.ok(breathe, "mesh-breathe duration missing");
+  assert.ok(Number(drift[1]) <= 16, `mesh drift too slow: ${drift[1]}s`);
+  assert.ok(Number(breathe[1]) <= 8, `mesh breathe too slow: ${breathe[1]}s`);
+});
+
 test("mesh bergerak pelan dan hormat pada reduced motion", () => {
   assert.ok(css.includes(".mesh-drift"), "mesh-drift class missing");
   assert.ok(/@keyframes\s+mesh-drift/.test(css), "mesh-drift keyframes missing");

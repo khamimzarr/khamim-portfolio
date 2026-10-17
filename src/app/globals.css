@@ -209,7 +209,7 @@ body {
 
 /* Mesh backdrop behind the routing card: two very slow layers so the panel is not flat */
 .mesh-drift {
-  animation: mesh-drift 26s ease-in-out infinite alternate;
+  animation: mesh-drift 13s ease-in-out infinite alternate;
   will-change: transform;
 }
 @keyframes mesh-drift {
@@ -217,7 +217,7 @@ body {
   to { transform: translate3d(-30px, 16px, 0) scale(1.04); }
 }
 .mesh-breathe {
-  animation: mesh-breathe 12s ease-in-out infinite alternate;
+  animation: mesh-breathe 6s ease-in-out infinite alternate;
 }
 @keyframes mesh-breathe {
   from { opacity: 0.5; }
