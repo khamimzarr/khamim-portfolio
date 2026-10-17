@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
 import Reveal from "@/components/Reveal";
+import RoutingDiagram from "@/components/RoutingDiagram";
 import Terminal from "@/components/Terminal";
 
 const HERO_LINE =
@@ -231,17 +232,19 @@ export default function Home() {
           {/* Tentang */}
           <section id="tentang" className="scroll-mt-16 pt-16">
             <SectionHead index="04" label="Tentang" title="Seorang penjaga hal kecil yang tumbuh pelan." />
-            <div className="mt-6 grid items-start gap-3 md:grid-cols-[1.1fr_0.9fr]">
+
+            <Reveal className="panel mt-6 p-4 md:p-6">
+              <p className="eyebrow pb-4">Alur</p>
+              <RoutingDiagram />
+            </Reveal>
+
+            <div className="mt-3 grid items-start gap-3 md:grid-cols-[1.1fr_0.9fr]">
               <Reveal className="panel flex flex-col gap-4 p-5">
                 <p className="text-[15px] leading-[1.6] text-[#c0c0c8]">
                   Halo, aku <strong className="font-medium text-[#e8e8ee]">Khamim Zarkasyi</strong>. Hari-hariku sederhana:
                   motret hal random, sepedaan biar kepala adem, nyiram tanaman, ngasih makan ikan hias sambil ngeliatin
                   aquarium kayak ngeliatin galeri kaca. Lalu vibes coding sampai lupa waktu, dan ngopi sambil ngerjain
                   project, wkwk tapi jadi.
-                </p>
-                <p className="text-[15px] leading-[1.6] text-[#c0c0c8]">
-                  Halaman ini dibangun seperti konsol gelap: kanvas near-black, satu accent lime, tanpa bayangan. Tipografinya
-                  Geist dan Geist Mono, fotonya foto asli, dan tidak ada angka yang aku karang.
                 </p>
               </Reveal>
 

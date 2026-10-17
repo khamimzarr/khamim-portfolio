@@ -176,6 +176,37 @@ body {
 }
 @keyframes caret-blink { 50% { opacity: 0; } }
 
+/* Routing diagram: dashed hairline rails with a lime pulse travelling along them */
+.route-rail {
+  fill: none;
+  stroke: var(--color-line-strong);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+.route-pulse {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 22 900;
+  animation: route-pulse 2.8s linear infinite;
+}
+@keyframes route-pulse {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -922; }
+}
+.route-node {
+  fill: var(--color-raised);
+  stroke: var(--color-line);
+  stroke-width: 1;
+  animation: route-flash 2.8s linear infinite;
+}
+@keyframes route-flash {
+  0%, 18% { stroke: var(--color-line); }
+  27% { stroke: var(--color-accent); }
+  40%, 100% { stroke: var(--color-line); }
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(8px);
@@ -188,5 +219,7 @@ body {
   .tile { transition: none; }
   .tile:hover { transform: none; }
   .caret { animation: none; }
+  .route-pulse { animation: none; opacity: 0; }
+  .route-node { animation: none; }
   html { scroll-behavior: auto; }
 }
