@@ -240,10 +240,10 @@ export default function Home() {
               <RoutingDiagram />
             </Reveal>
 
-            <div className="mt-3 grid items-start gap-3 md:grid-cols-2">
-              <Reveal className="panel p-5">
+            <div className="mt-3 grid items-stretch gap-3 md:grid-cols-2">
+              <Reveal className="panel flex flex-col p-4 md:p-5">
                 <p className="eyebrow">Data</p>
-                <dl className="mono mt-4 flex flex-col gap-3 text-[12px] tracking-[0.04em]">
+                <dl className="mono mt-4 flex flex-1 flex-col justify-between gap-3 text-[12px] tracking-[0.04em]">
                   <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
                     <dt className="text-[#8a8a94]">NAMA</dt>
                     <dd className="text-[#e8e8ee]">Khamim Zarkasyi</dd>
@@ -285,17 +285,17 @@ export default function Home() {
                 </dl>
               </Reveal>
 
-              <Reveal className="tile p-2">
-                <div className="relative aspect-[16/9] overflow-hidden rounded-[3px]">
+              <Reveal className="panel flex flex-col p-4 md:p-5">
+                <p className="eyebrow">Still life, bunga di halaman Khamim</p>
+                <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-[3px]">
                   <Image
                     src="/hobi/foto-bunga.jpg"
                     alt="Foto asli, bunga di halaman"
                     fill
-                    sizes="(max-width: 768px) 50vw, 45vw"
+                    sizes="(max-width: 768px) 100vw, 45vw"
                     className="object-cover"
                   />
                 </div>
-                <p className="eyebrow px-1 pt-3">Still life, bunga di halaman Khamim</p>
               </Reveal>
             </div>
           </section>

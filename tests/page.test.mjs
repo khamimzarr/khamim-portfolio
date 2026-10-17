@@ -69,6 +69,13 @@ test("teks Tentang yang lama sudah dihapus", () => {
   assert.ok(page.includes("Still life, bunga di halaman Khamim"), "still life caption should stay");
 });
 
+test("card Data dan card foto memakai perlakuan yang sama", () => {
+  assert.ok(page.includes("items-stretch"), "grid does not stretch both cards to one height");
+  assert.ok(!page.includes('className="tile p-2"'), "photo card still uses the old mismatched frame");
+  const panelCards = page.match(/panel flex flex-col p-4 md:p-5/g) || [];
+  assert.ok(panelCards.length >= 2, `expected both cards to share one treatment, found ${panelCards.length}`);
+});
+
 test("suara personal di footer tetap ada", () => {
   assert.ok(page.includes("Made with ngopi & vibes coding wkwk"), "personal footer line missing");
 });
