@@ -55,12 +55,35 @@ Rollback ke design mana pun: `git checkout <tag> && vercel --prod --yes`, atau p
 
 | Branch | Design | Status |
 |--------|--------|--------|
-| `rollback-design` ⭐ | Console CleveCode | Sama dengan `clevecode-skin`, LIVE di Vercel |
-| `clevecode-skin` | Console CleveCode | Branch kerja design aktif |
+| `main` ⭐ | Console CleveCode | LIVE di Vercel, default branch GitHub |
+| `rollback-design` | Console CleveCode | Sama persis dengan `main` |
+| `clevecode-skin` | Console CleveCode | Branch kerja |
 | `apple-gallery` | Apple-stage gelap | Tersimpan, pernah LIVE |
-| `main` | Slate & Lime (Trigger.dev re-skin) | Tersimpan, belum di-deploy ulang |
 
-> Sudah di-push ke GitHub (18 Okt 2026) lewat gh CLI: branch `main`, `rollback-design`, `apple-gallery`, `clevecode-skin`, plus tag `design/putty-ink`, `design/apple-stage`, `design/console`, `spike/3d-motion`. Semua branch lokal sinkron dengan origin. Default branch di GitHub masih `main` (design Slate & Lime), sedangkan yang LIVE adalah `rollback-design` (Console CleveCode).
+> Semua branch di atas (kecuali `apple-gallery`) menunjuk ke commit yang sama, `567a789`.
+
+### ⚠️ Penting: Vercel tersambung ke GitHub
+
+Project Vercel `khamim-portfolio` punya integrasi Git dengan **production branch `main`**. Artinya:
+
+- Setiap `git push` ke `main` otomatis membangun produksi dan **mengambil alih alias** `khamimzar.my.id`.
+- Ini pernah bikin situs balik ke design Slate & Lime (18 Okt 2026) karena `main` waktu itu masih design lama. Sudah diperbaiki: `main` sekarang berisi design console, jadi auto-deploy membangun design yang benar.
+- Kalau mau, Production Branch di dashboard Vercel bisa diubah ke `rollback-design` sebagai sabuk pengaman kedua.
+- Design Slate & Lime lama diamankan di tag `design/slate-lime`.
+
+### Riwayat git
+
+Riwayat sekarang lurus: `putty-ink` → `apple-stage` → `console`. Setiap design punya tag.
+
+| Design | Tag |
+|--------|-----|
+| Console CleveCode | `design/console` |
+| Apple-stage gelap | `design/apple-stage` |
+| Slate & Lime | `design/slate-lime` |
+| Renaissance Putty & Ink | `design/putty-ink` |
+| Eksperimen 3D three.js | `spike/3d-motion` |
+
+Rollback ke design mana pun: `git checkout <tag> && vercel --prod --yes`.
 
 > `git checkout rollback-design` → design lama (putty `#c4c3b6`, Playfair, notched card, grain).<br>
 > `git checkout main` → design baru (slate `#1c1e21`, Geist, lime `#a8ff53`, code pane).
