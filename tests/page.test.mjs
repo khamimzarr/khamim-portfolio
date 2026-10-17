@@ -83,6 +83,29 @@ test("nama tidak diulang di judul hero dan baris pembuka", () => {
   assert.ok(page.includes("Khamim Zarkasyi"), "name should still exist in the profile card");
 });
 
+test("kalimat penjelas yang ditandai owner sudah dihapus", () => {
+  const gone = [
+    "Yang dipajang di sini",
+    "Perintah di bawah ini mengeluarkan daftar project",
+    "Empat project yang tumbuh dari ngopi",
+    "Enam kebiasaan yang aku rawat seperti koleksi galeri",
+    "Foto asli, jepretan random Khamim",
+    "Foto asli, goes pagi",
+    "Menangkap yang terlewat",
+    "Ritual roda di pagi sunyi",
+    "Merawat diam",
+    "Katedral kaca",
+    "Kode sebagai kaligrafi",
+    "Pahit yang menyalakan ide",
+  ];
+  for (const s of gone) {
+    assert.ok(!page.includes(s), `still present: ${s}`);
+  }
+  for (const title of ["Foto Hal Random", "Bersepeda", "Merawat Tanaman", "Ikan Hias & Aquarium", "Vibes Coding", "Ngopi + Nge-project"]) {
+    assert.ok(page.includes(title), `hobby title should stay: ${title}`);
+  }
+});
+
 test("suara personal di footer tetap ada", () => {
   assert.ok(page.includes("Made with ngopi & vibes coding wkwk"), "personal footer line missing");
 });

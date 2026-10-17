@@ -4,46 +4,13 @@ import Reveal from "@/components/Reveal";
 import RoutingDiagram from "@/components/RoutingDiagram";
 import Terminal from "@/components/Terminal";
 
-const HERO_LINE =
-  "Yang dipajang di sini: empat project yang sudah live, dan enam kebiasaan harian yang menopangnya.";
-
 const vignettes = [
-  {
-    title: "Foto Hal Random",
-    desc: "Menangkap yang terlewat, cahaya random yang kebetulan jujur.",
-    img: "/hobi/foto-random.jpg",
-    caption: "Foto asli, jepretan random Khamim",
-  },
-  {
-    title: "Bersepeda",
-    desc: "Ritual roda di pagi sunyi, gerak adalah doa yang paling sederhana.",
-    img: "/hobi/bersepeda.jpg",
-    caption: "Foto asli, goes pagi",
-  },
-  {
-    title: "Merawat Tanaman",
-    desc: "Merawat diam, daun mengajarkan kesabaran yang tidak dimiliki notifikasi.",
-    img: "/hobi/tanaman.jpg",
-    caption: "Foto asli, tanaman di halaman",
-  },
-  {
-    title: "Ikan Hias & Aquarium",
-    desc: "Katedral kaca, cahaya menari di air, waktu melambat di balik gelembung.",
-    img: "/hobi/ikan.jpg",
-    caption: "Foto asli, aquarium di rumah",
-  },
-  {
-    title: "Vibes Coding",
-    desc: "Kode sebagai kaligrafi, bukan sekadar sintaks, tapi suasana yang mengalir.",
-    img: "/hobi/coding.jpg",
-    caption: "Foto asli, setup vibes coding",
-  },
-  {
-    title: "Ngopi + Nge-project",
-    desc: "Pahit yang menyalakan ide, ngopi sambil ngulik project, wkwk tapi serius.",
-    img: "/hobi/ngopi.jpg",
-    caption: "Foto asli, ngopi sambil nge-project",
-  },
+  { title: "Foto Hal Random", img: "/hobi/foto-random.jpg" },
+  { title: "Bersepeda", img: "/hobi/bersepeda.jpg" },
+  { title: "Merawat Tanaman", img: "/hobi/tanaman.jpg" },
+  { title: "Ikan Hias & Aquarium", img: "/hobi/ikan.jpg" },
+  { title: "Vibes Coding", img: "/hobi/coding.jpg" },
+  { title: "Ngopi + Nge-project", img: "/hobi/ngopi.jpg" },
 ];
 
 const projects = [
@@ -115,7 +82,6 @@ export default function Home() {
           <section id="top">
             <p className="eyebrow">Console</p>
             <h1 className="sr-only">Khamim Zarkasyi</h1>
-            <p className="mt-4 max-w-[70ch] text-[17px] leading-[1.6] text-[#c0c0c8]">{HERO_LINE}</p>
 
             <div className="panel mt-8 flex flex-col justify-between gap-6 p-5 md:flex-row md:items-center md:p-6">
               <div>
@@ -143,12 +109,7 @@ export default function Home() {
 
           {/* Terminal */}
           <section id="terminal" className="scroll-mt-16 pt-16">
-            <SectionHead
-              index="01"
-              label="Terminal"
-              title="Ringkasan karya, versi terminal."
-              description="Perintah di bawah ini mengeluarkan daftar project yang benar-benar live, bukan contoh karangan."
-            />
+            <SectionHead index="01" label="Terminal" title="Ringkasan karya, versi terminal." />
             <Reveal className="mt-6">
               <Terminal />
             </Reveal>
@@ -156,12 +117,7 @@ export default function Home() {
 
           {/* Karya */}
           <section id="karya" className="scroll-mt-16 pt-16">
-            <SectionHead
-              index="02"
-              label="Karya"
-              title="Kode yang sudah dipajang"
-              description="Empat project yang tumbuh dari ngopi dan vibes coding, live di Vercel dan source terbuka di GitHub."
-            />
+            <SectionHead index="02" label="Karya" title="Kode yang sudah dipajang" />
             <div className="mt-6 grid gap-3 md:grid-cols-2">
               {projects.map((p, i) => (
                 <article key={p.name} className="tile flex flex-col gap-3 p-5">
@@ -198,19 +154,14 @@ export default function Home() {
 
           {/* Exhibition */}
           <section id="exhibition" className="scroll-mt-16 pt-16">
-            <SectionHead
-              index="03"
-              label="Exhibition"
-              title="Enam ritual harian"
-              description="Enam kebiasaan yang aku rawat seperti koleksi galeri, hangat dan pelan."
-            />
+            <SectionHead index="03" label="Exhibition" title="Enam ritual harian" />
             <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3">
               {vignettes.map((v, i) => (
                 <figure key={v.title} className="tile overflow-hidden">
                   <div className="relative aspect-square overflow-hidden">
                     <Image
                       src={v.img}
-                      alt={v.caption}
+                      alt={`${v.title}, foto asli Khamim`}
                       fill
                       sizes="(max-width: 768px) 50vw, 33vw"
                       className="object-cover"
@@ -221,8 +172,6 @@ export default function Home() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <p className="mt-1 text-[14px] leading-[1.3] text-[#e8e8ee]">{v.title}</p>
-                    <p className="mt-1 text-[12px] leading-[1.4] text-[#8a8a94]">{v.caption}</p>
-                    <p className="mt-2 text-[13px] leading-[1.5] text-[#c0c0c8]">{v.desc}</p>
                   </figcaption>
                 </figure>
               ))}
