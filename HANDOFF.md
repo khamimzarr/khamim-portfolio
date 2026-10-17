@@ -60,7 +60,7 @@ Rollback ke design mana pun: `git checkout <tag> && vercel --prod --yes`, atau p
 | `apple-gallery` | Apple-stage gelap | Tersimpan, pernah LIVE |
 | `main` | Slate & Lime (Trigger.dev re-skin) | Tersimpan, belum di-deploy ulang |
 
-> Belum di-push ke GitHub. `rollback-design` lokal unggul 24 commit dari `origin/rollback-design`, `main` unggul 17 dari `origin/main`. Push butuh token dari owner.
+> Sudah di-push ke GitHub (18 Okt 2026) lewat gh CLI: branch `main`, `rollback-design`, `apple-gallery`, `clevecode-skin`, plus tag `design/putty-ink`, `design/apple-stage`, `design/console`, `spike/3d-motion`. Semua branch lokal sinkron dengan origin. Default branch di GitHub masih `main` (design Slate & Lime), sedangkan yang LIVE adalah `rollback-design` (Console CleveCode).
 
 > `git checkout rollback-design` → design lama (putty `#c4c3b6`, Playfair, notched card, grain).<br>
 > `git checkout main` → design baru (slate `#1c1e21`, Geist, lime `#a8ff53`, code pane).
@@ -172,16 +172,18 @@ npm run dev        # http://localhost:3000
 # Deploy (sudah link ke project khamim-portfolio)
 vercel --prod --yes
 
-# Git push (BUTUH TOKEN BARU — yang lama sudah di-revoke oleh owner)
-# Owner akan kasih token `ghp_...` saat diminta. SETELAH dipakai, UNGSONG token & minta owner revoke.
-export GITHUB_TOKEN="ghp_..."   # minta ke Khamim
-git -C ~/khamim-portfolio push "https://$GITHUB_TOKEN@github.com/khamimzarr/khamim-portfolio.git" main
-unset GITHUB_TOKEN
+# Git push: pakai gh CLI (sudah login sebagai khamimzarr, kredensial aman di ~/.config/gh/hosts.yml)
+gh auth status
+cd ~/khamim-portfolio
+git push origin rollback-design main
+git push origin --tags
+# Tidak perlu lagi menempel token ghp_ ke remote URL.
 ```
 
 ### 🔐 Keamanan token (PENTING)
 - Jangan pernah komit token ke git / remote URL permanen.
 - Setelah push, `unset GITHUB_TOKEN` dan **minta owner revoke** token di https://github.com/settings/tokens.
+- Sejak 18 Okt 2026 push pakai gh CLI, jadi tidak ada token yang ditempel ke remote URL. Kalau sesi mana pun masih memakai `ghp_...` di URL, unset dan minta revoke.
 - `hr-ai-review/gas/install-properties.gs` & `AUDIT-REPORT.md` berisi key real (bynara `sk-nry-...`) — DIIGNORE & JANGAN di-push. Secret scanning Push Protection aktif.
 
 ### Catatan Vercel
