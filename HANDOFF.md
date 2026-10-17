@@ -1,22 +1,31 @@
-# 📜 HANDOFF — Khamim Portfolio (Renaissance Gallery)
+# 📜 HANDOFF — Khamim Portfolio (Console / CleveCode)
 
-> **Status:** Design baru (Apple-stage, gelap) LIVE di produksi sejak 18 Okt 2026. Branch `apple-gallery` belum di-merge ke `rollback-design`.
+> **Status:** Design baru (console CleveCode, gelap) LIVE di produksi sejak 18 Okt 2026. Branch `clevecode-skin` belum di-merge ke `rollback-design`.
 > **Tanggal update:** 18 Okt 2026.
 
 ---
 
-## ⭐ Design baru: Apple-stage (branch `apple-gallery`)
+## ⭐ Design aktif: Console CleveCode (branch `clevecode-skin`)
 
-- Arah: panggung produk gelap, konsep "Khamim sebagai produk yang diluncurkan". Arah lengkap di [`DESIGN.md`](./DESIGN.md).
-- Spec: `docs/superpowers/specs/2026-10-18-apple-gallery-redesign-design.md`
-- Plan: `docs/superpowers/plans/2026-10-18-apple-gallery-redesign.md`
-- Laporan verifikasi: `docs/superpowers/plans/2026-10-18-verification-report.md`
-- Test: `npm test` (36 test, tanpa dependensi baru).
-- Yang berubah: palet jadi monokrom plus satu accent Apple Blue `#0071e3`, semua font Inter (Playfair dilepas), Ticker dan panel School of Athens dihapus, ikon dan OG dibuat ulang gelap.
-- Belum selesai: click-through di perangkat nyata (R-35) dan persetujuan baris hero.
+- Arah: panel konsol gelap, folio dibaca seperti developer console. Ringkas di [`DESIGN.md`](./DESIGN.md).
+- Palet: kanvas `#080808`, permukaan `#0e0e10`, kartu `#141417`, hairline `#1e1e22`, teks `#c0c0c8`, redup `#8a8a94`, accent lime `#b8f050`.
+- Font: Geist untuk teks, Geist Mono untuk label, angka, nav, dan tombol. Radius 3 sampai 4px, flat tanpa shadow.
+- Isi: sidebar bergrup (01 Terminal, 02 Karya, 03 Exhibition, 04 Tentang, plus grup Links), hero dengan card PROFILE dan tombol **Kontak**, Terminal (animasi ketik), Karya (4 project), Exhibition (6 foto), Tentang (diagram routing dengan mesh backdrop, panel DATA, foto still life). Footer sudah dihapus atas permintaan owner.
+- Test: `npm test` (39 test, tanpa dependensi baru).
+- Catatan: aturan antislop soal fake terminal di-override atas permintaan owner.
 - Live: https://khamimzar.my.id (alias `khamim-portfolio.vercel.app`).
-- Kalau perlu balik ke design lama: promote ulang deployment `rollback-design` di dashboard Vercel, atau `git checkout rollback-design && vercel --prod --yes`.
+- Rollback: promote ulang deployment `apple-gallery` atau `rollback-design` di dashboard Vercel, atau `git checkout <branch> && vercel --prod --yes`.
 - Catatan build: aset raster ikon dan OG harus RGBA, karena Turbopack di Vercel menolak PNG RGB di dalam `favicon.ico` (webpack lokal tidak komplain).
+
+## Riwayat design sebelumnya
+
+| Branch | Design | Status |
+|--------|--------|--------|
+| `clevecode-skin` | Console CleveCode | LIVE di Vercel |
+| `apple-gallery` | Apple-stage gelap | Tersimpan, pernah LIVE |
+| `spike-3d-motion` | Eksperimen 3D three.js | Throwaway, dilepas |
+| `rollback-design` | Renaissance Putty & Ink | Tersimpan |
+| `main` | Slate & Lime (Trigger.dev re-skin) | Tersimpan |
 
 > Catatan: seluruh isi HANDOFF di bawah baris ini menggambarkan design lama (Putty & Ink) dan tetap berlaku untuk branch `rollback-design`.
 
@@ -42,7 +51,8 @@
 
 | Branch | Design | Status |
 |--------|--------|--------|
-| `apple-gallery` | Apple-stage gelap (BARU) | LIVE di Vercel |
+| `clevecode-skin` ⭐ | Console CleveCode | LIVE di Vercel |
+| `apple-gallery` | Apple-stage gelap | Tersimpan, pernah LIVE |
 | `rollback-design` ⭐ | Renaissance Putty & Ink | LIVE di Vercel |
 | `main` | Slate & Lime (Trigger.dev re-skin) | Tersimpan, belum di-deploy ulang |
 
