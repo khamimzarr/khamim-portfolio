@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Header from "@/components/Header";
 import Reveal from "@/components/Reveal";
+import HeroScene from "@/components/three/HeroScene";
+import KaryaScene from "@/components/three/KaryaScene";
 
 const HERO_LINE =
   "Khamim Zarkasyi. Yang dipajang di sini: empat project yang sudah live, dan enam kebiasaan harian yang menopangnya.";
@@ -81,8 +83,12 @@ export default function Home() {
       <Header />
 
       {/* Hero: the wordmark is the object on the stage */}
-      <section className="relative w-full bg-[#000000] px-6 md:px-10 pt-20 md:pt-28 pb-14 overflow-hidden">
-        <div className="w-full max-w-[1120px] mx-auto flex flex-col gap-8">
+      <section className="relative w-full bg-[#000000] px-6 md:px-10 pt-20 md:pt-24 pb-14 overflow-hidden">
+        {/* 3D monogram, desktop: object on the right of the stage */}
+        <div className="absolute inset-y-0 right-0 z-0 hidden w-[48%] pointer-events-none md:block">
+          <HeroScene className="pointer-events-auto w-full h-full" />
+        </div>
+        <div className="relative z-10 w-full max-w-[1120px] mx-auto flex flex-col gap-8">
           <Reveal className="flex flex-col gap-6">
             <div className="inline-flex self-start items-center gap-3 bg-[#333336] rounded-[36px] px-4 py-2">
               <span className="font-sans text-[12px] leading-none tracking-[-0.12px] text-[#f5f5f7]">
@@ -90,12 +96,14 @@ export default function Home() {
               </span>
             </div>
             <h1
-              className="font-sans font-semibold text-[#f5f5f7]"
+              className="pointer-events-none select-none font-sans font-semibold text-[#f5f5f7]"
               style={{ fontSize: "clamp(40px, 14vw, 168px)", lineHeight: 0.9, letterSpacing: "-0.04em" }}
             >
               KHAMIMZAR
             </h1>
           </Reveal>
+          {/* 3D monogram, mobile: object in flow above the copy */}
+          <HeroScene className="h-[240px] w-full md:hidden" />
           <Reveal className="flex flex-col gap-6 max-w-[640px]">
             <p className="font-sans text-[17px] leading-[1.47] tracking-[-0.374px] text-[#f5f5f7]">
               {HERO_LINE}
@@ -132,8 +140,9 @@ export default function Home() {
       </section>
 
       {/* Karya */}
-      <section id="karya" className="w-full bg-[#000000] px-6 md:px-10 py-16 md:py-20">
-        <div className="max-w-[1120px] mx-auto flex flex-col gap-10">
+      <section id="karya" className="relative w-full bg-[#000000] px-6 md:px-10 py-16 md:py-20 overflow-hidden">
+        <KaryaScene className="absolute inset-0 z-0 pointer-events-none" />
+        <div className="relative z-10 max-w-[1120px] mx-auto flex flex-col gap-10">
           <Reveal className="flex flex-col gap-3 max-w-[640px]">
             <p className="font-sans text-[12px] tracking-[-0.12px] uppercase text-[#86868b]">Karya</p>
             <h2
@@ -147,9 +156,9 @@ export default function Home() {
             </p>
           </Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-            {projects.map((p) => (
-              <Reveal key={p.name}>
-                <div className="media-card relative bg-[#111111] p-6 flex flex-col gap-4">
+            {projects.map((p, i) => (
+              <Reveal key={p.name} style={{ transitionDelay: `${i * 70}ms` }}>
+                <div className="media-card relative bg-[#111111] p-6 flex flex-col gap-4 transition-transform duration-500 hover:-translate-y-1">
                   <a
                     href={p.vercel}
                     target="_blank"
@@ -197,9 +206,9 @@ export default function Home() {
             </p>
           </Reveal>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
-            {vignettes.map((v) => (
-              <Reveal key={v.title}>
-                <figure className="media-card bg-[#111111]">
+            {vignettes.map((v, i) => (
+              <Reveal key={v.title} style={{ transitionDelay: `${i * 50}ms` }}>
+                <figure className="media-card bg-[#111111] transition-transform duration-500 hover:-translate-y-1">
                   <div className="relative w-full aspect-square overflow-hidden">
                     <Image
                       src={v.img}
