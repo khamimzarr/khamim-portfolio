@@ -17,15 +17,19 @@
 - Rollback: promote ulang deployment `apple-gallery` atau `rollback-design` di dashboard Vercel, atau `git checkout <branch> && vercel --prod --yes`.
 - Catatan build: aset raster ikon dan OG harus RGBA, karena Turbopack di Vercel menolak PNG RGB di dalam `favicon.ico` (webpack lokal tidak komplain).
 
-## Riwayat design sebelumnya
+## Riwayat design
 
-| Branch | Design | Status |
-|--------|--------|--------|
-| `clevecode-skin` | Console CleveCode | LIVE di Vercel |
-| `apple-gallery` | Apple-stage gelap | Tersimpan, pernah LIVE |
-| `spike-3d-motion` | Eksperimen 3D three.js | Throwaway, dilepas |
-| `rollback-design` | Renaissance Putty & Ink | Tersimpan |
-| `main` | Slate & Lime (Trigger.dev re-skin) | Tersimpan |
+Riwayat git sekarang linier: `putty-ink` → `apple-stage` → `console`. Setiap design punya tag, jadi bisa dikembalikan tanpa menebak commit.
+
+| Design | Tag | Branch | Status |
+|--------|-----|--------|--------|
+| Console CleveCode | `design/console` | `clevecode-skin`, `rollback-design` | LIVE di Vercel |
+| Apple-stage gelap | `design/apple-stage` | `apple-gallery` | Tersimpan, pernah LIVE |
+| Renaissance Putty & Ink | `design/putty-ink` | - | Tersimpan, pernah LIVE |
+| Slate & Lime (Trigger.dev) | - | `main` | Tersimpan, pernah LIVE |
+| Eksperimen 3D three.js | `spike/3d-motion` | - | Throwaway, dilepas |
+
+Rollback ke design mana pun: `git checkout <tag> && vercel --prod --yes`, atau promote ulang deployment lamanya di dashboard Vercel.
 
 > Catatan: seluruh isi HANDOFF di bawah baris ini menggambarkan design lama (Putty & Ink) dan tetap berlaku untuk branch `rollback-design`.
 
@@ -51,10 +55,12 @@
 
 | Branch | Design | Status |
 |--------|--------|--------|
-| `clevecode-skin` ⭐ | Console CleveCode | LIVE di Vercel |
+| `rollback-design` ⭐ | Console CleveCode | Sama dengan `clevecode-skin`, LIVE di Vercel |
+| `clevecode-skin` | Console CleveCode | Branch kerja design aktif |
 | `apple-gallery` | Apple-stage gelap | Tersimpan, pernah LIVE |
-| `rollback-design` ⭐ | Renaissance Putty & Ink | LIVE di Vercel |
 | `main` | Slate & Lime (Trigger.dev re-skin) | Tersimpan, belum di-deploy ulang |
+
+> Belum di-push ke GitHub. `rollback-design` lokal unggul 24 commit dari `origin/rollback-design`, `main` unggul 17 dari `origin/main`. Push butuh token dari owner.
 
 > `git checkout rollback-design` → design lama (putty `#c4c3b6`, Playfair, notched card, grain).<br>
 > `git checkout main` → design baru (slate `#1c1e21`, Geist, lime `#a8ff53`, code pane).
