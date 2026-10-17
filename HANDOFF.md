@@ -1,6 +1,6 @@
 # 📜 HANDOFF — Khamim Portfolio (Renaissance Gallery)
 
-> **Status:** Design baru (Apple-stage, gelap) sudah selesai di branch `apple-gallery`, BELUM di-merge dan BELUM di-deploy. `rollback-design` masih yang LIVE.
+> **Status:** Design baru (Apple-stage, gelap) LIVE di produksi sejak 18 Okt 2026. Branch `apple-gallery` belum di-merge ke `rollback-design`.
 > **Tanggal update:** 18 Okt 2026.
 
 ---
@@ -14,7 +14,9 @@
 - Test: `npm test` (36 test, tanpa dependensi baru).
 - Yang berubah: palet jadi monokrom plus satu accent Apple Blue `#0071e3`, semua font Inter (Playfair dilepas), Ticker dan panel School of Athens dihapus, ikon dan OG dibuat ulang gelap.
 - Belum selesai: click-through di perangkat nyata (R-35) dan persetujuan baris hero.
-- Kalau owner setuju: `git checkout apple-gallery && vercel --prod --yes`.
+- Live: https://khamimzar.my.id (alias `khamim-portfolio.vercel.app`).
+- Kalau perlu balik ke design lama: promote ulang deployment `rollback-design` di dashboard Vercel, atau `git checkout rollback-design && vercel --prod --yes`.
+- Catatan build: aset raster ikon dan OG harus RGBA, karena Turbopack di Vercel menolak PNG RGB di dalam `favicon.ico` (webpack lokal tidak komplain).
 
 > Catatan: seluruh isi HANDOFF di bawah baris ini menggambarkan design lama (Putty & Ink) dan tetap berlaku untuk branch `rollback-design`.
 
@@ -40,7 +42,7 @@
 
 | Branch | Design | Status |
 |--------|--------|--------|
-| `apple-gallery` | Apple-stage gelap (BARU) | Selesai, belum di-merge, belum di-deploy |
+| `apple-gallery` | Apple-stage gelap (BARU) | LIVE di Vercel |
 | `rollback-design` ⭐ | Renaissance Putty & Ink | LIVE di Vercel |
 | `main` | Slate & Lime (Trigger.dev re-skin) | Tersimpan, belum di-deploy ulang |
 
