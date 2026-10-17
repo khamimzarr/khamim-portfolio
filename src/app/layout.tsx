@@ -1,39 +1,31 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-const davinci = Playfair_Display({
-  variable: "--font-davinci",
+const inter = Inter({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const helveticaNow = Inter({
-  variable: "--font-helvetica-now",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "600"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://khamimzar.my.id"),
   title: {
-    default: "KHAMIM ZARKASYI — Renaissance Folio",
-    template: "%s — Khamim Zarkasyi",
+    default: "Khamim Zarkasyi · Karya dan Hobi",
+    template: "%s · Khamim Zarkasyi",
   },
   description:
-    "Portfolio pribadi Khamim Zarkasyi — foto hal random, bersepeda, merawat tanaman & ikan hias, vibes coding, ngopi sambil ngerjain project. Renaissance gallery on putty paper.",
+    "Portfolio Khamim Zarkasyi. Empat project yang sudah live dan enam kebiasaan harian: foto hal random, bersepeda, merawat tanaman, aquarium, vibes coding, dan ngopi sambil ngerjain project.",
   keywords: [
     "Khamim Zarkasyi",
     "portfolio",
     "frontend developer",
-    "Renaissance",
-    "putty",
+    "Next.js",
     "Indonesia",
-    "vibes coding",
+    "karya",
   ],
   authors: [{ name: "Khamim Zarkasyi", url: "https://github.com/khamimzarr" }],
   creator: "Khamim Zarkasyi",
@@ -48,20 +40,19 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    title: "KHAMIM ZARKASYI — Renaissance Folio",
+    title: "Khamim Zarkasyi · Karya dan Hobi",
     description:
-      "A Renaissance gallery portfolio — warm putty, ink black, classical souls. Foto, sepeda, tanaman, aquarium, vibes coding & ngopi.",
+      "Empat project yang sudah live dan enam kebiasaan harian, dipajang di satu panggung gelap.",
     url: "https://khamimzar.my.id",
     siteName: "Khamim Zarkasyi",
     locale: "id_ID",
     type: "website",
-    images: [{ url: "/og/og-cover.png", width: 1200, height: 630, alt: "KHAMIM ZARKASYI — Renaissance Folio" }],
+    images: [{ url: "/og/og-cover.png", width: 1200, height: 630, alt: "Khamim Zarkasyi" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "KHAMIM ZARKASYI — Renaissance Folio",
-    description:
-      "A Renaissance gallery portfolio — warm putty, ink black, classical souls.",
+    title: "Khamim Zarkasyi · Karya dan Hobi",
+    description: "Empat project yang sudah live dan enam kebiasaan harian.",
     images: ["/og/og-cover.png"],
   },
   robots: {
@@ -78,8 +69,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={`${davinci.variable} ${helveticaNow.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#c4c3b6]">
+    <html lang="id" className={`${inter.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-[#000000]">
         {children}
         <Analytics />
         <SpeedInsights />
