@@ -2,10 +2,9 @@
 import { useEffect, useRef, useState } from "react";
 import useReducedMotion from "./useReducedMotion";
 
-type Line = { prompt: boolean; text: string };
-
 /* Isi terminal = spesifikasi kerja, bukan data diri.
-   Format neofetch: label rata kiri, nilai sejajar karena font mono. */
+   Format neofetch: label di kolom kiri, nilai di kolom kanan. Di layar HP
+   nilai membungkus di kolomnya sendiri, jadi label tidak ikut terpotong. */
 const SPECS = [
   ["OS / Host", "Web Runtime / khamimzar.my.id"],
   ["Stack", "TypeScript · Next.js · Node.js · Tailwind"],
@@ -14,37 +13,31 @@ const SPECS = [
   ["Status", "Available for builds & collaborations"],
 ] as const;
 
-const SPEC_WIDTH = Math.max(...SPECS.map(([key]) => key.length)) + 2;
-const specLine = ([key, value]: readonly [string, string]) => key.padEnd(SPEC_WIDTH) + value;
-
-const TRANSCRIPT: Line[] = [
-  { prompt: true, text: "neofetch" },
-  ...SPECS.map((spec) => ({ prompt: false, text: specLine(spec) })),
-];
-
+const COMMAND = "neofetch";
 const PROMPT = "khamim@folio:~$ ";
 
-/* Typing rhythm: commands type slowly, output lands at once, like a real session. */
+/* Typing rhythm: perintah diketik pelan, baris output muncul berurutan. */
 const TYPE_MS = 45;
-const OUTPUT_PAUSE_MS = 180;
-const LINE_PAUSE_MS = 420;
+const LINE_PAUSE_MS = 160;
 const START_DELAY_MS = 400;
-
-function fullLine(entry: Line) {
-  return (entry.prompt ? PROMPT : "") + entry.text;
-}
-
-const PLAIN_TRANSCRIPT = TRANSCRIPT.map(fullLine).join("\n");
 
 const escapeHtml = (value: string) =>
   value.replace(/[&<>]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[char] as string);
 
+/* Cadangan tanpa JavaScript: markup yang sama, tanpa animasi. */
+const NOSCRIPT_HTML = `<pre class="mono m-0 overflow-x-auto p-4 text-[11px] leading-[1.7] text-[#c0c0c8] sm:text-[12.5px]">${escapeHtml(
+  PROMPT + COMMAND,
+)}
+${SPECS.map(([key, value]) => `${escapeHtml(key.padEnd(11))}${escapeHtml(value)}`).join("\n")}</pre>`;
+
 export default function Terminal() {
   const reduced = useReducedMotion();
   const [started, setStarted] = useState(false);
-  const [line, setLine] = useState(0);
   const [chars, setChars] = useState(0);
+  const [rows, setRows] = useState(0);
   const host = useRef<HTMLDivElement>(null);
+
+  const commandDone = chars >= COMMAND.length;
 
   useEffect(() => {
     const el = host.current;
@@ -64,43 +57,23 @@ export default function Terminal() {
 
   useEffect(() => {
     if (reduced) {
-      setLine(TRANSCRIPT.length);
-      setChars(0);
+      setChars(COMMAND.length);
+      setRows(SPECS.length);
       return;
     }
-    if (!started || line >= TRANSCRIPT.length) return;
+    if (!started) return;
 
-    const entry = TRANSCRIPT[line];
-    const full = fullLine(entry);
-
-    if (!entry.prompt) {
-      const timer = setTimeout(() => {
-        setLine((l) => l + 1);
-        setChars(0);
-      }, OUTPUT_PAUSE_MS);
-      return () => clearTimeout(timer);
-    }
-
-    if (chars < full.length) {
+    if (chars < COMMAND.length) {
       const delay = chars === 0 ? START_DELAY_MS : TYPE_MS;
       const timer = setTimeout(() => setChars((c) => c + 1), delay);
       return () => clearTimeout(timer);
     }
 
-    const timer = setTimeout(() => {
-      setLine((l) => l + 1);
-      setChars(0);
-    }, LINE_PAUSE_MS);
-    return () => clearTimeout(timer);
-  }, [reduced, started, line, chars]);
-
-  const visible = TRANSCRIPT.slice(0, line).map(fullLine);
-  if (line < TRANSCRIPT.length) {
-    const entry = TRANSCRIPT[line];
-    const full = fullLine(entry);
-    if (entry.prompt && chars > 0) visible.push(full.slice(0, chars));
-    if (!entry.prompt && chars > 0) visible.push(full);
-  }
+    if (rows < SPECS.length) {
+      const timer = setTimeout(() => setRows((r) => r + 1), LINE_PAUSE_MS);
+      return () => clearTimeout(timer);
+    }
+  }, [reduced, started, chars, rows]);
 
   return (
     <div ref={host} className="panel overflow-hidden">
@@ -110,22 +83,29 @@ export default function Terminal() {
         <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
         <span className="eyebrow ml-2">khamim@folio: ~</span>
       </div>
-      <pre
+      <div
         tabIndex={0}
-        aria-label="Spesifikasi dev environment: stack, tooling, dan fokus kerja Khamim"
-        className="terminal-live mono m-0 min-h-[240px] overflow-x-auto whitespace-pre-wrap p-4 text-[12.5px] leading-[1.75] text-[#c0c0c8] focus-visible:outline-2 focus-visible:outline-[#b8f050]"
+        role="group"
+        aria-label="Spesifikasi runtime: stack, tooling, dan fokus kerja Khamim"
+        className="terminal-live mono min-h-[240px] p-4 text-[11px] leading-[1.7] text-[#c0c0c8] focus-visible:outline-2 focus-visible:outline-[#b8f050] sm:text-[12.5px] sm:leading-[1.75]"
       >
-        {visible.join("\n")}
-        <span className="caret" />
-      </pre>
+        <p className="m-0 break-words">
+          <span className="text-[#8a8a94]">{PROMPT}</span>
+          {COMMAND.slice(0, chars)}
+          {!commandDone ? <span className="caret" /> : null}
+        </p>
+        <dl className="mt-2 grid grid-cols-[74px_1fr] gap-x-3 gap-y-0.5 sm:grid-cols-[88px_1fr]">
+          {SPECS.slice(0, rows).map(([key, value]) => (
+            <div key={key} className="contents">
+              <dt className="text-[#8a8a94]">{key}</dt>
+              <dd className="m-0 break-words text-[#c0c0c8]">{value}</dd>
+            </div>
+          ))}
+        </dl>
+        {commandDone && rows >= SPECS.length ? <span className="caret mt-1 inline-block" /> : null}
+      </div>
       {/* Tanpa JavaScript animasinya tidak pernah jalan, jadi transkrip utuh tampil sebagai teks biasa */}
-      <noscript
-        dangerouslySetInnerHTML={{
-          __html: `<pre class="mono m-0 overflow-x-auto whitespace-pre-wrap p-4 text-[12.5px] leading-[1.75] text-[#c0c0c8]">${escapeHtml(
-            PLAIN_TRANSCRIPT,
-          )}</pre>`,
-        }}
-      />
+      <noscript dangerouslySetInnerHTML={{ __html: NOSCRIPT_HTML }} />
     </div>
   );
 }

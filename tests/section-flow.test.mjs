@@ -50,6 +50,27 @@ test("01 Terminal fokus ke stack dan tooling, bukan data diri atau daftar projec
   }
 });
 
+test("judul section dan label hero sesuai revisi terakhir", () => {
+  assert.ok(page.includes('title="Runtime Environment"'), "judul 01 bukan Runtime Environment");
+  assert.ok(page.includes('title="Selected Deployments"'), "judul 02 bukan Selected Deployments");
+  assert.ok(!page.includes("Dev environment, versi terminal."), "judul lama 01 masih ada");
+  assert.ok(!page.includes("Kode yang sudah dipajang"), "judul lama 02 masih ada");
+  assert.ok(/<p className="eyebrow">Builder<\/p>/.test(page), "label hero bukan Builder");
+  assert.ok(!/>Profile</.test(page), "label PROFILE masih ada");
+  assert.ok(page.includes(">WEB RUNTIME<"), "subtext hero bukan WEB RUNTIME");
+  assert.ok(!page.includes("BASED: INDONESIA"), "subtext lama hero masih ada");
+});
+
+test("terminal mobile memakai key-value dua kolom, bukan teks pre yang membungkus paksa", () => {
+  // Pre + padEnd bikin nilai panjang terlipat di tengah kata pada layar HP.
+  assert.ok(!/<pre[\s\S]{0,400}terminal-live/.test(terminal), "terminal masih memakai <pre>");
+  assert.ok(/<dl[^>]*grid-cols-\[74px_1fr\]/.test(terminal), "label dan nilai belum jadi grid dua kolom");
+  assert.ok(terminal.includes("sm:grid-cols-[88px_1fr]"), "grid belum melebar di layar besar");
+  assert.ok(/text-\[11px\][^"]*sm:text-\[12\.5px\]/.test(terminal), "ukuran font terminal belum compact di mobile");
+  assert.ok(terminal.includes("break-words"), "nilai tidak boleh memotong kata");
+  assert.ok(/<dt className="text-\[#8a8a94\]">/.test(terminal) && /<dd className="m-0 break-words/.test(terminal), "pasangan dt/dd hilang");
+});
+
 test("02 Karya: satu kartu memuat preview, nama, stack, deskripsi, dan dua tombol", () => {
   const start = page.indexOf("const projects = [");
   const block = page.slice(start, page.indexOf("];", start));

@@ -21,7 +21,7 @@ test("layout membawa cadangan noscript untuk browser tanpa scripting media query
 test("terminal menampilkan transkrip utuh tanpa JavaScript", () => {
   assert.ok(/terminal-live/.test(terminal), "pre animasi tidak ditandai terminal-live");
   assert.ok(/<noscript/.test(terminal), "terminal tidak punya cadangan noscript");
-  assert.ok(terminal.includes("PLAIN_TRANSCRIPT"), "cadangan tidak memakai transkrip utuh");
+  assert.ok(terminal.includes("NOSCRIPT_HTML"), "cadangan tidak memakai transkrip utuh");
   // Isi transkrip sekarang spesifikasi kerja, jadi yang dijaga adalah baris spec-nya.
   for (const field of ["OS / Host", "Stack", "Tools", "Focus", "Status"]) {
     assert.ok(terminal.includes(field), `transkrip kehilangan ${field}`);
