@@ -29,3 +29,12 @@ test("icon.png dan apple-icon.png RGBA", () => {
     assert.equal(types[0], 6, `${file} is not RGBA`);
   }
 });
+
+test("og-cover.png berukuran 1200x630", () => {
+  // Ukuran yang diharapkan og:image dan twitter summary_large_image. Kalau
+  // meleset, platform memotongnya sendiri dengan cara yang tidak terduga.
+  const buf = readFileSync("public/og/og-cover.png");
+  const i = buf.indexOf(PNG_SIG);
+  assert.equal(buf.readUInt32BE(i + 16), 1200, "lebar og-cover bukan 1200");
+  assert.equal(buf.readUInt32BE(i + 20), 630, "tinggi og-cover bukan 630");
+});
