@@ -30,6 +30,11 @@ function fullLine(entry: Line) {
   return (entry.prompt ? PROMPT : "") + entry.text;
 }
 
+const PLAIN_TRANSCRIPT = TRANSCRIPT.map(fullLine).join("\n");
+
+const escapeHtml = (value: string) =>
+  value.replace(/[&<>]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[char] as string);
+
 export default function Terminal() {
   const reduced = useReducedMotion();
   const [started, setStarted] = useState(false);
@@ -104,11 +109,19 @@ export default function Terminal() {
       <pre
         tabIndex={0}
         aria-label="Terminal ringkasan karya Khamim"
-        className="mono m-0 min-h-[240px] overflow-x-auto whitespace-pre-wrap p-4 text-[12.5px] leading-[1.75] text-[#c0c0c8] focus-visible:outline-2 focus-visible:outline-[#b8f050]"
+        className="terminal-live mono m-0 min-h-[240px] overflow-x-auto whitespace-pre-wrap p-4 text-[12.5px] leading-[1.75] text-[#c0c0c8] focus-visible:outline-2 focus-visible:outline-[#b8f050]"
       >
         {visible.join("\n")}
         <span className="caret" />
       </pre>
+      {/* Tanpa JavaScript animasinya tidak pernah jalan, jadi transkrip utuh tampil sebagai teks biasa */}
+      <noscript
+        dangerouslySetInnerHTML={{
+          __html: `<pre class="mono m-0 overflow-x-auto whitespace-pre-wrap p-4 text-[12.5px] leading-[1.75] text-[#c0c0c8]">${escapeHtml(
+            PLAIN_TRANSCRIPT,
+          )}</pre>`,
+        }}
+      />
     </div>
   );
 }

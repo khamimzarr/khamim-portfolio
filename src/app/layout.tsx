@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s · Khamim Zarkasyi",
   },
   description:
-    "Portfolio Khamim Zarkasyi. Empat project yang sudah live dan enam kebiasaan harian: foto hal random, bersepeda, merawat tanaman, aquarium, vibes coding, dan ngopi sambil ngerjain project.",
+    "Portfolio Khamim Zarkasyi: empat project live dan enam kebiasaan harian — foto hal random, bersepeda, tanaman, aquarium, coding, dan ngopi.",
   keywords: [
     "Khamim Zarkasyi",
     "portfolio",
@@ -74,11 +74,50 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#080808",
+  colorScheme: "dark",
+};
+
+/** Data terstruktur supaya mesin pencari tahu ini halaman orang, bukan halaman toko. */
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://khamimzar.my.id/#person",
+      name: "Khamim Zarkasyi",
+      url: "https://khamimzar.my.id",
+      email: "mailto:khamimzarrr@gmail.com",
+      jobTitle: "Frontend Developer",
+      knowsAbout: ["JavaScript", "TypeScript", "Next.js", "React"],
+      sameAs: ["https://github.com/khamimzarr", "https://instagram.com/bukann_bapakmu"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://khamimzar.my.id/#website",
+      url: "https://khamimzar.my.id",
+      name: "Khamim Zarkasyi · Karya dan Hobi",
+      inLanguage: "id-ID",
+      publisher: { "@id": "https://khamimzar.my.id/#person" },
+    },
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id" className={`${sans.variable} ${mono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#080808]">
         {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: "<style>.reveal{opacity:1;transform:none}.terminal-live{display:none}</style>",
+          }}
+        />
         <Analytics />
         <SpeedInsights />
       </body>

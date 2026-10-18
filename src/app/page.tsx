@@ -136,7 +136,7 @@ export default function Home() {
                       href={p.vercel}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mono text-[12px] tracking-[0.04em] text-[#b8f050] underline underline-offset-4"
+                      className="link-action mono text-[12px] tracking-[0.04em] text-[#b8f050] underline underline-offset-4"
                     >
                       live ↗
                     </a>
@@ -144,7 +144,7 @@ export default function Home() {
                       href={p.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mono text-[12px] tracking-[0.04em] text-[#8a8a94] underline underline-offset-4"
+                      className="link-action mono text-[12px] tracking-[0.04em] text-[#8a8a94] underline underline-offset-4"
                     >
                       github
                     </a>
@@ -165,7 +165,8 @@ export default function Home() {
                       src={v.img}
                       alt={`${v.title}, foto asli Khamim`}
                       fill
-                      sizes="(max-width: 768px) 50vw, 33vw"
+                      quality={68}
+                      sizes="(max-width: 768px) 45vw, (max-width: 1200px) 30vw, 325px"
                       className="object-cover"
                     />
                   </div>
@@ -244,7 +245,8 @@ export default function Home() {
                     src="/hobi/foto-bunga.jpg"
                     alt="Foto asli, bunga di halaman"
                     fill
-                    sizes="(max-width: 768px) 100vw, 45vw"
+                    quality={68}
+                    sizes="(max-width: 768px) 92vw, (max-width: 1200px) 45vw, 490px"
                     className="object-cover"
                   />
                 </div>
