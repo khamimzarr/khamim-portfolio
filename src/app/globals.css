@@ -176,6 +176,13 @@ body {
   color: var(--color-accent-ink);
 }
 
+/* Link kecil di dalam kartu karya tetap punya tinggi sentuh 44px, biar nyaman di HP */
+.link-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
 .caret {
   display: inline-block;
   width: 8px;
@@ -241,6 +248,14 @@ body {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+/* Tanpa JavaScript tidak ada yang menambah .in-view, jadi panel harus tetap terbaca.
+   Ini pengaman utama untuk browser yang paham media query `scripting`;
+   cadangan untuk sisanya ada di <noscript> pada layout dan komponen Terminal. */
+@media (scripting: none) {
+  .reveal { opacity: 1; transform: none; }
+  .terminal-live { display: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 const css = readFileSync("src/app/globals.css", "utf8");
+const sidebar = readFileSync("src/components/Sidebar.tsx", "utf8");
 
 function token(name) {
   const match = css.match(new RegExp(`--color-${name}:\\s*(#[0-9a-fA-F]{6})`));
@@ -38,4 +39,11 @@ test("semua pasangan teks CleveCode lolos WCAG AA (4.5:1)", () => {
     const r = ratio(token(fg), token(bg));
     assert.ok(r >= 4.5, `${fg} on ${bg} = ${r.toFixed(2)}, below 4.5`);
   }
+});
+
+test("baris nav tidak lagi ditumpuk opacity", () => {
+  // --color-dim di atas --color-surface hanya 6.17:1. Satu langkah opacity 0.7 menjatuhkannya
+  // ke 3.20:1 dan gagal AA — ini yang dulu dilaporkan Lighthouse untuk angka nav 02/03/04.
+  const rows = sidebar.slice(sidebar.indexOf("const sections"), sidebar.indexOf("const links"));
+  assert.ok(!/opacity-\d/.test(rows), "baris nav masih memakai utilitas opacity");
 });

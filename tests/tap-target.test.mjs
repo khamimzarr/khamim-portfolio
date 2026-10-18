@@ -23,3 +23,12 @@ test("terminal punya fokus keyboard terlihat", () => {
   const terminal = readFileSync("src/components/Terminal.tsx", "utf8");
   assert.ok(/focus-visible|aria-label|tabIndex/.test(terminal), "terminal has no keyboard affordance");
 });
+
+test("tautan kecil di kartu karya tetap 44px tingginya", () => {
+  const rows = page.slice(page.indexOf("projects.map"));
+  assert.equal((rows.match(/link-action/g) || []).length, 2, "kedua tautan kartu harus memakai .link-action");
+
+  const css = readFileSync("src/app/globals.css", "utf8").replace(/\s+/g, " ");
+  assert.ok(/\.link-action\s*\{[^}]*min-height:\s*44px/.test(css), ".link-action di bawah 44px");
+  assert.ok(/\.link-action\s*\{[^}]*display:\s*inline-flex/.test(css), ".link-action bukan inline-flex");
+});

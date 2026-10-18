@@ -66,7 +66,7 @@ export default function Sidebar() {
           onClick={() => setOpen(false)}
           className="nav-row"
         >
-          <span className="w-5 text-[11px] opacity-70">{s.index}</span>
+          <span className="w-5 text-[11px]">{s.index}</span>
           <span>{s.label}</span>
         </a>
       ))}
@@ -83,7 +83,7 @@ export default function Sidebar() {
           onClick={() => setOpen(false)}
           className="nav-row"
         >
-          <span className="w-5 text-[11px] opacity-70">↗</span>
+          <span className="w-5 text-[11px]">↗</span>
           <span>{l.label}</span>
         </a>
       ))}
