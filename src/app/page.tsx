@@ -71,7 +71,7 @@ function SectionHead({
         {index} / {label}
       </p>
       {title ? (
-        <h2 className="mt-3 text-[26px] font-medium leading-[1.15] tracking-[-0.01em] text-[#e8e8ee] md:text-[34px]">
+        <h2 className="display mt-3 text-[26px] leading-[1.15] text-[#e8e8ee] md:text-[34px]">
           {title}
         </h2>
       ) : null}
@@ -95,11 +95,9 @@ export default function Home() {
 
             <div className="panel mt-8 flex flex-col justify-between gap-6 p-5 md:flex-row md:items-center md:p-6">
               <div>
-                <p className="eyebrow">Profile</p>
-                <p className="mt-2 text-[22px] leading-[1.2] text-[#e8e8ee]">Khamim Zarkasyi</p>
-                <p className="mono mt-2 text-[12px] tracking-[0.04em] text-[#8a8a94]">
-                  BASED: INDONESIA · EST. 2026 · KARYA
-                </p>
+                <p className="eyebrow">Builder</p>
+                <p className="display mt-2 text-[22px] leading-[1.2] text-[#e8e8ee]">Khamim Zarkasyi</p>
+                <p className="mono mt-2 text-[12px] tracking-[0.04em] text-[#8a8a94]">WEB RUNTIME</p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <a href="mailto:khamimzarrr@gmail.com" className="btn-accent min-h-[44px] px-4">
@@ -119,7 +117,7 @@ export default function Home() {
 
           {/* 01 Terminal: dev environment, bukan data diri */}
           <section id="terminal" className="scroll-mt-16 pt-16">
-            <SectionHead index="01" label="Terminal" title="Dev environment, versi terminal." />
+            <SectionHead index="01" label="Terminal" title="Runtime Environment" />
             <Reveal className="mt-6">
               <Terminal />
             </Reveal>
@@ -127,7 +125,7 @@ export default function Home() {
 
           {/* 02 Karya: satu kartu = satu project, lengkap dengan tangkapan layar */}
           <section id="karya" className="scroll-mt-16 pt-16">
-            <SectionHead index="02" label="Karya" title="Kode yang sudah dipajang" />
+            <SectionHead index="02" label="Karya" title="Selected Deployments" />
             <div className="mt-6 grid gap-3 md:grid-cols-2">
               {projects.map((p, i) => (
                 <article key={p.name} className="tile flex flex-col overflow-hidden">
@@ -157,7 +155,7 @@ export default function Home() {
                         ))}
                       </ul>
                     </div>
-                    <h3 className="text-[22px] leading-[1.2] text-[#e8e8ee]">{p.name}</h3>
+                    <h3 className="display text-[22px] leading-[1.2] text-[#e8e8ee]">{p.name}</h3>
                     <p className="text-[15px] leading-[1.6] text-[#c0c0c8]">{p.desc}</p>
                     <div className="mt-auto flex flex-wrap items-center gap-2 pt-2">
                       <a

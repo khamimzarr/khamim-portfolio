@@ -66,6 +66,7 @@
   --color-accent: #b8f050;
   --color-accent-ink: #08080a;
   --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-space-grotesk);
   --font-mono: var(--font-geist-mono);
   --radius-cards: 4px;
   --radius-buttons: 4px;
@@ -89,6 +90,14 @@ body {
 }
 
 .mono { font-family: var(--font-mono); }
+
+/* Judul section, judul project, dan nama di hero memakai Space Grotesk.
+   Body copy tetap Geist Sans, terminal & log tetap monospace. */
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
 
 /* Full-page background: one calm dot grid, like blueprint paper under the console.
    Static, no animation, and it only shows in the gaps between opaque panels. */

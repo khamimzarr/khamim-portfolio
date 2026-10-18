@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -8,6 +8,15 @@ const sans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
   weight: ["400", "500"],
+  display: "swap",
+});
+
+/* Judul dan nama project: geometris dan sedikit lebih tegas dari body,
+   tapi tetap satu keluarga visual dengan Geist. */
+const display = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  weight: ["500", "600"],
   display: "swap",
 });
 
@@ -106,7 +115,7 @@ const structuredData = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={`${sans.variable} ${mono.variable} h-full antialiased`}>
+    <html lang="id" className={`${sans.variable} ${display.variable} ${mono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#080808]">
         {children}
         <script
