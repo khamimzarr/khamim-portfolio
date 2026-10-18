@@ -36,6 +36,33 @@
 
 ---
 
+## Preview-first (aturan tetap, semua project)
+
+Owner memeriksa hasil dari HP, jadi setiap perubahan tampilan disajikan sebagai **URL preview Vercel**, bukan `localhost`. `localhost` cuma untuk pemeriksaan sendiri; yang dikirim ke owner selalu tautan yang bisa dibuka sekali klik.
+
+Langkahnya, tiap langkah punya batas selesai:
+
+1. **Test dan build lokal hijau.** `npm test` dan `npm run build` lulus dulu. Selesai kalau tidak ada test merah dan build mengeluarkan halaman static yang diharapkan.
+2. **Naikkan preview.** Dari folder project jalankan `vercel --yes` (tanpa `--prod`). Selesai kalau output memuat `"readyState": "READY"` dan satu URL preview.
+3. **Buktikan URL itu memuat build terbaru.** `curl` URL preview dan cari satu penanda yang hanya ada di perubahan ini, sekaligus pastikan penanda versi lama hilang. Selesai kalau penanda baru ada dan penanda lama nol. Langkah ini yang menangkap kasus preview lama masih tersaji.
+4. **Kirim URL-nya ke owner** di pesan yang sama dengan ringkasan perubahan. Selesai kalau owner punya satu tautan yang bisa langsung dibuka di HP.
+5. **Prod menunggu aba-aba.** Prod berubah hanya setelah owner bilang gas, dengan `vercel --prod --yes`. Setelah itu cek domain utama sekali lagi dan laporkan buktinya.
+
+Detail yang berguna:
+
+- URL preview bersifat permanen per deployment, dan tiap branch juga punya URL sendiri seperti `<project>-git-<branch>-<team>.vercel.app` yang selalu mengikuti commit terbaru branch itu.
+- Preview tidak diproteksi, jadi siapa pun yang punya link bisa melihat design yang belum jadi.
+
+### Gotcha: push ke production branch sama dengan deploy produksi
+
+Kalau project Vercel tersambung ke GitHub, push ke production branch (biasanya `main`) otomatis membangun produksi dan **mengambil alih alias domain**, menimpa deployment yang barusan kita promote manual. Ini pernah membuat situs `khamim-portfolio` balik ke design lama pada 18 Okt 2026.
+
+Karena itu, sebelum push ke `main`, pastikan isi branch itu memang design yang ingin live. Cek siapa pemegang alias dengan `vercel inspect <url>` dan lihat bagian `Aliases`; deployment dari Git punya penanda `-git-<branch>-` di salah satu aliasnya.
+
+Balik ke design sebelumnya: `vercel ls`, lalu promote ulang deployment lamanya di dashboard, atau `git checkout <tag> && vercel --prod --yes`.
+
+---
+
 ## Prasyarat
 
 - Node `v26`, **Vercel sudah terintegrasi penuh** — `vercel whoami` langsung `khamimzar-2499` di team `voiddarkfire` (skip `vercel login`, langsung `vercel --prod --yes` + `vercel blob create-store`)
