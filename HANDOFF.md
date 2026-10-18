@@ -11,7 +11,8 @@
 - Palet: kanvas `#080808`, permukaan `#0e0e10`, kartu `#141417`, hairline `#1e1e22`, teks `#c0c0c8`, redup `#8a8a94`, accent lime `#b8f050`.
 - Font: Geist untuk teks, Geist Mono untuk label, angka, nav, dan tombol. Radius 3 sampai 4px, flat tanpa shadow.
 - Isi: sidebar bergrup (01 Terminal, 02 Karya, 03 Exhibition, 04 Tentang, plus grup Links), hero dengan card PROFILE dan tombol **Kontak**, Terminal (animasi ketik), Karya (4 project), Exhibition (6 foto), Tentang (diagram routing dengan mesh backdrop, panel DATA, foto still life). Footer sudah dihapus atas permintaan owner.
-- Test: `npm test` (39 test, tanpa dependensi baru).
+- Background: **dot grid full-page** lewat `.dot-grid` di `src/app/globals.css` (titik `radial-gradient` `#2a2a30`, jarak 24px, statis tanpa animasi, `pointer-events: none`). Dipasang satu layer `absolute inset-0` di `page.tsx`, konten utama `relative z-10`. Panel/kartu tetap solid, jadi titik cuma muncul di celah antar section. Guard: `tests/background.test.mjs`.
+- Test: `npm test` (42 test, tanpa dependensi baru).
 - Catatan: aturan antislop soal fake terminal di-override atas permintaan owner.
 - Live: https://khamimzar.my.id (alias `khamim-portfolio.vercel.app`).
 - Rollback: promote ulang deployment `apple-gallery` atau `rollback-design` di dashboard Vercel, atau `git checkout <branch> && vercel --prod --yes`.
@@ -60,7 +61,7 @@ Rollback ke design mana pun: `git checkout <tag> && vercel --prod --yes`, atau p
 | `clevecode-skin` | Console CleveCode | Branch kerja |
 | `apple-gallery` | Apple-stage gelap | Tersimpan, pernah LIVE |
 
-> Semua branch di atas (kecuali `apple-gallery`) menunjuk ke commit yang sama, `567a789`.
+> Semua branch di atas (kecuali `apple-gallery`) menunjuk ke commit yang sama, `34485d1`.
 
 ### ⚠️ Penting: Vercel tersambung ke GitHub
 

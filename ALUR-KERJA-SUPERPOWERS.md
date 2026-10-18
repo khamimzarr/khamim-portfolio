@@ -63,6 +63,22 @@ Balik ke design sebelumnya: `vercel ls`, lalu promote ulang deployment lamanya d
 
 ---
 
+## Penutup Sesi — Perbarui .md (aturan tetap)
+
+Saat owner bilang **"selesai"**, **"sudahi"**, **"stop"**, atau sejenisnya, sesi belum ditutup sebelum dokumentasi dibereskan. Jangan tunggu diminta.
+
+Yang diperbarui, singkat saja, jangan menulis ulang seluruh file:
+
+1. **`HANDOFF.md` (project)** — status branch, commit HEAD terakhir, fitur/perubahan yang barusan live, hasil test. Ini sumber kebenaran buat sesi berikutnya.
+2. **`ALUR-KERJA-SUPERPOWERS.md`** — hanya kalau ada aturan/proses baru yang perlu diingat lintas project.
+3. **`DESIGN.md` (project)** — hanya kalau keputusan visual berubah (token, palet, komponen), biar tidak drift dari kode.
+
+Batas selesai: dokumen sudah menyebut commit terakhir dan fitur terakhir, lalu di-commit dengan pesan `docs: ...` supaya ikut ter-push bersama kode.
+
+Contoh nyata (18 Okt 2026): setelah background dot grid live, `HANDOFF.md` ditambah baris Background + commit HEAD diperbarui ke `34485d1`, lalu di-commit.
+
+---
+
 ## Prasyarat
 
 - Node `v26`, **Vercel sudah terintegrasi penuh** — `vercel whoami` langsung `khamimzar-2499` di team `voiddarkfire` (skip `vercel login`, langsung `vercel --prod --yes` + `vercel blob create-store`)
