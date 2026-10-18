@@ -1,0 +1,53 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { existsSync, readFileSync, statSync } from "node:fs";
+
+const page = readFileSync("src/app/page.tsx", "utf8");
+const sidebar = readFileSync("src/components/Sidebar.tsx", "utf8");
+
+const OUTPUTS = [
+  { name: "hr-ai-review", live: "https://hr-ai-review-nine.vercel.app" },
+  { name: "ruang-resepsi", live: "https://ruang-resepsi.vercel.app" },
+  { name: "structur-md", live: "https://structur-md.vercel.app" },
+  { name: "dropdeploy", live: "https://dropdeploy.my.id" },
+];
+
+test("empat tangkapan layar project ada di public/output dan benar-benar JPEG", () => {
+  for (const o of OUTPUTS) {
+    const path = `public/output/${o.name}.jpg`;
+    assert.ok(existsSync(path), `tangkapan layar hilang: ${path}`);
+    const head = readFileSync(path).subarray(0, 3);
+    assert.deepEqual([...head], [0xff, 0xd8, 0xff], `${path} bukan JPEG`);
+  }
+});
+
+test("tangkapan layar tetap ringan", () => {
+  // Batas 150 KB per berkas: tanpa penjaga ini foto 300 KB gampang masuk lagi.
+  for (const o of OUTPUTS) {
+    const size = statSync(`public/output/${o.name}.jpg`).size;
+    assert.ok(size < 150 * 1024, `${o.name}.jpg ${Math.round(size / 1024)} KB, di atas 150 KB`);
+  }
+});
+
+test("tiap tile output bisa diklik ke situs live-nya", () => {
+  for (const o of OUTPUTS) {
+    assert.ok(page.includes(`/output/${o.name}.jpg`), `tile hilang: ${o.name}`);
+    assert.ok(page.includes(o.live), `tautan live hilang: ${o.name}`);
+  }
+  const links = page.match(/<a href=\{o\.live\}/g) || [];
+  assert.equal(links.length, 1, "tile output harus dibungkus satu tautan ke o.live");
+});
+
+test("section dan nav memakai nama Output, bukan Exhibition", () => {
+  assert.ok(page.includes('id="output"'), "section #output hilang");
+  assert.ok(page.includes('label="Output"'), "label section bukan Output");
+  assert.ok(sidebar.includes('label: "Output"'), "nav sidebar belum jadi Output");
+  assert.ok(!/exhibition/i.test(page + sidebar), "sisa kata Exhibition masih ada");
+});
+
+test("panel log berisi empat entri", () => {
+  const block = page.slice(page.indexOf("const log = ["), page.indexOf("];", page.indexOf("const log = [")));
+  const entries = block.match(/\{ hash: "/g) || [];
+  assert.equal(entries.length, 4, `panel log harus 4 entri, ada ${entries.length}`);
+  assert.ok(block.includes('hash: "a11y"'), "entri a11y hilang dari log");
+});

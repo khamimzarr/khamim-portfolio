@@ -9,10 +9,10 @@ const pkg = JSON.parse(readFileSync("package.json", "utf8"));
 
 const PROJECTS = ["hr-ai-review", "ruang-resepsi", "structur-md", "dropdeploy"];
 const LIVE = ["hr-ai-review-nine.vercel.app", "ruang-resepsi.vercel.app", "structur-md.vercel.app", "dropdeploy.my.id"];
-const PHOTOS = ["foto-random", "bersepeda", "tanaman", "ikan", "coding", "ngopi"];
+const OUTPUTS = ["hr-ai-review", "ruang-resepsi", "structur-md", "dropdeploy"];
 
 test("section console ada semua", () => {
-  for (const id of ["karya", "exhibition", "tentang", "terminal"]) {
+  for (const id of ["karya", "output", "tentang", "terminal"]) {
     assert.ok(page.includes(`id="${id}"`), `section missing: #${id}`);
   }
 });
@@ -32,12 +32,14 @@ test("empat karya nyata dengan tautan live", () => {
 });
 
 test("enam foto exhibition dan kontak tentang nyata", () => {
-  for (const f of PHOTOS) {
-    assert.ok(page.includes(`/hobi/${f}.jpg`), `photo missing: ${f}`);
+  for (const f of OUTPUTS) {
+    assert.ok(page.includes(`/output/${f}.jpg`), `screenshot missing: ${f}`);
   }
+  assert.ok(!page.includes("/hobi/"), "halaman masih menautkan foto hobi");
   assert.ok(/mailto:khamimzarrr@gmail\.com/.test(page), "email missing");
   assert.ok(page.includes("github.com/khamimzarr"), "github missing");
   assert.ok(page.includes("instagram.com/bukann_bapakmu"), "instagram missing");
+  assert.ok(page.includes("vercel.com/voiddarkfire"), "akun vercel missing");
 });
 
 test("terminal dibangun dari karya", () => {
@@ -48,7 +50,7 @@ test("terminal dibangun dari karya", () => {
 });
 
 test("sidebar menautkan section console", () => {
-  for (const id of ["karya", "exhibition", "tentang", "terminal"]) {
+  for (const id of ["karya", "output", "tentang", "terminal"]) {
     assert.ok(sidebar.includes(`id: "${id}"`), `sidebar missing target ${id}`);
     assert.ok(page.includes(`id="${id}"`), `page missing section ${id}`);
   }
@@ -66,10 +68,11 @@ test("teks Tentang yang lama sudah dihapus", () => {
   assert.ok(!/Seorang penjaga hal kecil/.test(page), "old heading still present");
   assert.ok(!/Halo, aku Khamim Zarkasyi/.test(page), "old paragraph still present");
   assert.ok(page.includes("RoutingDiagram"), "routing diagram should stay in Tentang");
-  assert.ok(page.includes("Still life, bunga di halaman Khamim"), "still life caption should stay");
+  assert.ok(!page.includes("Still life"), "foto still life seharusnya sudah diganti panel log");
+  assert.ok(page.includes("git log --oneline"), "panel log hilang dari Tentang");
 });
 
-test("card Data dan card foto memakai perlakuan yang sama", () => {
+test("card Data dan card log memakai perlakuan yang sama", () => {
   assert.ok(page.includes("items-stretch"), "grid does not stretch both cards to one height");
   assert.ok(!page.includes('className="tile p-2"'), "photo card still uses the old mismatched frame");
   const panelCards = page.match(/panel flex flex-col p-4 md:p-5/g) || [];
@@ -102,8 +105,9 @@ test("kalimat penjelas yang ditandai owner sudah dihapus", () => {
     assert.ok(!page.includes(s), `still present: ${s}`);
   }
   for (const title of ["Foto Hal Random", "Bersepeda", "Merawat Tanaman", "Ikan Hias & Aquarium", "Vibes Coding", "Ngopi + Nge-project"]) {
-    assert.ok(page.includes(title), `hobby title should stay: ${title}`);
+    assert.ok(!page.includes(title), `judul hobi seharusnya sudah hilang: ${title}`);
   }
+  assert.ok(!/Hobi|hobi/.test(page), "sisa kata hobi masih ada di halaman");
 });
 
 test("footer yang ditandai owner sudah dihapus", () => {

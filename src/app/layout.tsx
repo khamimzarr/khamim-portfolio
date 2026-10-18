@@ -21,11 +21,11 @@ const mono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://khamimzar.my.id"),
   title: {
-    default: "Khamim Zarkasyi · Karya dan Hobi",
+    default: "Khamim Zarkasyi · Karya",
     template: "%s · Khamim Zarkasyi",
   },
   description:
-    "Portfolio Khamim Zarkasyi: empat project live dan enam kebiasaan harian — foto hal random, bersepeda, tanaman, aquarium, coding, dan ngopi.",
+    "Portfolio Khamim Zarkasyi. Empat project Next.js yang sudah live, lengkap dengan tampilannya, kode sumber, dan catatan pengerjaannya.",
   keywords: [
     "Khamim Zarkasyi",
     "portfolio",
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    title: "Khamim Zarkasyi · Karya dan Hobi",
+    title: "Khamim Zarkasyi · Karya",
     description:
-      "Empat project yang sudah live dan enam kebiasaan harian, dipajang di satu konsol gelap.",
+      "Empat project live dan tampilannya, dipajang di satu konsol gelap.",
     url: "https://khamimzar.my.id",
     siteName: "Khamim Zarkasyi",
     locale: "id_ID",
@@ -58,8 +58,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Khamim Zarkasyi · Karya dan Hobi",
-    description: "Empat project yang sudah live dan enam kebiasaan harian.",
+    title: "Khamim Zarkasyi · Karya",
+    description: "Empat project live, lengkap dengan tampilannya.",
     images: ["/og/og-cover.png"],
   },
   robots: {
@@ -97,7 +97,7 @@ const structuredData = {
       "@type": "WebSite",
       "@id": "https://khamimzar.my.id/#website",
       url: "https://khamimzar.my.id",
-      name: "Khamim Zarkasyi · Karya dan Hobi",
+      name: "Khamim Zarkasyi · Karya",
       inLanguage: "id-ID",
       publisher: { "@id": "https://khamimzar.my.id/#person" },
     },

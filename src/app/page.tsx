@@ -5,13 +5,39 @@ import RoutingDiagram from "@/components/RoutingDiagram";
 import MeshBackdrop from "@/components/MeshBackdrop";
 import Terminal from "@/components/Terminal";
 
-const vignettes = [
-  { title: "Foto Hal Random", img: "/hobi/foto-random.jpg" },
-  { title: "Bersepeda", img: "/hobi/bersepeda.jpg" },
-  { title: "Merawat Tanaman", img: "/hobi/tanaman.jpg" },
-  { title: "Ikan Hias & Aquarium", img: "/hobi/ikan.jpg" },
-  { title: "Vibes Coding", img: "/hobi/coding.jpg" },
-  { title: "Ngopi + Nge-project", img: "/hobi/ngopi.jpg" },
+const outputs = [
+  {
+    name: "hr-ai-review",
+    shot: "/output/hr-ai-review.jpg",
+    live: "https://hr-ai-review-nine.vercel.app",
+    alt: "Tampilan hr-ai-review: hero dan kartu ATS Score",
+  },
+  {
+    name: "ruang-resepsi",
+    shot: "/output/ruang-resepsi.jpg",
+    live: "https://ruang-resepsi.vercel.app",
+    alt: "Tampilan ruang-resepsi: hero undangan digital",
+  },
+  {
+    name: "structur-md",
+    shot: "/output/structur-md.jpg",
+    live: "https://structur-md.vercel.app",
+    alt: "Tampilan structur-md: hero URL ke Markdown",
+  },
+  {
+    name: "dropdeploy",
+    shot: "/output/dropdeploy.jpg",
+    live: "https://dropdeploy.my.id",
+    alt: "Tampilan dropdeploy: hero tarik dan lepas .zip",
+  },
+];
+
+/* Diperbarui manual tiap ada perubahan besar, biar panelnya tetap jujur. */
+const log = [
+  { hash: "a11y", text: "kontras nav + konten tetap terbaca tanpa JS" },
+  { hash: "perf", text: "AVIF/WebP, quality 68, sizes diperbaiki" },
+  { hash: "sec", text: "CSP + header keamanan di semua path" },
+  { hash: "seo", text: "JSON-LD, manifest, theme-color" },
 ];
 
 const projects = [
@@ -90,7 +116,7 @@ export default function Home() {
                 <p className="eyebrow">Profile</p>
                 <p className="mt-2 text-[22px] leading-[1.2] text-[#e8e8ee]">Khamim Zarkasyi</p>
                 <p className="mono mt-2 text-[12px] tracking-[0.04em] text-[#8a8a94]">
-                  BASED: INDONESIA · EST. 2026 · KARYA & HOBI
+                  BASED: INDONESIA · EST. 2026 · KARYA
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
@@ -154,28 +180,33 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Exhibition */}
-          <section id="exhibition" className="scroll-mt-16 pt-16">
-            <SectionHead index="03" label="Exhibition" title="Enam ritual harian" />
-            <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3">
-              {vignettes.map((v, i) => (
-                <figure key={v.title} className="tile overflow-hidden">
-                  <div className="relative aspect-square overflow-hidden">
-                    <Image
-                      src={v.img}
-                      alt={`${v.title}, foto asli Khamim`}
-                      fill
-                      quality={68}
-                      sizes="(max-width: 768px) 45vw, (max-width: 1200px) 30vw, 325px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <figcaption className="p-4">
-                    <span className="mono text-[11px] tracking-[0.1em] text-[#8a8a94]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <p className="mt-1 text-[14px] leading-[1.3] text-[#e8e8ee]">{v.title}</p>
-                  </figcaption>
+          {/* Output */}
+          <section id="output" className="scroll-mt-16 pt-16">
+            <SectionHead index="03" label="Output" title="Empat project, dari layar aslinya" />
+            <div className="mt-6 grid gap-3 md:grid-cols-2">
+              {outputs.map((o, i) => (
+                <figure key={o.name} className="tile overflow-hidden">
+                  <a href={o.live} target="_blank" rel="noopener noreferrer" className="block">
+                    <div className="relative aspect-[16/10] overflow-hidden border-b border-[#1e1e22]">
+                      <Image
+                        src={o.shot}
+                        alt={o.alt}
+                        fill
+                        quality={68}
+                        sizes="(max-width: 768px) 92vw, (max-width: 1200px) 45vw, 490px"
+                        className="object-cover object-top"
+                      />
+                    </div>
+                    <figcaption className="flex items-center justify-between gap-3 p-4">
+                      <span className="flex items-baseline gap-3">
+                        <span className="mono text-[11px] tracking-[0.1em] text-[#8a8a94]">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span className="text-[14px] leading-[1.3] text-[#e8e8ee]">{o.name}</span>
+                      </span>
+                      <span className="mono text-[11px] tracking-[0.1em] text-[#b8f050]">live ↗</span>
+                    </figcaption>
+                  </a>
                 </figure>
               ))}
             </div>
@@ -222,7 +253,7 @@ export default function Home() {
                       </a>
                     </dd>
                   </div>
-                  <div className="flex justify-between gap-4">
+                  <div className="flex justify-between gap-4 border-b border-[#1e1e22] pb-3">
                     <dt className="text-[#8a8a94]">GITHUB</dt>
                     <dd>
                       <a
@@ -235,21 +266,38 @@ export default function Home() {
                       </a>
                     </dd>
                   </div>
+                  <div className="flex justify-between gap-4">
+                    <dt className="text-[#8a8a94]">VERCEL</dt>
+                    <dd>
+                      <a
+                        href="https://vercel.com/voiddarkfire/khamim-portfolio"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#b8f050] underline underline-offset-4"
+                      >
+                        voiddarkfire
+                      </a>
+                    </dd>
+                  </div>
                 </dl>
               </Reveal>
 
               <Reveal className="panel flex flex-col p-4 md:p-5">
-                <p className="eyebrow">Still life, bunga di halaman Khamim</p>
-                <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-[3px]">
-                  <Image
-                    src="/hobi/foto-bunga.jpg"
-                    alt="Foto asli, bunga di halaman"
-                    fill
-                    quality={68}
-                    sizes="(max-width: 768px) 92vw, (max-width: 1200px) 45vw, 490px"
-                    className="object-cover"
-                  />
-                </div>
+                <p className="eyebrow">Log</p>
+                <p className="mono mt-3 text-[12px] tracking-[0.04em] text-[#8a8a94]">
+                  $ git log --oneline -{log.length}
+                </p>
+                <ul className="mono mt-4 flex flex-1 flex-col justify-between gap-3 text-[12px] tracking-[0.04em]">
+                  {log.map((entry, i) => (
+                    <li
+                      key={entry.hash}
+                      className={`flex gap-3 ${i < log.length - 1 ? "border-b border-[#1e1e22] pb-3" : ""}`}
+                    >
+                      <span className="w-12 shrink-0 text-[#b8f050]">{entry.hash}</span>
+                      <span className="text-[#c0c0c8]">{entry.text}</span>
+                    </li>
+                  ))}
+                </ul>
               </Reveal>
             </div>
           </section>

@@ -6,7 +6,7 @@ type Line = { prompt: boolean; text: string };
 
 const TRANSCRIPT: Line[] = [
   { prompt: true, text: "whoami" },
-  { prompt: false, text: "Khamim Zarkasyi. Karya, foto, dan catatan kecil." },
+  { prompt: false, text: "Khamim Zarkasyi. Karya dan catatan kecil." },
   { prompt: true, text: "ls karya/" },
   { prompt: false, text: "hr-ai-review   ruang-resepsi   structur-md   dropdeploy" },
   { prompt: true, text: "cat karya/*/status" },

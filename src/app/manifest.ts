@@ -3,10 +3,10 @@ import type { MetadataRoute } from "next";
 /** Sebelumnya /manifest.webmanifest masih 404, jadi ikon dan warna aplikasi belum terpasang. */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Khamim Zarkasyi · Karya dan Hobi",
+    name: "Khamim Zarkasyi · Karya",
     short_name: "Khamim Folio",
     description:
-      "Portfolio Khamim Zarkasyi: empat project live dan enam kebiasaan harian — foto hal random, bersepeda, tanaman, aquarium, coding, dan ngopi.",
+      "Portfolio Khamim Zarkasyi. Empat project Next.js yang sudah live, lengkap dengan tampilannya, kode sumber, dan catatan pengerjaannya.",
     start_url: "/",
     display: "standalone",
     background_color: "#080808",
