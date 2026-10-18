@@ -41,6 +41,8 @@ function NodeBox({
   );
 }
 
+/* Service map: satu entry (DOMAIN) dirutekan lewat EDGE/Vercel ke empat
+   micro web-tool yang jalan sendiri-sendiri, masing-masing dengan backend-nya. */
 export default function RoutingDiagram() {
   /* Desktop: left to right */
   const left = { x: 16, y: 126, w: 110, h: 48 };
@@ -66,7 +68,7 @@ export default function RoutingDiagram() {
   return (
     <div className="w-full">
       {/* Desktop */}
-      <svg className="hidden w-full lg:block" viewBox="0 0 760 300" role="img" aria-label="Alur: KHAMIMZAR lewat TERMINAL, keluar jadi empat project live">
+      <svg className="hidden w-full lg:block" viewBox="0 0 760 300" role="img" aria-label="Service map: domain khamimzar.my.id dirutekan lewat Vercel edge ke empat web tool yang live">
         <path className="route-rail" d={`M ${left.x + left.w} ${left.y + left.h / 2} H ${mid.x}`} />
         <path className="route-pulse" d={`M ${left.x + left.w} ${left.y + left.h / 2} H ${mid.x}`} />
 
@@ -83,12 +85,12 @@ export default function RoutingDiagram() {
           );
         })}
 
-        <NodeBox node={left} label="KHAMIMZAR" delay={0} />
-        <NodeBox node={mid} label="TERMINAL" sub="vibes coding" delay={0.35} />
+        <NodeBox node={left} label="DOMAIN" sub="khamimzar.my.id" delay={0} />
+        <NodeBox node={mid} label="EDGE" sub="Vercel · per-project" delay={0.35} />
       </svg>
 
       {/* Mobile */}
-      <svg className="w-full lg:hidden" viewBox="0 0 360 470" role="img" aria-label="Alur: KHAMIMZAR lewat TERMINAL, keluar jadi empat project live">
+      <svg className="w-full lg:hidden" viewBox="0 0 360 470" role="img" aria-label="Service map: domain khamimzar.my.id dirutekan lewat Vercel edge ke empat web tool yang live">
         <path className="route-rail" d={`M ${mLeft.x + mLeft.w / 2} ${mLeft.y + mLeft.h} V ${mMid.y}`} />
         <path className="route-pulse" d={`M ${mLeft.x + mLeft.w / 2} ${mLeft.y + mLeft.h} V ${mMid.y}`} />
 
@@ -108,8 +110,8 @@ export default function RoutingDiagram() {
           );
         })}
 
-        <NodeBox node={mLeft} label="KHAMIMZAR" delay={0} />
-        <NodeBox node={mMid} label="TERMINAL" sub="vibes coding" delay={0.35} />
+        <NodeBox node={mLeft} label="DOMAIN" sub="khamimzar.my.id" delay={0} />
+        <NodeBox node={mMid} label="EDGE" sub="Vercel · per-project" delay={0.35} />
       </svg>
     </div>
   );

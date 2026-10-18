@@ -22,7 +22,8 @@ test("terminal menampilkan transkrip utuh tanpa JavaScript", () => {
   assert.ok(/terminal-live/.test(terminal), "pre animasi tidak ditandai terminal-live");
   assert.ok(/<noscript/.test(terminal), "terminal tidak punya cadangan noscript");
   assert.ok(terminal.includes("PLAIN_TRANSCRIPT"), "cadangan tidak memakai transkrip utuh");
-  for (const project of ["hr-ai-review", "ruang-resepsi", "structur-md", "dropdeploy"]) {
-    assert.ok(terminal.includes(project), `transkrip kehilangan ${project}`);
+  // Isi transkrip sekarang spesifikasi kerja, jadi yang dijaga adalah baris spec-nya.
+  for (const field of ["OS / Host", "Stack", "Tools", "Focus", "Status"]) {
+    assert.ok(terminal.includes(field), `transkrip kehilangan ${field}`);
   }
 });

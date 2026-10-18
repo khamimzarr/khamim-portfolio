@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 const SECTIONS = [
   { id: "terminal", index: "01", label: "Terminal" },
   { id: "karya", index: "02", label: "Karya" },
-  { id: "output", index: "03", label: "Output" },
-  { id: "tentang", index: "04", label: "Tentang" },
+  { id: "routing", index: "03", label: "Routing" },
+  { id: "data", index: "04", label: "Data" },
 ];
 
 const LINKS = [
