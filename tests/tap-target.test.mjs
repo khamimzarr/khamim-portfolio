@@ -24,11 +24,15 @@ test("terminal punya fokus keyboard terlihat", () => {
   assert.ok(/focus-visible|aria-label|tabIndex/.test(terminal), "terminal has no keyboard affordance");
 });
 
-test("tautan kecil di kartu karya tetap 44px tingginya", () => {
+test("tautan aksi di kartu karya tetap 44px tingginya", () => {
   const rows = page.slice(page.indexOf("projects.map"));
-  assert.equal((rows.match(/link-action/g) || []).length, 2, "kedua tautan kartu harus memakai .link-action");
+  // Dua aksi per kartu (Live Demo + GitHub) memakai kelas tombol yang sudah 44px.
+  assert.equal((rows.match(/btn-accent|btn-ghost/g) || []).length, 2, "kedua tautan kartu harus memakai kelas tombol 44px");
 
   const css = readFileSync("src/app/globals.css", "utf8").replace(/\s+/g, " ");
+  for (const cls of ["btn-accent", "btn-ghost"]) {
+    assert.ok(new RegExp(`\\.${cls}\\s*\\{[^}]*min-height:\\s*44px`).test(css), `.${cls} di bawah 44px`);
+    assert.ok(new RegExp(`\\.${cls}\\s*\\{[^}]*display:\\s*inline-flex`).test(css), `.${cls} bukan inline-flex`);
+  }
   assert.ok(/\.link-action\s*\{[^}]*min-height:\s*44px/.test(css), ".link-action di bawah 44px");
-  assert.ok(/\.link-action\s*\{[^}]*display:\s*inline-flex/.test(css), ".link-action bukan inline-flex");
 });

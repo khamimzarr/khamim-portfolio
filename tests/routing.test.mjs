@@ -14,14 +14,24 @@ test("komponen routing ada dan menggantikan paragraf meta", () => {
   assert.ok(!/Halaman ini dibangun seperti konsol gelap/.test(page), "meta paragraph still present");
 });
 
-test("simpul routing memakai label yang disetujui", () => {
+test("simpul routing memakai label service map yang disetujui", () => {
   const src = readFileSync(path, "utf8");
-  assert.ok(src.includes('label="KHAMIMZAR"'), "left node label missing");
-  assert.ok(src.includes('label="TERMINAL"'), "middle node label missing");
-  assert.ok(src.includes('sub="vibes coding"'), "middle sub-label missing");
+  assert.ok(src.includes('label="DOMAIN"'), "entry node label missing");
+  assert.ok(src.includes('sub="khamimzar.my.id"'), "entry node host missing");
+  assert.ok(src.includes('label="EDGE"'), "edge node label missing");
+  assert.ok(src.includes('sub="Vercel · per-project"'), "edge sub-label missing");
   for (const p of PROJECTS) {
     assert.ok(src.includes(p), `output node missing: ${p}`);
   }
+});
+
+test("routing diagram pindah ke section 03 dan tidak lagi di dalam Tentang", () => {
+  const routing = page.indexOf('id="routing"');
+  const data = page.indexOf('id="data"');
+  assert.ok(routing > 0, "section #routing hilang");
+  assert.ok(data > routing, "section #data harus setelah #routing");
+  assert.ok(page.indexOf("RoutingDiagram />") > routing, "RoutingDiagram tidak dipasang di section Routing");
+  assert.ok(page.indexOf("RoutingDiagram />") < data, "RoutingDiagram bocor ke section Data");
 });
 
 test("diagram punya versi desktop dan mobile", () => {

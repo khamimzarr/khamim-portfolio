@@ -5,30 +5,44 @@ import RoutingDiagram from "@/components/RoutingDiagram";
 import MeshBackdrop from "@/components/MeshBackdrop";
 import Terminal from "@/components/Terminal";
 
-const outputs = [
+/* Satu sumber data untuk section 02: kartu karya dan tangkapan layarnya
+   duduk di objek yang sama, jadi tidak ada daftar project yang dobel. */
+const projects = [
   {
     name: "hr-ai-review",
     shot: "/output/hr-ai-review.jpg",
-    live: "https://hr-ai-review-nine.vercel.app",
     alt: "Tampilan hr-ai-review: hero dan kartu ATS Score",
+    desc: "Unggah CV dalam PDF, keluar analisis ala reviewer HR plus skor kecocokan. Backend Apps Script, muka depannya di Vercel.",
+    stack: ["JavaScript", "Apps Script", "Vercel"],
+    live: "https://hr-ai-review-nine.vercel.app",
+    href: "https://github.com/khamimzarr/hr-ai-review",
   },
   {
     name: "ruang-resepsi",
     shot: "/output/ruang-resepsi.jpg",
-    live: "https://ruang-resepsi.vercel.app",
     alt: "Tampilan ruang-resepsi: hero undangan digital",
+    desc: "Undangan pernikahan digital dengan satu tautan personal per tamu, aktif 7 hari. Tanpa backend, datanya menempel di tautan.",
+    stack: ["HTML", "WhatsApp", "Frontend-only"],
+    live: "https://ruang-resepsi.vercel.app",
+    href: "https://github.com/khamimzarr/ruang-resepsi",
   },
   {
     name: "structur-md",
     shot: "/output/structur-md.jpg",
-    live: "https://structur-md.vercel.app",
     alt: "Tampilan structur-md: hero URL ke Markdown",
+    desc: "Tempel satu URL, dapat Markdown bersih plus struktur halamannya. Scraping jalan di serverless, hasilnya disimpan di Supabase.",
+    stack: ["TypeScript", "Next.js", "Supabase"],
+    live: "https://structur-md.vercel.app",
+    href: "https://github.com/khamimzarr/structur-md",
   },
   {
     name: "dropdeploy",
     shot: "/output/dropdeploy.jpg",
-    live: "https://dropdeploy.my.id",
     alt: "Tampilan dropdeploy: hero tarik dan lepas .zip",
+    desc: "Jatuhkan .zip ke browser, project langsung live di Vercel dan GitHub. Kunci API punya sendiri, semua proses di sisi klien.",
+    stack: ["TypeScript", "Next.js", "JSZip"],
+    live: "https://dropdeploy.my.id",
+    href: "https://github.com/khamimzarr/dropdeploy",
   },
 ];
 
@@ -40,36 +54,7 @@ const log = [
   { hash: "seo", text: "JSON-LD, manifest, theme-color" },
 ];
 
-const projects = [
-  {
-    name: "hr-ai-review",
-    desc: "Unggah PDF CV, terima analisis dan skor.",
-    lang: "JavaScript",
-    href: "https://github.com/khamimzarr/hr-ai-review",
-    vercel: "https://hr-ai-review-nine.vercel.app",
-  },
-  {
-    name: "ruang-resepsi",
-    desc: "Undangan digital pernikahan, satu tautan per tamu, aktif 7 hari.",
-    lang: "HTML",
-    href: "https://github.com/khamimzarr/ruang-resepsi",
-    vercel: "https://ruang-resepsi.vercel.app",
-  },
-  {
-    name: "structur-md",
-    desc: "Ubah URL jadi Markdown dan ekstrak struktur halaman.",
-    lang: "TypeScript",
-    href: "https://github.com/khamimzarr/structur-md",
-    vercel: "https://structur-md.vercel.app",
-  },
-  {
-    name: "dropdeploy",
-    desc: "Deploy dari browser: jatuhkan .zip, langsung live di Vercel dan GitHub.",
-    lang: "TypeScript",
-    href: "https://github.com/khamimzarr/dropdeploy",
-    vercel: "https://dropdeploy.my.id",
-  },
-];
+const GIT_LOG_CMD = `$ git log --oneline -${log.length}`;
 
 function SectionHead({
   index,
@@ -135,87 +120,92 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Terminal */}
+          {/* 01 Terminal: dev environment, bukan data diri */}
           <section id="terminal" className="scroll-mt-16 pt-16">
-            <SectionHead index="01" label="Terminal" title="Ringkasan karya, versi terminal." />
+            <SectionHead
+              index="01"
+              label="Terminal"
+              title="Dev environment, versi terminal."
+              description="Stack, tooling, dan fokus kerja yang dipakai tiap hari."
+            />
             <Reveal className="mt-6">
               <Terminal />
             </Reveal>
           </section>
 
-          {/* Karya */}
+          {/* 02 Karya: satu kartu = satu project, lengkap dengan tangkapan layar */}
           <section id="karya" className="scroll-mt-16 pt-16">
-            <SectionHead index="02" label="Karya" title="Kode yang sudah dipajang" />
+            <SectionHead
+              index="02"
+              label="Karya"
+              title="Kode yang sudah dipajang"
+              description="Empat web tool yang jalan di produksi. Tiap kartu membawa tangkapan layar, fungsi singkat, dan tautan keluar."
+            />
             <div className="mt-6 grid gap-3 md:grid-cols-2">
               {projects.map((p, i) => (
-                <article key={p.name} className="tile flex flex-col gap-3 p-5">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="mono text-[11px] tracking-[0.1em] text-[#8a8a94]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="eyebrow">{p.lang}</span>
+                <article key={p.name} className="tile flex flex-col overflow-hidden">
+                  <div className="relative aspect-[16/10] overflow-hidden border-b border-[#1e1e22]">
+                    <Image
+                      src={p.shot}
+                      alt={p.alt}
+                      fill
+                      quality={68}
+                      sizes="(max-width: 768px) 92vw, (max-width: 1200px) 45vw, 490px"
+                      className="object-cover object-top"
+                    />
                   </div>
-                  <h3 className="text-[22px] leading-[1.2] text-[#e8e8ee]">{p.name}</h3>
-                  <p className="text-[15px] leading-[1.6] text-[#c0c0c8]">{p.desc}</p>
-                  <div className="mt-auto flex items-center gap-4 pt-1">
-                    <a
-                      href={p.vercel}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-action mono text-[12px] tracking-[0.04em] text-[#b8f050] underline underline-offset-4"
-                    >
-                      live ↗
-                    </a>
-                    <a
-                      href={p.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-action mono text-[12px] tracking-[0.04em] text-[#8a8a94] underline underline-offset-4"
-                    >
-                      github
-                    </a>
+                  <div className="flex flex-1 flex-col gap-3 p-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="mono text-[11px] tracking-[0.1em] text-[#8a8a94]">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <ul className="flex flex-wrap justify-end gap-1.5" aria-label={`Stack ${p.name}`}>
+                        {p.stack.map((tech) => (
+                          <li
+                            key={tech}
+                            className="mono rounded-[3px] border border-[#2a2a30] px-1.5 py-0.5 text-[10px] tracking-[0.08em] text-[#8a8a94]"
+                          >
+                            {tech}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <h3 className="text-[22px] leading-[1.2] text-[#e8e8ee]">{p.name}</h3>
+                    <p className="text-[15px] leading-[1.6] text-[#c0c0c8]">{p.desc}</p>
+                    <div className="mt-auto flex flex-wrap items-center gap-2 pt-2">
+                      <a
+                        href={p.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-accent px-4"
+                        aria-label={`Buka demo live ${p.name}`}
+                      >
+                        Live Demo ↗
+                      </a>
+                      <a
+                        href={p.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-ghost px-4"
+                        aria-label={`Buka source ${p.name} di GitHub`}
+                      >
+                        GitHub
+                      </a>
+                    </div>
                   </div>
                 </article>
               ))}
             </div>
           </section>
 
-          {/* Output */}
-          <section id="output" className="scroll-mt-16 pt-16">
-            <SectionHead index="03" label="Output" title="Empat project, dari layar aslinya" />
-            <div className="mt-6 grid gap-3 md:grid-cols-2">
-              {outputs.map((o, i) => (
-                <figure key={o.name} className="tile overflow-hidden">
-                  <a href={o.live} target="_blank" rel="noopener noreferrer" className="block">
-                    <div className="relative aspect-[16/10] overflow-hidden border-b border-[#1e1e22]">
-                      <Image
-                        src={o.shot}
-                        alt={o.alt}
-                        fill
-                        quality={68}
-                        sizes="(max-width: 768px) 92vw, (max-width: 1200px) 45vw, 490px"
-                        className="object-cover object-top"
-                      />
-                    </div>
-                    <figcaption className="flex items-center justify-between gap-3 p-4">
-                      <span className="flex items-baseline gap-3">
-                        <span className="mono text-[11px] tracking-[0.1em] text-[#8a8a94]">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        <span className="text-[14px] leading-[1.3] text-[#e8e8ee]">{o.name}</span>
-                      </span>
-                      <span className="mono text-[11px] tracking-[0.1em] text-[#b8f050]">live ↗</span>
-                    </figcaption>
-                  </a>
-                </figure>
-              ))}
-            </div>
-          </section>
-
-          {/* Tentang */}
-          <section id="tentang" className="scroll-mt-16 pt-16">
-            <SectionHead index="04" label="Tentang" />
-
+          {/* 03 Routing: service map, bukan pengulangan daftar project */}
+          <section id="routing" className="scroll-mt-16 pt-16">
+            <SectionHead
+              index="03"
+              label="Routing"
+              title="Service map: bagaimana karyanya tersambung."
+              description="Satu domain, satu edge, empat micro web-tool yang masing-masing punya backend sendiri."
+            />
             <Reveal className="panel relative mt-6 overflow-hidden p-4 md:p-6">
               <MeshBackdrop className="pointer-events-none absolute inset-0" />
               <p className="eyebrow relative pb-4">Alur</p>
@@ -223,8 +213,13 @@ export default function Home() {
                 <RoutingDiagram />
               </div>
             </Reveal>
+          </section>
 
-            <div className="mt-3 grid items-stretch gap-3 md:grid-cols-2">
+          {/* 04 Data: metadata kontak + log perubahan */}
+          <section id="data" className="scroll-mt-16 pt-16">
+            <SectionHead index="04" label="Data" title="Metadata dan kontak." />
+
+            <div className="mt-6 grid items-stretch gap-3 md:grid-cols-2">
               <Reveal className="panel flex flex-col p-4 md:p-5">
                 <p className="eyebrow">Data</p>
                 <dl className="mono mt-4 flex flex-1 flex-col justify-between gap-3 text-[12px] tracking-[0.04em]">
@@ -285,7 +280,7 @@ export default function Home() {
               <Reveal className="panel flex flex-col p-4 md:p-5">
                 <p className="eyebrow">Log</p>
                 <p className="mono mt-3 text-[12px] tracking-[0.04em] text-[#8a8a94]">
-                  $ git log --oneline -{log.length}
+                  {GIT_LOG_CMD}
                 </p>
                 <ul className="mono mt-4 flex flex-1 flex-col justify-between gap-3 text-[12px] tracking-[0.04em]">
                   {log.map((entry, i) => (

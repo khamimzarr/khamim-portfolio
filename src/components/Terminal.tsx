@@ -4,18 +4,22 @@ import useReducedMotion from "./useReducedMotion";
 
 type Line = { prompt: boolean; text: string };
 
+/* Isi terminal = spesifikasi kerja, bukan data diri.
+   Format neofetch: label rata kiri, nilai sejajar karena font mono. */
+const SPECS = [
+  ["OS / Host", "Web Runtime / khamimzar.my.id"],
+  ["Stack", "TypeScript · Next.js · Node.js · Tailwind"],
+  ["Tools", "Git · Vercel · Docker · Terminal CLI"],
+  ["Focus", "Micro Web-Tools, Automation & Fast Delivery"],
+  ["Status", "Available for builds & collaborations"],
+] as const;
+
+const SPEC_WIDTH = Math.max(...SPECS.map(([key]) => key.length)) + 2;
+const specLine = ([key, value]: readonly [string, string]) => key.padEnd(SPEC_WIDTH) + value;
+
 const TRANSCRIPT: Line[] = [
-  { prompt: true, text: "whoami" },
-  { prompt: false, text: "Khamim Zarkasyi. Karya dan catatan kecil." },
-  { prompt: true, text: "ls karya/" },
-  { prompt: false, text: "hr-ai-review   ruang-resepsi   structur-md   dropdeploy" },
-  { prompt: true, text: "cat karya/*/status" },
-  { prompt: false, text: "live  hr-ai-review    https://hr-ai-review-nine.vercel.app" },
-  { prompt: false, text: "live  ruang-resepsi   https://ruang-resepsi.vercel.app" },
-  { prompt: false, text: "live  structur-md     https://structur-md.vercel.app" },
-  { prompt: false, text: "live  dropdeploy      https://dropdeploy.my.id" },
-  { prompt: true, text: "deploy --prod --yes" },
-  { prompt: false, text: "4 project live. source terbuka di github.com/khamimzarr" },
+  { prompt: true, text: "neofetch" },
+  ...SPECS.map((spec) => ({ prompt: false, text: specLine(spec) })),
 ];
 
 const PROMPT = "khamim@folio:~$ ";
@@ -108,7 +112,7 @@ export default function Terminal() {
       </div>
       <pre
         tabIndex={0}
-        aria-label="Terminal ringkasan karya Khamim"
+        aria-label="Spesifikasi dev environment: stack, tooling, dan fokus kerja Khamim"
         className="terminal-live mono m-0 min-h-[240px] overflow-x-auto whitespace-pre-wrap p-4 text-[12.5px] leading-[1.75] text-[#c0c0c8] focus-visible:outline-2 focus-visible:outline-[#b8f050]"
       >
         {visible.join("\n")}

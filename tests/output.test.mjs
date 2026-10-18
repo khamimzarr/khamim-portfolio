@@ -29,20 +29,22 @@ test("tangkapan layar tetap ringan", () => {
   }
 });
 
-test("tiap tile output bisa diklik ke situs live-nya", () => {
+test("tiap kartu karya memuat tangkapan layar dan tautan live-nya", () => {
   for (const o of OUTPUTS) {
     assert.ok(page.includes(`/output/${o.name}.jpg`), `tile hilang: ${o.name}`);
     assert.ok(page.includes(o.live), `tautan live hilang: ${o.name}`);
   }
-  const links = page.match(/<a href=\{o\.live\}/g) || [];
-  assert.equal(links.length, 1, "tile output harus dibungkus satu tautan ke o.live");
+  // Kartu kini satu blok utuh, jadi tautan live dibangun dari data kartu sendiri.
+  const links = page.match(/href=\{p\.live\}/g) || [];
+  assert.equal(links.length, 1, "tiap kartu harus memakai satu tautan p.live dari data project");
 });
 
-test("section dan nav memakai nama Output, bukan Exhibition", () => {
-  assert.ok(page.includes('id="output"'), "section #output hilang");
-  assert.ok(page.includes('label="Output"'), "label section bukan Output");
-  assert.ok(sidebar.includes('label: "Output"'), "nav sidebar belum jadi Output");
+test("tidak ada lagi section Output terpisah, karya jadi satu section", () => {
+  assert.ok(!page.includes('id="output"'), "section #output masih ada, mestinya sudah lebur ke 02 Karya");
+  assert.ok(!page.includes('label="Output"'), "label section Output masih ada");
+  assert.ok(!sidebar.includes('label: "Output"'), "nav sidebar masih menautkan Output");
   assert.ok(!/exhibition/i.test(page + sidebar), "sisa kata Exhibition masih ada");
+  assert.ok(page.includes('id="karya"'), "section Karya hilang");
 });
 
 test("panel log berisi empat entri", () => {
