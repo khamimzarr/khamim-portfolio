@@ -51,3 +51,11 @@ test("panel log berisi empat entri", () => {
   assert.equal(entries.length, 4, `panel log harus 4 entri, ada ${entries.length}`);
   assert.ok(block.includes('hash: "a11y"'), "entri a11y hilang dari log");
 });
+
+test("foto hobi lama sudah dibersihkan", () => {
+  // 960 KB aset mati: sudah tidak ada yang merujuknya sejak section 03 jadi Output.
+  assert.ok(!existsSync("public/hobi"), "folder public/hobi masih ada");
+  for (const f of ["foto-random", "bersepeda", "tanaman", "ikan", "coding", "ngopi", "foto-bunga"]) {
+    assert.ok(!existsSync(`public/hobi/${f}.jpg`), `foto hobi masih ada: ${f}.jpg`);
+  }
+});
