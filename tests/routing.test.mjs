@@ -14,12 +14,15 @@ test("komponen routing ada dan menggantikan paragraf meta", () => {
   assert.ok(!/Halaman ini dibangun seperti konsol gelap/.test(page), "meta paragraph still present");
 });
 
-test("simpul routing memakai label service map yang disetujui", () => {
+test("simpul routing kembali ke alur karya yang disetujui owner", () => {
   const src = readFileSync(path, "utf8");
-  assert.ok(src.includes('label="DOMAIN"'), "entry node label missing");
-  assert.ok(src.includes('sub="khamimzar.my.id"'), "entry node host missing");
-  assert.ok(src.includes('label="EDGE"'), "edge node label missing");
-  assert.ok(src.includes('sub="Vercel · per-project"'), "edge sub-label missing");
+  assert.ok(src.includes('label="KHAMIMZAR"'), "node atas bukan KHAMIMZAR");
+  assert.ok(src.includes('label="TERMINAL"'), "node tengah bukan TERMINAL");
+  assert.ok(src.includes('sub="vibe coding"'), "keterangan node tengah bukan vibe coding");
+  // Label service map sebelumnya tidak boleh tersisa.
+  assert.ok(!src.includes('label="DOMAIN"'), "label DOMAIN masih ada");
+  assert.ok(!src.includes('label="EDGE"'), "label EDGE masih ada");
+  assert.ok(!src.includes("khamimzar.my.id"), "host masih dipakai sebagai label node");
   for (const p of PROJECTS) {
     assert.ok(src.includes(p), `output node missing: ${p}`);
   }

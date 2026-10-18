@@ -78,14 +78,28 @@ test("tidak ada daftar project kedua di section lain", () => {
   }
 });
 
-test("03 Routing memakai bahasa service map, bukan alur personal", () => {
-  assert.ok(routing.includes('label="DOMAIN"'), "node masuk bukan DOMAIN");
-  assert.ok(routing.includes('label="EDGE"'), "node perantara bukan EDGE");
-  assert.ok(!routing.includes("vibes coding"), "sub-label lama masih ada");
+test("03 Routing kembali ke alur KHAMIMZAR -> TERMINAL -> project", () => {
+  assert.ok(routing.includes('label="KHAMIMZAR"'), "node atas bukan KHAMIMZAR");
+  assert.ok(routing.includes('label="TERMINAL"'), "node tengah bukan TERMINAL");
+  assert.ok(routing.includes('sub="vibe coding"'), "keterangan node tengah bukan vibe coding");
   for (const p of PROJECTS) {
     assert.ok(routing.includes(p), `service ${p} hilang dari peta`);
   }
-  assert.ok(/aria-label="Service map/.test(routing), "svg tidak punya label service map");
+  assert.ok(/aria-label="Alur: KHAMIMZAR/.test(routing), "svg tidak punya label alur");
+});
+
+test("tiga section tampil tanpa kalimat deskripsi di bawah judul", () => {
+  const gone = [
+    "Stack, tooling, dan fokus kerja yang dipakai tiap hari.",
+    "Empat web tool yang jalan di produksi. Tiap kartu membawa tangkapan layar, fungsi singkat, dan tautan keluar.",
+    "Satu domain, satu edge, empat micro web-tool yang masing-masing punya backend sendiri.",
+  ];
+  for (const line of gone) {
+    assert.ok(!page.includes(line), `deskripsi section masih ada: ${line}`);
+  }
+  // Prop description sudah tidak dipakai sama sekali, jadi komponennya ikut bersih.
+  assert.ok(!/description[=:]\s*"/.test(page), "masih ada prop description di page.tsx");
+  assert.ok(!page.includes("description?: string"), "SectionHead masih menerima prop description");
 });
 
 test("04 Data: tabel metadata di atas, log tetap di bawah", () => {
