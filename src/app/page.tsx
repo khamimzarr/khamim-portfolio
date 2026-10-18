@@ -74,10 +74,11 @@ function SectionHead({
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#080808]">
+    <div className="relative min-h-screen bg-[#080808]">
+      <div className="dot-grid" aria-hidden />
       <Sidebar />
 
-      <main className="px-5 pb-20 pt-16 md:px-8 lg:ml-[248px] lg:pt-10">
+      <main className="relative z-10 px-5 pb-20 pt-16 md:px-8 lg:ml-[248px] lg:pt-10">
         <div className="mx-auto flex max-w-[1000px] flex-col">
           {/* Hero */}
           <section id="top">

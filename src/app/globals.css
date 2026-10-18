@@ -90,6 +90,17 @@ body {
 
 .mono { font-family: var(--font-mono); }
 
+/* Full-page background: one calm dot grid, like blueprint paper under the console.
+   Static, no animation, and it only shows in the gaps between opaque panels. */
+.dot-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--color-line-strong) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
