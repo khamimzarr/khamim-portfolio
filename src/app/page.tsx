@@ -60,12 +60,10 @@ function SectionHead({
   index,
   label,
   title,
-  description,
 }: {
   index: string;
   label: string;
   title?: string;
-  description?: string;
 }) {
   return (
     <div>
@@ -77,7 +75,6 @@ function SectionHead({
           {title}
         </h2>
       ) : null}
-      {description ? <p className="mt-3 max-w-[70ch] text-[15px] leading-[1.6] text-[#c0c0c8]">{description}</p> : null}
       <div className="rule-dotted mt-6" />
     </div>
   );
@@ -122,12 +119,7 @@ export default function Home() {
 
           {/* 01 Terminal: dev environment, bukan data diri */}
           <section id="terminal" className="scroll-mt-16 pt-16">
-            <SectionHead
-              index="01"
-              label="Terminal"
-              title="Dev environment, versi terminal."
-              description="Stack, tooling, dan fokus kerja yang dipakai tiap hari."
-            />
+            <SectionHead index="01" label="Terminal" title="Dev environment, versi terminal." />
             <Reveal className="mt-6">
               <Terminal />
             </Reveal>
@@ -135,12 +127,7 @@ export default function Home() {
 
           {/* 02 Karya: satu kartu = satu project, lengkap dengan tangkapan layar */}
           <section id="karya" className="scroll-mt-16 pt-16">
-            <SectionHead
-              index="02"
-              label="Karya"
-              title="Kode yang sudah dipajang"
-              description="Empat web tool yang jalan di produksi. Tiap kartu membawa tangkapan layar, fungsi singkat, dan tautan keluar."
-            />
+            <SectionHead index="02" label="Karya" title="Kode yang sudah dipajang" />
             <div className="mt-6 grid gap-3 md:grid-cols-2">
               {projects.map((p, i) => (
                 <article key={p.name} className="tile flex flex-col overflow-hidden">
@@ -200,12 +187,7 @@ export default function Home() {
 
           {/* 03 Routing: service map, bukan pengulangan daftar project */}
           <section id="routing" className="scroll-mt-16 pt-16">
-            <SectionHead
-              index="03"
-              label="Routing"
-              title="Service map: bagaimana karyanya tersambung."
-              description="Satu domain, satu edge, empat micro web-tool yang masing-masing punya backend sendiri."
-            />
+            <SectionHead index="03" label="Routing" title="Service map: bagaimana karyanya tersambung." />
             <Reveal className="panel relative mt-6 overflow-hidden p-4 md:p-6">
               <MeshBackdrop className="pointer-events-none absolute inset-0" />
               <p className="eyebrow relative pb-4">Alur</p>
