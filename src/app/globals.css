@@ -254,21 +254,13 @@ body {
   40%, 100% { stroke: var(--color-line); }
 }
 
-/* Mesh backdrop behind the routing card: two very slow layers so the panel is not flat */
-.mesh-drift {
-  animation: mesh-drift 13s ease-in-out infinite alternate;
-  will-change: transform;
-}
-@keyframes mesh-drift {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(-30px, 16px, 0) scale(1.04); }
-}
-.mesh-breathe {
-  animation: mesh-breathe 6s ease-in-out infinite alternate;
-}
-@keyframes mesh-breathe {
-  from { opacity: 0.5; }
-  to { opacity: 0.95; }
+/* Terrain kisi 3D di kartu Routing: emerald/lime di atas slate, ditahan 22%
+   supaya diagram alur tetap terbaca. Mask melembutkan tepi panel. */
+.terrain-layer {
+  overflow: hidden;
+  opacity: 0.22;
+  -webkit-mask-image: radial-gradient(120% 130% at 50% 100%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(120% 130% at 50% 100%, #000 30%, transparent 100%);
 }
 
 .reveal {
@@ -293,6 +285,5 @@ body {
   .caret { animation: none; }
   .route-pulse { animation: none; opacity: 0; }
   .route-node { animation: none; }
-  .mesh-drift, .mesh-breathe { animation: none; }
   html { scroll-behavior: auto; }
 }
