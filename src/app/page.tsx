@@ -3,6 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import Reveal from "@/components/Reveal";
 import RoutingDiagram from "@/components/RoutingDiagram";
 import MeshBackdrop from "@/components/MeshBackdrop";
+import ParticleWaveMount from "@/components/ParticleWaveMount";
 import Terminal from "@/components/Terminal";
 
 /* Satu sumber data untuk section 02: kartu karya dan tangkapan layarnya
@@ -93,13 +94,17 @@ export default function Home() {
             <p className="eyebrow">Console</p>
             <h1 className="sr-only">Khamim Zarkasyi</h1>
 
-            <div className="panel mt-8 flex flex-col justify-between gap-6 p-5 md:flex-row md:items-center md:p-6">
-              <div>
+            {/* Wave mesh 3D di pojok kanan bawah panel hero. Layer dekoratif:
+                aria-hidden, pointer-events-none, dan di-mask radial supaya teks
+                kiri tetap tajam. Warna inline di WebGL, mengikuti mood terminal. */}
+            <div className="panel relative isolate mt-8 flex flex-col justify-between gap-6 overflow-hidden p-5 md:flex-row md:items-center md:p-6">
+              <ParticleWaveMount className="wave-layer absolute inset-0 -z-10" />
+              <div className="relative">
                 <p className="eyebrow">Builder</p>
                 <p className="display mt-2 text-[22px] leading-[1.2] text-[#e8e8ee]">Khamim Zarkasyi</p>
                 <p className="mono mt-2 text-[12px] tracking-[0.04em] text-[#8a8a94]">WEB RUNTIME</p>
               </div>
-              <div className="flex flex-wrap gap-3">
+              <div className="wave-scrim flex flex-wrap gap-3">
                 <a href="mailto:khamimzarrr@gmail.com" className="btn-accent min-h-[44px] px-4">
                   Kontak
                 </a>
