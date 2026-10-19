@@ -110,6 +110,26 @@ body {
   background-position: -1px -1px;
 }
 
+/* Wave mesh 3D di panel hero: canvas WebGL yang memudar ke kiri-atas lewat
+   mask radial, jadi hanya pojok kanan bawah yang menyala dan teks tetap tajam.
+   pointer-events-none di komponen menjaga seleksi teks dan klik tombol. */
+.wave-layer {
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(125% 165% at 100% 108%, #000 0%, #000 26%, transparent 72%);
+  mask-image: radial-gradient(125% 165% at 100% 108%, #000 0%, #000 26%, transparent 72%);
+}
+
+/* Scrim tipis di belakang tombol hero: wave tetap jadi aksen, CTA tetap juara. */
+.wave-scrim { position: relative; }
+.wave-scrim::before {
+  content: "";
+  position: absolute;
+  inset: -18px -12px;
+  z-index: -10;
+  pointer-events: none;
+  background: radial-gradient(72% 130% at 50% 50%, rgba(14, 14, 16, 0.92) 0%, rgba(14, 14, 16, 0.5) 58%, rgba(14, 14, 16, 0) 100%);
+}
+
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
