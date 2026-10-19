@@ -20,9 +20,9 @@ const projects = [
   {
     name: "ruang-resepsi",
     shot: "/output/ruang-resepsi.jpg",
-    alt: "Tampilan ruang-resepsi: hero undangan digital",
-    desc: "Undangan pernikahan digital dengan satu tautan personal per tamu, aktif 7 hari. Tanpa backend, datanya menempel di tautan.",
-    stack: ["HTML", "WhatsApp", "Frontend-only"],
+    alt: "Tampilan ruang-resepsi: hero undangan digital bertema olive",
+    desc: "Undangan pernikahan digital dengan satu tautan personal per tamu, aktif 7 hari. Foto dan data tamu disimpan di Vercel Blob, lalu terhapus otomatis.",
+    stack: ["HTML", "Vercel Blob", "Serverless"],
     live: "https://ruang-resepsi.vercel.app",
     href: "https://github.com/khamimzarr/ruang-resepsi",
   },
