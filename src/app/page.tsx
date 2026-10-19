@@ -2,7 +2,7 @@ import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
 import Reveal from "@/components/Reveal";
 import RoutingDiagram from "@/components/RoutingDiagram";
-import MeshBackdrop from "@/components/MeshBackdrop";
+import RoutingTerrainMount from "@/components/RoutingTerrainMount";
 import ParticleWaveMount from "@/components/ParticleWaveMount";
 import Terminal from "@/components/Terminal";
 
@@ -191,10 +191,12 @@ export default function Home() {
           {/* 03 Routing: service map, bukan pengulangan daftar project */}
           <section id="routing" className="scroll-mt-16 pt-16">
             <SectionHead index="03" label="Routing" title="Service map: bagaimana karyanya tersambung." />
-            <Reveal className="panel relative mt-6 overflow-hidden p-4 md:p-6">
-              <MeshBackdrop className="pointer-events-none absolute inset-0" />
-              <p className="eyebrow relative pb-4">Alur</p>
-              <div className="relative">
+            <Reveal className="panel relative isolate mt-6 overflow-hidden p-4 md:p-6">
+              {/* Terrain kisi 3D di belakang diagram: emerald/lime, 22% opacity,
+                  pointer-events-none. Semua konten alur duduk di z-10. */}
+              <RoutingTerrainMount className="terrain-layer absolute inset-0 -z-10" />
+              <p className="eyebrow relative z-10 pb-4">Alur</p>
+              <div className="relative z-10">
                 <RoutingDiagram />
               </div>
             </Reveal>
