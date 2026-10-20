@@ -97,6 +97,11 @@ const ARC_HEADROOM = 1.04;
 const ARC_ALTITUDE = 0.2;
 const ATMOSPHERE_ALTITUDE = 0.1;
 
+/* Lama auto-rotate berhenti setelah sentuhan terakhir, lalu pulih sendiri.
+   700 ms: cukup untuk menyelesaikan momentum drag, tapi tidak terasa "mati"
+   kalau user cuma menyentuh sekali. */
+const RESUME_IDLE_MS = 700;
+
 type Dot = { lat: number; lng: number; tone: number };
 
 /* Daratan: 6.822 titik. Warna dipilih dari pola deterministik (bukan acak)
@@ -288,7 +293,12 @@ export default function Globe({ className = "" }: { className?: string }) {
     let dragging = false;
     let lastX = 0;
     let lastY = 0;
-    let manual = false;
+    /* Kapan terakhir user menyentuh globe (ms, jam rAF). Auto-rotate jeda
+       selama drag dan selama RESUME_IDLE_MS setelah sentuhan terakhir, lalu
+       pulih sendiri. Sebelumnya ada flag `manual` yang di-set true saat
+       pointerdown dan TIDAK PERNAH direset, jadi sekali disentuh globe diam
+       selamanya. */
+    let lastInteraction = -Infinity;
 
     const draw = () => {
       globe.rotation.y = yaw;
@@ -305,7 +315,10 @@ export default function Globe({ className = "" }: { className?: string }) {
     const loop = (ts: number) => {
       const dt = lastTs ? Math.min(48, ts - lastTs) : 16;
       lastTs = ts;
-      if (!dragging && !manual) targetYaw += dt * 0.000055; // ~110 detik per putaran
+      // Auto-rotate hanya jalan kalau tidak sedang drag DAN sudah lewat masa
+      // tenang setelah sentuhan terakhir, jadi globe selalu hidup lagi.
+      const idle = ts - lastInteraction > RESUME_IDLE_MS;
+      if (!dragging && idle) targetYaw += dt * 0.000055; // ~110 detik per putaran
       // Easing lembut supaya drag tidak terasa kaku.
       yaw += (targetYaw - yaw) * 0.14;
       pitch += (targetPitch - pitch) * 0.14;
@@ -328,7 +341,7 @@ export default function Globe({ className = "" }: { className?: string }) {
 
     const onPointerDown = (event: PointerEvent) => {
       dragging = true;
-      manual = true;
+      lastInteraction = performance.now();
       lastX = event.clientX;
       lastY = event.clientY;
       canvasEl.setPointerCapture?.(event.pointerId);
@@ -336,6 +349,7 @@ export default function Globe({ className = "" }: { className?: string }) {
     };
     const onPointerMove = (event: PointerEvent) => {
       if (!dragging) return;
+      lastInteraction = performance.now();
       targetYaw += (event.clientX - lastX) * 0.008;
       targetPitch = Math.max(
         -0.85,
@@ -351,8 +365,14 @@ export default function Globe({ className = "" }: { className?: string }) {
     };
     const onPointerUp = (event: PointerEvent) => {
       dragging = false;
+      // Masa tenang dihitung dari sini, jadi auto-rotate pulih sendiri
+      // beberapa saat setelah jari/mouse dilepas.
+      lastInteraction = performance.now();
       canvasEl.releasePointerCapture?.(event.pointerId);
       canvasEl.style.cursor = "grab";
+      // Kalau loop sempat berhenti (mis. reduced motion tidak aktif tapi
+      // frame terhenti), pastikan jalan lagi supaya easing selesai.
+      play();
     };
 
     canvasEl.addEventListener("pointerdown", onPointerDown);
