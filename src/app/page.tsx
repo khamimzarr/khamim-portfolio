@@ -212,7 +212,7 @@ export default function Home() {
                   Distribusi node dan edge serverless
                 </p>
               </div>
-              <div className="globe-glow relative mx-auto mt-4 aspect-square w-full max-w-[240px] overflow-hidden">
+              <div className="relative mx-auto mt-4 aspect-square w-full max-w-[380px] overflow-hidden">
                 <GlobeMount className="absolute inset-0" />
               </div>
               {/* Ringkasan terminal di bawah globe: satu baris, gaya sama
