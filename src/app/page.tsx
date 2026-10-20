@@ -3,7 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import Reveal from "@/components/Reveal";
 import RoutingDiagram from "@/components/RoutingDiagram";
 import RoutingTerrainMount from "@/components/RoutingTerrainMount";
-import TechGlobeMount from "@/components/TechGlobeMount";
+import GlobeMount from "@/components/GlobeMount";
 import ParticleWaveMount from "@/components/ParticleWaveMount";
 import Terminal from "@/components/Terminal";
 
@@ -212,9 +212,14 @@ export default function Home() {
                   Distribusi node dan edge serverless
                 </p>
               </div>
-              <div className="relative mx-auto mt-4 aspect-square w-full max-w-[280px] overflow-hidden">
-                <TechGlobeMount className="absolute inset-0" />
+              <div className="globe-glow relative mx-auto mt-4 aspect-square w-full max-w-[240px] overflow-hidden">
+                <GlobeMount className="absolute inset-0" />
               </div>
+              {/* Ringkasan terminal di bawah globe: satu baris, gaya sama
+                  dengan blok log di section 04. */}
+              <p className="mono mt-4 text-center text-[10.5px] tracking-[0.08em] text-[#8a8a94]">
+                REGION: AP-SOUTHEAST • LATENCY: &lt;18MS • STATUS: ACTIVE
+              </p>
             </Reveal>
           </section>
 
