@@ -1,79 +1,179 @@
-/* Peta daratan 144 x 72 sel (2,5 derajat), diturunkan dari Natural Earth 110m land
-   (public domain) dengan uji titik-di-poligon pada pusat tiap sel.
-   "#" = daratan, "." = laut. Dipakai Globe untuk menaruh titik daratan. */
-export const LAND_COLS = 144;
-export const LAND_ROWS = 72;
-export const LAND_MASK = [
-  "................................................................................................................................................",
-  "................................................................................................................................................",
-  "................................................................................................................................................",
-  "....................................#########..####################.............................................................................",
-  "...........................#..##..########..####################.............###................................##..............................",
-  ".......................#..#.#..##..#........####################................................###............######...........................",
-  "......................####........##.#............##############.............................##..........############...........#...............",
-  "#........#...............#####...##.#######........############..............................##....###.#####################.########...........",
-  ".....#####################.#.#....###.##..###......##########..................########......#.####.#.##########################################",
-  "####..################################....#####....#######.......#...........#########.#..######################################################",
-  "........############################.#.#...###.....#####........#...........####.##############################################################.",
-  "......############################.......##.........###...................#####..######################################################.#####...",
-  ".......####......##################......####.#...........................#####..################################################.......#.......",
-  "........#..........##################....######.......................#....#.#..###############################################.......###.......",
-  "....................###################.#########...................##.#...#####################################################......##........",
-  ".....................#############################....................##########################################################................",
-  "......................######################.#..###...................##########################################################................",
-  "......................########################.........................#############.#.########################################.................",
-  "......................######################...........................####.#.#####.....######################################...#..............",
-  "......................#####################.........................#####....##.####.##.####################################....#...............",
-  ".......................###################..........................####......#.#..####################################...#.....#...............",
-  ".......................###################..............................####.........###################################...#..##................",
-  ".........................################............................#######..........##################################.....#..................",
-  ".........................#.############.............................###########.###.#.###################################.......................",
-  "..........................########.....#............................#######################.#############################.......................",
-  "............................#####......#..........................####################.#####..##########################........................",
-  ".............................####.................................####################.########....####################.#.......................",
-  "..............................###...#............................######################.########....#######..######.............................",
-  "..............................####.##......##.....................#####################.#######......#####....####.#............................",
-  ".................................####............................#######################.####........####......####.....#.......................",
-  "....................................###..........................##########################...........##.......#####....##......................",
-  "..........................................#.#.....................#######################..#..........##.......#.##.............................",
-  ".......................................#.#######...................#########################...................#..........#.....................",
-  ".........................................########...................#####.##################............#.......#...............................",
-  ".........................................###########........................###############....................##....##.........................",
-  "........................................############........................##############......................##..###.........................",
-  "........................................##############......................#############.......................##..###.#...##..................",
-  "........................................#################...................############.........................#......#.....####..............",
-  "........................................##################...................###########..........................#............####.............",
-  "........................................##################...................###########...............................##.#.....#...............",
-  ".........................................################....................###########........................................................",
-  ".........................................###############.....................###########...#................................##..................",
-  "...........................................#############.....................###########..##.............................######..#..............",
-  "............................................############.....................#########....##.............................##########.............",
-  "............................................############.....................#########...##...........................##############............",
-  "............................................##########........................########...##..........................###############............",
-  "............................................#########.........................#######................................################...........",
-  "...........................................#########...........................######.................................###############...........",
-  "...........................................#########...........................#####..................................###############...........",
-  "...........................................########............................###....................................####....#######...........",
-  "...........................................######...............................................................................####............",
-  "...........................................#####..................................................................................#...........#.",
-  "..........................................####....................................................................................#..........#..",
-  "...........................................###..............................................................................................#...",
-  "..........................................###..............................................................................................#....",
-  "..........................................###...................................................................................................",
-  "..........................................##....#...............................................................................................",
-  "...........................................##...................................................................................................",
-  "................................................................................................................................................",
-  "................................................................................................................................................",
-  "................................................................................................................................................",
-  "................................................#...............................................................................................",
-  "..............................................#..............................................##..................#...#..........................",
-  ".............................................#.......................................#...###########...##############################...........",
-  "..........................................#####......................#.############################..#######################################....",
-  ".......................#.......##########.######.................##########################################################################.....",
-  "..............##############################..................###########################################################################.......",
-  ".......#..###############################...........###...#################################################################################.....",
-  "..........###################################............###############################################################################........",
-  "...........#################################################################################################################################....",
-  "################################################################################################################################################",
-  "################################################################################################################################################",
-];
+/* Titik daratan globe untuk kartu "Global Network".
+
+   Sumber: Natural Earth 110m land (public domain), dirasterisasi pada dokumen
+   kisi 1 derajat dengan uji point-in-polygon, lalu disaring hash supaya jarak
+   antar titik renggang. Hasilnya 6.822 titik yang mengikuti bentuk benua asli
+   (bukan heksagon pemukul rata), jadi globe terbaca seperti GitHub/Aceternity.
+
+   Disimpan sebagai base64 berisi delta-zigzag-varint index sel kisi 0,25
+   derajat: latIndex = (lat + 90) * 4 (0..720), lonIndex = (lon + 180) * 4
+   (0..1440), id = latIndex * 1441 + lonIndex. Teks ~10 KB, tanpa dependensi,
+   tetap bisa dibaca di review (bukan blob biner). */
+
+const DOTS_B64 = `
+otIFFkIWQhZCFkIWQhZCFkIWQm5CFkIWQhZCFkIWQhZCFkIWQhZCFkIWQhZCFkIWQhZCFkIWQhZCFowwWFhYWFhYWOAC
+WFhYWFhYWFhYWFhYWFhYWFjMAxgqFhgqFhgqFhgqFhgqFhgqFhgqFkJYhgEqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgq
+FhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgq+jBYWFhYWIgCiAJYWFhYWFhYWFhYWFhYWFhYzAMYKhYYKhYYKhYYKhYY
+KhYYKhYY2gEWmgEWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCqiMFhYWFhY
+WIgCsAFYWFhYWFhYWFhYWFhYWFhYWLQCQBgqFhgqFhgqFhgqFhgqFhgqFhgqiAIWQhYYKhYYKhYYKhYYKhYYKhYYKhYY
+KhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKsovWFhYWFhYWIgCsAFYWFhYWFhYWFhYWFhYWFhYWN4CFhgq
+FhgqFhgqFhgqFhgqFhgqFhgqFsoCFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgq
+FhgqFhgqyi9YWFhYWFhYuANYWFhYWFhYWFhYWFhYWFhYjANYKhYYKhYYKhYYKhYYKhYYKhYYoAMYKhYYKhYYKhYYKhYY
+KhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYzDBYWFhYWFi4A1hYWFhYWFhYWFhYWFhYWFjkAyoW
+GCoWGCoWGCoWGCoWGCoWGCoWogMWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoW
+GMwwWFhYWFhYkARYWFhYWFhYWFhYWFhYWFiOBBYYKhYYKhYYWCoWGCoWGCoWGIoDFhgqFhgqFhgqFhgqFhgqFhgqFhgq
+FhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFpQysAFYWJAEWFhYWFhYWFhYWFhYWFhYvgVYFhgqFhgqFhgqFhiKAxYY
+KhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYY1DJYsAG4A1hYWFhYWFhYWFhYWFhY
+WFiWBogCFhiKAxYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYY1DKYBlhYWFhY
+WFhYWFhYWFhYWNwHGCoWogMWGCoWGCoWGCoWGCoWGCoWGCoWGCouKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhb0NOgE
+WFhYWFhYWFhYWFhYWFj0ByqmBBgqFhgqFhgqFhgqFhgqFhgqLioWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCqKNegEsAFY
+WFhYWFhYWFhYWLQIGKgFGFgqFhgqFhgqFhhYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKvo7WFiwAVhYWFhYWKQJmAZAGCoW
+GCoWGFgqFhgqFhgqFhgqFhgqFhgqFhgqFhj8PFiwAVhYWFhY5AmIByoWGCoWcCoWGCoWGCoWGCoWGCoWGCoWGNQ9iAKw
+AVhYWM4JngcqFuACGCoWGEAYKhYYKhbsPY4PvgpYgk+uWuipBpha6lkWrEOsFipY6kKsFoBaGOpZFhiUQ9YWFhiUQ9YW
+FqxDrBYq5g7cNKwWKuYO3DSUFhj4DvQ0/hUWGLINxgH8QfYIFhiyDcYBnDTgDfYIFhiIDdoBFpw0rBYqFpAPnDSsFioW
++g6yNIgNiAKEBxgqFhjaDIgCsjSIDfYIFhgqFsgMKhbIAdw0iA32CBYYKsYMGCrGAZw0WIgN9ggWGKoLsAEWGNoBsjTA
+BZgGsAFYzAgqFhgq6ATuBSqwARYYjDZY6ASYBrABpAkqFhgq6AQW2AUqbhgqFhiMNljoBJgGsAGMCRgqFhgqvgQqFsAF
+GCoWQhYYKhYYjDZY6ASYBlhYjAkYKhYY0AQYKhbABRgqFhgqFhgqFqQ2WOgEmAZYWPYIFhgqFhi6BBYYKsAFFhgqFhgq
+FhgqFsw1WOgEWMAFWFhY9ggWGCoWGLoEFhgqwAUWGCoWGCoWGCriNVjoBFjABVhYWMwIKhYYKhYYkAQqFhjABSoWGCoW
+GCoWGIw2WOgEmAZYWKQJKhYYKhaQBBgqFhioBRgqFhgqFhgqFhiMNljoBJgGWFiMCRgqFhgqkAQWGCoWGJIFFhgqFhgq
+FhgqFhiMNliQBFiYBlhYjAkYKhYYKpAEFhgqFnC6BBYYKhYYKhYYKhakNliQBFjABVhYWPYIFhgqFhgqkAQWGCoWWBi6
+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
+AZYGFhgqFhgqFhgqFhgqpgQYmAFCLioWGCoWQhYYKhYYKhYYKhYYKhYYKhYYWIQ0WFhYWOgEsAFYWFhYWFhYWJ4IFhgq
+FhgqFhgqFhgqkAQWGPABGCoWGCoWQhYYKhYYKhYYKhYYKhYYKhZYcKwzWFhYWPAGWFhYWFhYWFicByoWGCoWGCoWGCoW
+GLoEFhiCAS5AGCoWGCouKhYYKhYYKhYYKhYYKhYYKhZCFpw0WFhYWJAEsAGwAVhYWFhYWFhYhAcYKhYYKhYYKhYYKhYY
+ugQWWFgYKhYYQBhYKhYYKhYYKhYYKhYYKhYYKhYYKm7EM1hYWFiQBIgCiAJYWFhYWFjuBhYYKhYYKhYYKhYYKhYYkAQq
+FnAqFhiYARhAGCoWGCoWGCoWGCoWGCoWGCoWGCpYgjNYWFhY6ASwAeACWFhYWFhY7gYWGCoWGCoWGCoWGCoWGPgDGCoW
+WEIWGIIBFkIWGCoWGCoWGCoWGCoWGCoWGCoWGCoWQoIzWFhYWOgEsAGwAVhYWFhYWFhYWJYGFhgqFhgqFhgqFhgqFhgq
+kAQWGCouKhZwKi4qFhgqFhgqFhgqFhgqFhgqFhgqFhgq2jNYWFhYWJAEWFhYWFhYWFhYWFhYxAYqFhgqFhgqFhgqFhgq
+FhgqkAQWGEAYKhZCFhhYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKtozWFhYWFiQBFhYsAFYWFhYWFhYWMQGKhYYKhYYKhYY
+KhYYKhYYKuYDKhYYKhYYKhZCFhhYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKtozWFhYWOgEWFiwAVhYWFhYWFhYrAYYKhYY
+KhYYKhYYKhYYKhaQBBgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhiENFhYWFhYkARYWFhYWFhYWFhY
+WFisBhgqFhgqFhgqFhgqFhgqFkIWogMWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGIQ0WFhYsAGQ
+BFhYWFhYWFhYWFhY7gYWGCoWGCoWGCoWGCoWGCpYuAMWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoW
+GKwzWFhYWMAFWFhYWFhYWFhYWFhY1AUYKhYYKhYYKhYYKhYYKhYYWOIDFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgq
+FhgqFhgqFhgqFhisM1hYWFhYkARYWFhYWFhYWFhYWFisBhgqFhgqFhgqFhgqFhgqFhgqFrgDGCoWGCoWGCoWGCoWGCoW
+GCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWxDNYWFhYWOgEWFhYWFhYWFhYWFiwAeYEFhgqFhgqFhgqFhgqLioWGCoW+AIq
+FhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFuwyWFhYWFhYkARYWFhYWFhYWFhYWFjUBRgqFhgq
+FhgqFhgqFhhAGCoWGCqOAyoWQhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhZw/DFYWFiwAVjoBFhY
+WFhYWFhYWFhY7AUqFhgqFhgqFhgqFhgqFhgqFhigA0JYFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhiY
+ARj8MVhYWFhYkARYWFhYWFhYWFhYWFiWBhYYKhYYKhYYKhYYKhZCFhgqFhigAxiCAVgWGCoWGCoWGCoWGCoWGCoWGCoW
+GCoWGCoWGCoWGCrGARikMVhYWFhYWOgEWFhYWFhYWFhYWFikBPIBFhgqFhgqFhgqFhiCARYYKs4DcCpYFhgqFhgqFhgq
+FhgqFhgqFhgqFhgqFhgqFhgqFhgqsAEWvDFYWFiwAVjoBFhYWFhYWFhYWFhYsAH0AhiwASoWGCoWGCoWGCoWmgEWGOID
+FpoBLioWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCqwARa8MVhYWLABwAVYWFhYWFhYWFhYWLAB9AKwARgqFhgq
+FhgqFhiwASoWGOIDWC6CARYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKrAByi+wAVhYWIgC6ASwAVhYWFhYWFhY
+WFiwAbQCKrABFhgqFhgqFhgqFhiYARhA0gQWGFgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqWKIwsAFYWFjw
+BrABWFhYWFhYWFhYWFhYnAIYKhZCFhgqFhgqFhgqFhgqFpoBFhjaAY4DKhYYggEWGCoWGCoWGCoWGCoWGCoWGCoWGCoW
+GCoWGCoWGCoWGCpY8i5YWFhYWFiwAYgCuANYWFhYWFhYWFhYWFhYWIYCFhgqFhgqFhgqFhgqFhgqFhgqsAEWyAG4AyoW
+QhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKlgW3C5YWFhYWFiwAcAFWFhYWFhYWFhYWFhYWFiGAhYY
+KhYYKhYYKhYYKhYYKhYYKoYB8AEYoAMYKlgWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoW3C5Y
+WFhYWFjwBlhYWFhYWFhYWFhYWFhYrgEuKhYYKhYYKhYYKhYYKhYYKhYYKrABFpoBFhigAxgqLioWGCoWGCoWGCoWGCoW
+GCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGMQuWFhYWFhYWFiwAZAEWFhYWFhYWFhYWFhYWFiGAhYYKhYYKhYYKhYY
+KhYYKhYYKi6CARaaARawARjwARgqLioWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoW3C5YWFhY
+WFiwAbABiAKIAlhYWFhYWFhYWFhYWFhYbEIWGCoWGCoWGCoWGCoWGCoWGCoWGCoWQhYYsAEqFrABGPABGCouKhYYKhYY
+KhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhasLVhYWFhYWFhY4AKwAeACWFhYWFhYWFhYWFhYWFhWFlgY
+KhYYKhYYKhYYKhYYKhYYKhYYKm4YKm4YKhawARjwARgqFhgqWBYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYYKhYY
+KhYYKsItsAFYWFhYWFiwAbABkARYWFhYWFhYWFhYWFhYWCyCARYYKhYYKhYYKhYYKhYYKhYYKhYYKhZYGIIBFhgqFhiK
+AxYYKhYYKhZYGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCoWGCqaLlhYWFhYWFiIAliQBFiwAVhYWFhYWFhY
+WFhYFHAqFhgqFhgqFhgqFhgqLipYFkIuKhYYggEWGCoWGIoDFhgqFhgqbhgqFhgqLioWGCoWGCoWGCoWGCoWGCoWGCoW
+GCoWGCoWGMQuWFhYWLABWFiwAVhYuAPgAlhYWFhYWFhYtAIqFhgqFhgqFhgqFhgqFkJYFnAqsAEWGCoWGCrgAhYYKhYY
+2gEWWBgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhjELliIAliwAViwAVhYuAO4A1hYWFhYWLAB3AEqFhiwAVgqFhhA
+GIIBFhiYARgqFhgqFhgq9gIY4AIqFhgqFhgqFhgqFhgqFhgqFhgqFhgqFhj0L+ACiAKIAljwBlhYWFhYWFiMA+ACKhZY
+GCoWGCoWsAEYKhYYKhYYoAMY2gFuGCoWGCoWGCoWGCoWGCoWGCoWGCoWGECwAeQwWFhYWLABWFjABbABWFhYWLAB7AUq
+FhhAQlgWGNoBFhgqFhgqFhjoBJgBQhYYKhYYKhYYKhYYKhZwKhbsMogCiAJYWMgHWFhYnAeCAS4qFhgqFhjaARYYKhYY
+KhYY6ATaARYYKhYYKhYYKhYYKhacNLAB4AJYWMgHWLQIGJAEKhYYKhYYKhYY6ASIAioWGCoWGLw3iAJYWMgHWOACrAZY
+GCoWGNoBFhgqFhgqFhgqFoAF8AEYKhYYKhbyARbEM1hYiAJYWFjABYgCWIgClgYuQEKIAlgWGCoWGCoWGCoWgAUq3gEq
+FhgqFvw2WFhYWFhYvhAWsAFCFhhYKhYYKhYYKhYYKhYYKt4HGLw3sAFYWFhY4AKMDtoBFhhAGCoWGCoWGCoWGCoWGLIC
+FqoF6jewAVhYWOACwAXOCVgWGCoWGFgqFhgqFhgqFhgqFhiyAhboBBi8N1hYWFhYWOAC5g8WGCoWGEAYKhYYKhYYKhYY
+KhYYiAIqFhi6BBbUN1hYWFhYWOgE4ALUCioWGCoWGCouKhYYKhYYKhYYKhYYhD9YWFhYWFjcEhhAGFhAGEAYQBhY
+`;
+
+const LAT_STEPS = 4;
+const LON_SPAN = 1441;
+
+const B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+/** Base64 -> byte array (tanpa atob, supaya tidak butuh DOM). */
+function toBytes(input: string): number[] {
+  const lookup = new Int16Array(128).fill(-1);
+  for (let i = 0; i < B64.length; i += 1) lookup[B64.charCodeAt(i)] = i;
+
+  const out: number[] = [];
+  let acc = 0;
+  let bits = 0;
+  for (let i = 0; i < input.length; i += 1) {
+    const v = lookup[input.charCodeAt(i)];
+    if (v < 0) continue; // padding "="
+    acc = (acc << 6) | v;
+    bits += 6;
+    if (bits >= 8) {
+      bits -= 8;
+      out.push((acc >> bits) & 0xff);
+    }
+  }
+  return out;
+}
+
+/** Daftar titik [lat, lon] dalam derajat. */
+export function decodeLandDots(): Array<[number, number]> {
+  const bytes = toBytes(DOTS_B64);
+  const dots: Array<[number, number]> = [];
+  let prev = 0;
+  let value = 0;
+  let shift = 0;
+
+  for (let i = 0; i < bytes.length; i += 1) {
+    const byte = bytes[i];
+    value |= (byte & 0x7f) << shift;
+    if (byte & 0x80) {
+      shift += 7;
+      continue;
+    }
+    shift = 0;
+    const delta = value & 1 ? -((value + 1) >>> 1) : value >>> 1;
+    value = 0;
+    prev += delta;
+    const latIndex = Math.floor(prev / LON_SPAN);
+    const lonIndex = prev - latIndex * LON_SPAN;
+    dots.push([latIndex / LAT_STEPS - 90, lonIndex / LAT_STEPS - 180]);
+  }
+
+  return dots;
+}

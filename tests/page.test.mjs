@@ -98,11 +98,15 @@ test("sidebar menautkan section console", () => {
   assert.ok(sidebar.includes("aria-current"), "sidebar has no active state");
 });
 
-test("tiga dimensi sudah dilepas", () => {
-  assert.ok(!pkg.dependencies.three, "three still a dependency");
+test("three hanya dipakai globe, tidak ada scene 3D lain di beranda", () => {
+  // Globe "Global Network" memang memakai three + three-globe (keputusan owner,
+  // lihat tests/globe-webgl.test.mjs), tapi tidak boleh ada scene 3D lain:
+  // react-three-fiber tetap dilarang, folder komponen three tetap kosong,
+  // dan hero/karya tetap bukan 3D.
   assert.ok(!pkg.dependencies["@react-three/fiber"], "r3f still a dependency");
   assert.ok(!existsSync("src/components/three"), "three components still present");
   assert.ok(!/AmbientBackground|HeroScene|KaryaScene/.test(page), "3D still imported");
+  assert.equal((page.match(/<GlobeMount\b/g) || []).length, 1, "three should only be used by the globe card");
 });
 
 test("teks Tentang yang lama sudah dihapus", () => {
