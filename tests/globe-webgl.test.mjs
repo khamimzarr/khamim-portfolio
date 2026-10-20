@@ -28,7 +28,8 @@ test("globe terpasang sekali di section 03, di bawah kartu ALUR", () => {
   // Wadah globe proporsional: sisi 380px, dipotong rapi.
   assert.ok(/aspect-square[^"]*max-w-\[380px\]/.test(routing), "globe container is not aspect-square max-w-[380px]");
   assert.ok(routing.includes("mx-auto"), "globe container is not centered");
-  assert.ok(routing.includes("panel relative mt-3 overflow-hidden p-4 md:p-6"), "card styling differs from ALUR");
+  assert.ok(routing.includes("panel panel-globe relative mt-3 overflow-hidden p-4 md:p-6"),
+    "globe card lost its panel-globe navy treatment");
 });
 
 test("kartu punya header dan baris status terminal", () => {
@@ -76,7 +77,7 @@ test("bola bulat utuh: three-globe + atmosphere, bukan shader tangan", () => {
   // Rim light / atmosphere tipis di tepi siluet: ini yang bikin bentuk
   // bulat 3D-nya padat tanpa kabut hijau di latar kartu.
   assert.ok(globe.includes("showAtmosphere(true)"), "no atmosphere rim light");
-  assert.ok(/atmosphereColor\(\s*EMERALD\s*\)/.test(globe), "atmosphere is not emerald");
+  assert.ok(/atmosphereColor\(\s*CYAN\s*\)/.test(globe), "atmosphere is not cyan");
   assert.ok(/atmosphereAltitude\(/.test(globe), "atmosphere has no altitude");
 
   // Bola harus terisi cahaya; tanpa light MeshPhongMaterial jadi hitam rata.
@@ -162,9 +163,9 @@ test("daratan dari Natural Earth, bukan kisi heksagon", () => {
   assert.ok(globe.includes(".pointsMerge(true)"), "land dots are not merged into one mesh");
   assert.ok(/\.pointAltitude\(/.test(globe), "land dots have no altitude");
   assert.ok(/\.pointRadius\(/.test(globe), "land dots have no radius");
-  // Palet slate redup #64748b - #94a3b8.
-  assert.ok(globe.includes('"#94a3b8"'), "slate #94a3b8 missing");
-  assert.ok(globe.includes('"#64748b"'), "slate #64748b missing");
+  // Palet periwinkle dari referensi video (bukan emerald/slate lagi).
+  assert.ok(globe.includes('"#b9c6ff"'), "periwinkle #b9c6ff missing");
+  assert.ok(globe.includes('"#8f9de8"'), "dim periwinkle #8f9de8 missing");
 });
 
 test("busur melayang 3D (Bézier tube), bukan lingkaran radar datar", () => {
@@ -184,9 +185,8 @@ test("busur melayang 3D (Bézier tube), bukan lingkaran radar datar", () => {
   assert.ok(globe.includes(".arcAltitudeAutoScale(0)"), "arc altitude is auto-scaled per arc");
   assert.ok(/\.arcCurveResolution\(\d+\)/.test(globe), "arcs have no curve resolution");
 
-  // Emerald -> cyber lime, putus-putus yang bergerak.
-  assert.ok(globe.includes('"#10b981"'), "emerald #10b981 missing");
-  assert.ok(globe.includes('"#a3e635"'), "cyber lime #a3e635 missing");
+  // Cyan dari referensi video, putus-putus yang bergerak.
+  assert.ok(globe.includes('"#4fc3dd"'), "cyan #4fc3dd missing");
   assert.ok(/\.arcDashAnimateTime\(\d+\)/.test(globe), "arc dashes are not animated");
 
   // Tidak ada lagi lingkaran radar / outline bola.
@@ -195,21 +195,23 @@ test("busur melayang 3D (Bézier tube), bukan lingkaran radar datar", () => {
   assert.ok(!globe.includes("ctx."), "globe still uses a 2D context");
 });
 
-test("marker: satu titik denyut di Indonesia, bukan target bidik konsentris", () => {
-  const marker = globe.match(/const MARKER = \{ lat: (-?[\d.]+), lng: (-?[\d.]+) \}/);
-  assert.ok(marker, "no marker constant");
-  assert.ok(Math.abs(Number(marker[1]) - -2) < 3, "marker latitude is not Indonesia");
-  assert.ok(Math.abs(Number(marker[2]) - 118) < 6, "marker longitude is not Indonesia");
+test("marker: cincin berongga (hollow ring) cyan, bukan titik denyut", () => {
+  // Referensi video memakai hollow ring statis, bukan titik padat berdenyut.
+  // Marker sekarang lapisan objects (butuh geometri cincin sendiri).
+  assert.ok(/const MARKERS: \{ lat: number; lng: number \}\[\]/.test(globe), "no marker list");
+  assert.ok(/\.objectsData\(MARKERS\)/.test(globe), "markers are not drawn as objects");
+  assert.ok(/new\s+RingGeometry\(/.test(globe), "marker is not a hollow ring geometry");
+  assert.ok(/RING_INNER/.test(globe) && /RING_OUTER/.test(globe), "ring has no inner/outer radius");
+  assert.ok(/\.objectFacesSurface\(true\)/.test(globe), "ring does not face outward from the sphere");
+  assert.ok(/\.objectAltitude\(/.test(globe), "ring has no altitude");
 
-  // Gelombang denyut yang merambat di permukaan bola.
-  assert.ok(/\.ringsData\(/.test(globe), "no pulse ring layer");
-  assert.ok(/\.ringRepeatPeriod\(\d+\)/.test(globe), "pulse ring does not repeat");
-  assert.ok(/\.ringPropagationSpeed\(/.test(globe), "pulse ring does not propagate");
-  assert.ok(/\.ringMaxRadius\(/.test(globe), "pulse ring has no max radius");
-  assert.ok(/\.ringColor\(/.test(globe), "pulse ring has no color");
-  // Titik inti marker ikut di layer points, ditandai flag marker.
-  assert.ok(globe.includes("marker: true"), "marker has no core dot in the points layer");
-  assert.ok(/pointColor\(/.test(globe), "points have no color accessor");
+  // Tidak ada lagi denyut: pulse ring dan titik inti sudah harus hilang.
+  assert.ok(!/\.ringsData\(/.test(globe), "pulse ring layer still present");
+  assert.ok(!/ringPropagationSpeed/.test(globe), "pulse propagation still present");
+  assert.ok(!globe.includes("marker: true"), "old pulsing core dot still present");
+
+  // Marker Indonesia tetap ada (koordinat nyata, bukan angka hiasan).
+  assert.ok(/-2, lng: 118/.test(globe), "no marker at Indonesia");
 });
 
 test("interaktif: drag, auto-rotate, dan hemat daya", () => {
@@ -225,7 +227,12 @@ test("interaktif: drag, auto-rotate, dan hemat daya", () => {
   assert.ok(/renderer\.dispose\(\)/.test(globe), "renderer is never disposed");
 });
 
-test("tanpa kabut hijau ambient di latar kartu", () => {
+test("tanpa kabut hijau ambient di latar kartu, palet kartu navy", () => {
+  // Kartu globe sekarang satu-satunya panel bernada navy (referensi video),
+  // tapi tetap tidak boleh ada kabut hijau/radial glow di belakang bola.
+  assert.ok(/\.panel-globe/.test(css), "panel-globe style missing");
+  assert.ok(page.includes("panel-globe"), "globe card does not use panel-globe");
+  assert.ok(/globe/.test(css) && /#000118/.test(css), "navy card background missing");
   assert.ok(!/\.globe-glow/.test(css), "globe-glow CSS block is still there");
   assert.ok(!/globe-glow/.test(page), "page still applies the globe-glow class");
   assert.ok(

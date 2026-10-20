@@ -5,7 +5,10 @@ import ThreeGlobe from "three-globe";
 import {
   AmbientLight,
   DirectionalLight,
+  Mesh,
+  MeshBasicMaterial,
   PerspectiveCamera,
+  RingGeometry,
   Scene,
   WebGLRenderer,
 } from "three";
@@ -36,48 +39,65 @@ import { decodeLandDots } from "./globe-land";
 type Arc = { startLat: number; startLng: number; endLat: number; endLng: number };
 
 /* Rute antar node. three-globe mengangkat busur ke altitude sebagai Bézier,
-   jadi tidak ada lagi great-circle datar yang menusuk wajah bola. */
+   jadi tidak ada lagi great-circle datar yang menusuk wajah bola. Palet dan
+   jumlahnya mengikuti referensi video (2-3 garis cyan tipis melayang). */
+/* Pasangan dipilih supaya SELISIH BUJURNYA sedang (bukan hampir antipodal):
+   busur yang ujungnya berseberangan hampir 180 derajat memproyeksikan diri
+   sebagai garis lurus menembus tengah bola, dan itu terbaca sebagai garis
+   aneh, bukan lengkungan. Semua ujung di sini juga punya cincin marker, jadi
+   tiap busur terbaca sebagai koneksi antar node. */
 const ARCS: Arc[] = [
-  { startLat: -6.2, startLng: 106.8, endLat: 50.1, endLng: 8.7 }, // Jakarta - Frankfurt
-  { startLat: 1.35, startLng: 103.8, endLat: 39.0, endLng: -77.5 }, // Singapore - Ashburn
-  { startLat: 35.7, startLng: 139.7, endLat: -23.5, endLng: -46.6 }, // Tokyo - Sao Paulo
+  { startLat: 19.1, startLng: 72.9, endLat: 35.7, endLng: 139.7 }, // Mumbai - Tokyo
+  { startLat: 1.35, startLng: 103.8, endLat: -33.9, endLng: 151.2 }, // Singapore - Sydney
+  { startLat: 25.2, startLng: 55.3, endLat: -2, endLng: 118 }, // Dubai - Jakarta
 ];
 
-/* Satu marker aktif di Indonesia: titik kecil + gelombang denyut. */
-const MARKER = { lat: -2, lng: 118 };
+/* Marker: CINCIN BERONGGA statis, bukan titik padat berdenyut. Referensi
+   video memakai beberapa hollow ring untuk menandai lokasi; angka diambil
+   dari koordinat nyata supaya tetap masuk akal sebagai "node". */
+const MARKERS: { lat: number; lng: number }[] = [
+  { lat: -2, lng: 118 }, // Jakarta
+  { lat: 1.35, lng: 103.8 }, // Singapore
+  { lat: 35.7, lng: 139.7 }, // Tokyo
+  { lat: -33.9, lng: 151.2 }, // Sydney
+  { lat: 19.1, lng: 72.9 }, // Mumbai
+  { lat: 25.2, lng: 55.3 }, // Dubai
+];
 
-const EMERALD = "#10b981";
-const LIME = "#a3e635";
-const SLATE_NEAR = "#94a3b8";
-const SLATE_FAR = "#64748b";
-const BODY = 0x0f1318;
+/* Palet dari referensi video (diukur dari piksel frame, bukan dikira-kira):
+   titik daratan periwinkle #a8b8ff (hue ~235), busur cyan #4fc3dd (hue ~195),
+   badan bola navy sangat gelap, latar kartu #000118. */
+const DOT_NEAR = "#dfe4ff"; // titik paling terang
+const DOT_MID = "#b9c6ff"; // periwinkle utama (warna acuan video)
+const DOT_FAR = "#8f9de8"; // titik redup, memberi variasi opacity
+const CYAN = "#4fc3dd"; // busur + cincin marker
+const CYAN_DIM = "#2f7f96";
+const BODY = 0x04071f; // badan bola navy, hampir hitam
 const GLOBE_RADIUS = 100;
 const FOV = 30;
 
 /* Ukuran & framing globe.
 
    Dulu jarak kamera diberi supaya BOLA mengisi 92% kanvas. Akibatnya busur
-   (yang melayang 34% di atas permukaan) dan ekor glow atmosphere keluar dari
+   (yang melayang di atas permukaan) dan ekor glow atmosphere keluar dari
    frustum: isinya menyentuh x=0 dan hampir menyentuh tepi atas/bawah, jadi
    terlihat terpotong kotak.
 
    Sekarang yang dijadikan patokan adalah ISI TERLUAR globe (busur, karena
-   paling jauh), lalu bola ikut mengecil sendiri. Hasilnya bola ~0.73 dari
-   sisi kanvas (≈20% lebih kecil dari sebelumnya) dengan margin kosong di
-   keempat sisi, jadi glow atmosphere memudar alami sebelum tepi. */
-const OUTER_FILL = 0.93;
+   paling jauh), lalu bola ikut mengecil sendiri. Bola mengisi ~0.67 sisi
+   kanvas (referensi video: 65-69%), dengan margin kosong di keempat sisi. */
+const OUTER_FILL = 0.79;
 /* Busur digambar sebagai tube; tambah sedikit ruang untuk tebal tube,
-   antialias, dan marker yang menonjol. Rotasi tidak menambah radius
-   terluar (bola & busur berpusat di origin), jadi tidak perlu margin besar. */
+   antialias, dan cincin marker yang menonjol. */
 const ARC_HEADROOM = 1.04;
 
 /* Altitude relatif terhadap radius bola, dipakai dua tempat sekaligus:
    lapisan three-globe dan perhitungan jarak kamera. Kalau salah satu
    berubah tanpa yang lain, busur/glow akan terpotong tepi kanvas lagi. */
-const ARC_ALTITUDE = 0.24;
-const ATMOSPHERE_ALTITUDE = 0.16;
+const ARC_ALTITUDE = 0.2;
+const ATMOSPHERE_ALTITUDE = 0.1;
 
-type Dot = { lat: number; lng: number; tone: number; marker?: boolean };
+type Dot = { lat: number; lng: number; tone: number };
 
 /* Daratan: 6.822 titik. Warna dipilih dari pola deterministik (bukan acak)
    supaya render stabil antar reload dan tidak berkedip. */
@@ -87,7 +107,7 @@ const LAND: Dot[] = decodeLandDots().map(([lat, lng]) => ({
   tone: Math.abs(Math.round(lat * 3 + lng)) % 3,
 }));
 
-const DOTS: Dot[] = [...LAND, { ...MARKER, tone: 0, marker: true }];
+const DOTS: Dot[] = LAND;
 
 export default function Globe({ className = "" }: { className?: string }) {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -140,23 +160,23 @@ export default function Globe({ className = "" }: { className?: string }) {
     const globe = new ThreeGlobe()
       .showGraticules(false)
       .showAtmosphere(true)
-      .atmosphereColor(EMERALD)
+      .atmosphereColor(CYAN)
       .atmosphereAltitude(ATMOSPHERE_ALTITUDE)
       .globeCurvatureResolution(2);
 
-    /* Rim light: atmosphere three-globe (pelapis bola, shader glow). Intensitas
-       bawaannya sangat redup (coefficient 0.1, power 3.5) sehingga di kartu
-       gelap rim-nya nyaris tak terlihat. Dinaikkan lewat uniform materialnya
-       supaya siluet bola padat, tanpa menaruh kabut hijau di latar kartu:
-       glow ini hanya menempel di tepi bola, dan canvas-nya transparan. */
+    /* Rim light: atmosphere three-globe (pelapis bola, shader glow). Referensi
+       video memakai rim icy-blue yang tipis, jadi intensity dinaikkan sedikit
+       dari bawaan (0.1 / 3.5 -> 0.34 / 2.6) supaya siluet terbaca tanpa jadi
+       neon. Glow hanya menempel di tepi bola dan canvas transparan, jadi latar
+       kartu tetap navy polos. */
     const atmos = globe.children.find(
       (child) => (child as { __globeObjType?: string }).__globeObjType === "atmosphere",
     ) as unknown as {
       material?: { uniforms?: Record<string, { value: number }> };
     } | undefined;
     const uniforms = atmos?.material?.uniforms;
-    if (uniforms?.coefficient) uniforms.coefficient.value = 0.42;
-    if (uniforms?.power) uniforms.power.value = 2.4;
+    if (uniforms?.coefficient) uniforms.coefficient.value = 0.55;
+    if (uniforms?.power) uniforms.power.value = 2.0;
     type MaterialLike = {
       color?: { set(value: number): void };
       emissive?: { set(value: number): void };
@@ -166,31 +186,29 @@ export default function Globe({ className = "" }: { className?: string }) {
     };
     const material = globe.globeMaterial() as unknown as MaterialLike;
     material.color?.set(BODY);
-    material.emissive?.set(0x05070a);
-    material.specular?.set(0x0e1a1e);
-    if (typeof material.shininess === "number") material.shininess = 8;
+    material.emissive?.set(0x02040f);
+    material.specular?.set(0x0d2a3a);
+    if (typeof material.shininess === "number") material.shininess = 6;
     material.needsUpdate = true;
 
-    /* Titik daratan + marker dalam satu layer (three-globe hanya punya satu
-       layer points). pointsMerge menggabungkan 6.823 titik jadi satu mesh,
-       jadi satu draw call. */
+    /* Titik daratan: periwinkle, sisi depan lebih terang. pointsMerge
+       menggabungkan 6.822 titik jadi satu mesh, jadi satu draw call. */
     globe
       .pointsData(DOTS)
       .pointLat("lat")
       .pointLng("lng")
-      .pointAltitude((d: object) => ((d as Dot).marker ? 0.016 : 0.012))
-      .pointRadius((d: object) => ((d as Dot).marker ? 0.75 : 0.34))
+      .pointAltitude(0.012)
+      .pointRadius(0.38)
       .pointResolution(6)
       .pointsMerge(true)
       .pointsTransitionDuration(0)
       .pointColor((d: object) => {
-        const dot = d as Dot;
-        if (dot.marker) return EMERALD;
-        return dot.tone === 0 ? SLATE_NEAR : SLATE_FAR;
+        const tone = (d as Dot).tone;
+        return tone === 0 ? DOT_NEAR : tone === 1 ? DOT_MID : DOT_FAR;
       });
 
-    /* Busur orbit: Bézier 3D melayang tinggi di atas atmosfer, emerald ke
-       cyber lime, putus-putus yang bergerak. */
+    /* Busur orbit: Bézier 3D melayang di atas permukaan, cyan tipis seperti
+       referensi video. Tetap putus-putus bergerak supaya terasa hidup. */
     globe
       .arcsData(ARCS)
       .arcStartLat("startLat")
@@ -199,27 +217,36 @@ export default function Globe({ className = "" }: { className?: string }) {
       .arcEndLng("endLng")
       .arcAltitude(ARC_ALTITUDE)
       .arcAltitudeAutoScale(0)
-      .arcStroke(0.55)
+      .arcStroke(0.8)
       .arcCurveResolution(96)
       .arcCircularResolution(6)
-      .arcColor([EMERALD, LIME])
-      .arcDashLength(0.42)
-      .arcDashGap(0.16)
+      .arcColor([CYAN, "#8fe9f7", CYAN])
+      .arcDashLength(0.55)
+      .arcDashGap(0.1)
       .arcDashInitialGap((d: object) => ((d as Arc).startLng % 7) / 7)
-      .arcDashAnimateTime(4200);
+      .arcDashAnimateTime(5200);
 
-    /* Gelombang denyut dari marker: merambat di permukaan bola dan makin
-       redup saat melebar. Pengganti target bidik konsentris. */
+    /* Marker = CINCIN BERONGGA statis, bukan titik padat berdenyut. Lapisan
+       objects dipakai (bukan points) karena cincin butuh geometri sendiri:
+       RingGeometry kecil ditaruh menempel permukaan. objectFacesSurface
+       memutar cincin agar menghadap keluar dari bola, jadi bentuknya tetap
+       bulat di semua posisi, tidak jadi elips miring. */
+    const RING_INNER = 2.2;
+    const RING_OUTER = 3.6;
+    const ringGeometry = new RingGeometry(RING_INNER, RING_OUTER, 40);
+    const ringMaterial = new MeshBasicMaterial({
+      color: CYAN,
+      transparent: true,
+      opacity: 1,
+      depthWrite: false,
+    });
     globe
-      .ringsData([MARKER])
-      .ringLat("lat")
-      .ringLng("lng")
-      .ringAltitude(0.006)
-      .ringResolution(96)
-      .ringMaxRadius(3.2)
-      .ringPropagationSpeed(1.1)
-      .ringRepeatPeriod(1500)
-      .ringColor(() => ["rgba(16,185,129,0.85)", "rgba(163,230,53,0)"]);
+      .objectsData(MARKERS)
+      .objectLat("lat")
+      .objectLng("lng")
+      .objectAltitude(0.008)
+      .objectFacesSurface(true)
+      .objectThreeObject(() => new Mesh(ringGeometry, ringMaterial));
 
     scene.add(globe);
 
