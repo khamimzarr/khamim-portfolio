@@ -202,8 +202,10 @@ export default function Home() {
               </div>
             </Reveal>
 
-            {/* Globe jaringan: kartu kedua di section 03, gaya panel sama dengan ALUR. */}
-            <Reveal className="panel relative mt-3 overflow-hidden p-4 md:p-6">
+            {/* Globe jaringan: kartu kedua di section 03. Satu-satunya kartu
+                bernada navy (class .panel-globe) karena globe biru-violet
+                butuh latar kebiruan; kartu lain tetap netral. */}
+            <Reveal className="panel panel-globe relative mt-3 overflow-hidden p-4 md:p-6">
               {/* Satu kolom di tengah: kartu selebar panel, jadi header ikut
                   di tengah supaya tidak menggantung di pojok kiri. */}
               <div className="text-center">
