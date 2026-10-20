@@ -3,6 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import Reveal from "@/components/Reveal";
 import RoutingDiagram from "@/components/RoutingDiagram";
 import RoutingTerrainMount from "@/components/RoutingTerrainMount";
+import TechGlobeMount from "@/components/TechGlobeMount";
 import ParticleWaveMount from "@/components/ParticleWaveMount";
 import Terminal from "@/components/Terminal";
 
@@ -198,6 +199,21 @@ export default function Home() {
               <p className="eyebrow relative z-10 pb-4">Alur</p>
               <div className="relative z-10">
                 <RoutingDiagram />
+              </div>
+            </Reveal>
+
+            {/* Globe jaringan: kartu kedua di section 03, gaya panel sama dengan ALUR. */}
+            <Reveal className="panel relative mt-3 overflow-hidden p-4 md:p-6">
+              {/* Satu kolom di tengah: kartu selebar panel, jadi header ikut
+                  di tengah supaya tidak menggantung di pojok kiri. */}
+              <div className="text-center">
+                <p className="eyebrow">Global Network</p>
+                <p className="mono mt-2 text-[10.5px] tracking-[0.08em] text-[#8a8a94]">
+                  Distribusi node dan edge serverless
+                </p>
+              </div>
+              <div className="relative mx-auto mt-4 aspect-square w-full max-w-[280px] overflow-hidden">
+                <TechGlobeMount className="absolute inset-0" />
               </div>
             </Reveal>
           </section>
