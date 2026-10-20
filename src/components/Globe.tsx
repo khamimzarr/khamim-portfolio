@@ -175,8 +175,8 @@ export default function Globe({ className = "" }: { className?: string }) {
       material?: { uniforms?: Record<string, { value: number }> };
     } | undefined;
     const uniforms = atmos?.material?.uniforms;
-    if (uniforms?.coefficient) uniforms.coefficient.value = 0.55;
-    if (uniforms?.power) uniforms.power.value = 2.0;
+    if (uniforms?.coefficient) uniforms.coefficient.value = 0.72;
+    if (uniforms?.power) uniforms.power.value = 1.7;
     type MaterialLike = {
       color?: { set(value: number): void };
       emissive?: { set(value: number): void };
