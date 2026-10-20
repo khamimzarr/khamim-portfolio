@@ -220,6 +220,18 @@ test("interaktif: drag, auto-rotate, dan hemat daya", () => {
   assert.ok(globe.includes("touchAction"), "vertical page scroll would be blocked on mobile");
   assert.ok(/targetYaw \+= dt \* /.test(globe), "no auto-rotate");
 
+  // Auto-rotate WAJIB pulih setelah user menyentuh globe. Versi lama punya
+  // flag `manual` yang di-set true saat pointerdown dan tidak pernah direset,
+  // jadi sekali disentuh globe diam selamanya.
+  assert.ok(!/(let|const)\s+manual\b/.test(globe), "sticky manual flag is back; auto-rotate would never resume");
+  assert.ok(!/manual\s*=\s*true/.test(globe), "manual flag is being set again; auto-rotate would never resume");
+  assert.ok(/RESUME_IDLE_MS/.test(globe), "no idle timeout before auto-rotate resumes");
+  assert.ok(/lastInteraction = performance\.now\(\)/.test(globe), "interaction timestamp is not recorded");
+  assert.ok(
+    /ts - lastInteraction > RESUME_IDLE_MS/.test(globe),
+    "auto-rotate does not check the idle window",
+  );
+
   assert.ok(globe.includes("prefers-reduced-motion"), "globe ignores reduced motion");
   assert.ok(globe.includes("IntersectionObserver"), "globe keeps rendering offscreen");
   assert.ok(globe.includes("visibilitychange"), "globe keeps rendering in a hidden tab");
