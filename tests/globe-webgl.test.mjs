@@ -83,8 +83,19 @@ test("bola bulat utuh: three-globe + atmosphere, bukan shader tangan", () => {
   assert.ok(/new\s+AmbientLight\(/.test(globe), "no ambient light");
   assert.ok(/new\s+DirectionalLight\(/.test(globe), "no directional light");
 
-  // Kamera dihitung dari FOV, jadi ukuran globe mengikuti kartu.
-  assert.ok(globe.includes("fillRatio"), "camera distance is not derived from a fill ratio");
+  // Kamera dihitung dari radius ISI TERLUAR (busur), bukan radius bola:
+  // kalau hanya bola yang dijadikan patokan, busur yang melayang dan ekor
+  // glow atmosphere keluar frustum dan terpotong tepi kanvas.
+  assert.ok(globe.includes("OUTER_FILL"), "camera distance is not derived from an outer fill ratio");
+  assert.ok(globe.includes("outerRadius"), "camera distance is not based on the outermost radius");
+  assert.ok(
+    /1 \+ ARC_ALTITUDE/.test(globe),
+    "outer radius does not include the arc altitude, so arcs can be clipped",
+  );
+  assert.ok(
+    /Math\.min\(aspect, 1\)/.test(globe),
+    "camera ignores the horizontal bound, so a tall canvas clips the globe",
+  );
   assert.ok(/camera\.position\.set\(0, 0, distance\)/.test(globe), "camera does not sit on the +Z axis");
 });
 
@@ -164,9 +175,12 @@ test("busur melayang 3D (Bézier tube), bukan lingkaran radar datar", () => {
   // CubicBezierCurve3; kalau null, dia jatuh ke busur great-circle datar.
   assert.ok(/\.arcStroke\(\d/.test(globe), "arcs are not drawn as tubes (flat great-circle instead)");
   // arcAltitude eksplisit > 0: inilah yang mengangkat busur ke atas bola.
-  const alt = globe.match(/\.arcAltitude\(([\d.]+)\)/);
-  assert.ok(alt, "arcs have no explicit altitude");
-  assert.ok(Number(alt[1]) > 0.15, `arc altitude ${alt[1]} is too low to read as floating`);
+  // Nilainya konstanta bersama ARC_ALTITUDE supaya kamera dan layer memakai
+  // angka yang sama (kalau salah satu berubah, busur bisa terpotong tepi).
+  const altConst = globe.match(/const ARC_ALTITUDE = ([\d.]+)/);
+  assert.ok(altConst, "no shared ARC_ALTITUDE constant");
+  assert.ok(Number(altConst[1]) > 0.15, `arc altitude ${altConst[1]} is too low to read as floating`);
+  assert.ok(/\.arcAltitude\(ARC_ALTITUDE\)/.test(globe), "arc layer does not use the shared altitude");
   assert.ok(globe.includes(".arcAltitudeAutoScale(0)"), "arc altitude is auto-scaled per arc");
   assert.ok(/\.arcCurveResolution\(\d+\)/.test(globe), "arcs have no curve resolution");
 
