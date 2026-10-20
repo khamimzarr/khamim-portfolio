@@ -54,6 +54,29 @@ const BODY = 0x0f1318;
 const GLOBE_RADIUS = 100;
 const FOV = 30;
 
+/* Ukuran & framing globe.
+
+   Dulu jarak kamera diberi supaya BOLA mengisi 92% kanvas. Akibatnya busur
+   (yang melayang 34% di atas permukaan) dan ekor glow atmosphere keluar dari
+   frustum: isinya menyentuh x=0 dan hampir menyentuh tepi atas/bawah, jadi
+   terlihat terpotong kotak.
+
+   Sekarang yang dijadikan patokan adalah ISI TERLUAR globe (busur, karena
+   paling jauh), lalu bola ikut mengecil sendiri. Hasilnya bola ~0.73 dari
+   sisi kanvas (≈20% lebih kecil dari sebelumnya) dengan margin kosong di
+   keempat sisi, jadi glow atmosphere memudar alami sebelum tepi. */
+const OUTER_FILL = 0.93;
+/* Busur digambar sebagai tube; tambah sedikit ruang untuk tebal tube,
+   antialias, dan marker yang menonjol. Rotasi tidak menambah radius
+   terluar (bola & busur berpusat di origin), jadi tidak perlu margin besar. */
+const ARC_HEADROOM = 1.04;
+
+/* Altitude relatif terhadap radius bola, dipakai dua tempat sekaligus:
+   lapisan three-globe dan perhitungan jarak kamera. Kalau salah satu
+   berubah tanpa yang lain, busur/glow akan terpotong tepi kanvas lagi. */
+const ARC_ALTITUDE = 0.24;
+const ATMOSPHERE_ALTITUDE = 0.16;
+
 type Dot = { lat: number; lng: number; tone: number; marker?: boolean };
 
 /* Daratan: 6.822 titik. Warna dipilih dari pola deterministik (bukan acak)
@@ -92,18 +115,33 @@ export default function Globe({ className = "" }: { className?: string }) {
     const scene = new Scene();
     const camera = new PerspectiveCamera(FOV, 1, 1, GLOBE_RADIUS * 40);
 
-    /* Kamera dihitung, bukan ditebak: jarak dipilih supaya bola mengisi
-       ~92% tinggi kanvas, jadi ukuran globe selalu ikut lebar kartu. */
-    const fillRatio = 0.92;
-    const distance = GLOBE_RADIUS / (fillRatio * Math.tan((FOV * Math.PI) / 360));
-    camera.position.set(0, 0, distance);
-    camera.lookAt(0, 0, 0);
+    /* Jarak kamera dihitung dari radius ISI TERLUAR globe, bukan radius bola.
+       Isi terluar = busur (altitude-nya paling jauh) dikali headroom untuk
+       tebal tube + antialias. Bola lalu mengisi ~0.73 kanvas, jadi ada margin
+       kosong di keempat sisi dan glow atmosphere memudar sebelum tepi. */
+    const outerRadius =
+      GLOBE_RADIUS * (1 + ARC_ALTITUDE) * ARC_HEADROOM;
+
+    const fitCamera = (aspect: number) => {
+      // Muat di kedua arah: batas vertikal (FOV) dan horizontal (FOV * aspect).
+      // Ambil jarak terjauh, jadi globe tidak terpotong di sisi mana pun.
+      const halfFov = (FOV * Math.PI) / 360;
+      const dVertical = outerRadius / (OUTER_FILL * Math.tan(halfFov));
+      const dHorizontal =
+        outerRadius / (OUTER_FILL * Math.tan(halfFov) * Math.min(aspect, 1));
+      const distance = Math.max(dVertical, dHorizontal);
+      camera.aspect = aspect;
+      camera.position.set(0, 0, distance);
+      camera.lookAt(0, 0, 0);
+      camera.updateProjectionMatrix();
+    };
+    fitCamera(1);
 
     const globe = new ThreeGlobe()
       .showGraticules(false)
       .showAtmosphere(true)
       .atmosphereColor(EMERALD)
-      .atmosphereAltitude(0.16)
+      .atmosphereAltitude(ATMOSPHERE_ALTITUDE)
       .globeCurvatureResolution(2);
 
     /* Rim light: atmosphere three-globe (pelapis bola, shader glow). Intensitas
@@ -159,7 +197,7 @@ export default function Globe({ className = "" }: { className?: string }) {
       .arcStartLng("startLng")
       .arcEndLat("endLat")
       .arcEndLng("endLng")
-      .arcAltitude(0.34)
+      .arcAltitude(ARC_ALTITUDE)
       .arcAltitudeAutoScale(0)
       .arcStroke(0.55)
       .arcCurveResolution(96)
@@ -205,8 +243,10 @@ export default function Globe({ className = "" }: { className?: string }) {
       height = Math.max(1, Math.round(rect.height));
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       renderer.setSize(width, height, false);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
+      // Jarak kamera ikut dihitung ulang: kanvas bukan selalu bujur sangkar
+      // (di 375px dia 301x301, tapi di panel lebar bisa lebih pendek), dan
+      // isi terluar harus tetap 74% dari sisi terpendek supaya tidak clipped.
+      fitCamera(width / height);
     };
     resize();
 
