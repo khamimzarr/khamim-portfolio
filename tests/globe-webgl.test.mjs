@@ -28,8 +28,11 @@ test("globe terpasang sekali di section 03, di bawah kartu ALUR", () => {
   // Wadah globe proporsional: sisi 380px, dipotong rapi.
   assert.ok(/aspect-square[^"]*max-w-\[380px\]/.test(routing), "globe container is not aspect-square max-w-[380px]");
   assert.ok(routing.includes("mx-auto"), "globe container is not centered");
-  assert.ok(routing.includes("panel panel-globe relative mt-3 overflow-hidden p-4 md:p-6"),
-    "globe card lost its panel-globe navy treatment");
+  // Kartu globe kembali netral seperti ALUR: warna khasnya dibawa kanvas,
+  // bukan latar kartu, supaya tidak jadi blok warna asing di halaman.
+  assert.ok(routing.includes("panel relative mt-3 overflow-hidden p-4 md:p-6"),
+    "globe card styling differs from ALUR");
+  assert.ok(!routing.includes("panel-globe"), "globe card must not use a special navy panel");
 });
 
 test("kartu punya header dan baris status terminal", () => {
@@ -77,7 +80,7 @@ test("bola bulat utuh: three-globe + atmosphere, bukan shader tangan", () => {
   // Rim light / atmosphere tipis di tepi siluet: ini yang bikin bentuk
   // bulat 3D-nya padat tanpa kabut hijau di latar kartu.
   assert.ok(globe.includes("showAtmosphere(true)"), "no atmosphere rim light");
-  assert.ok(/atmosphereColor\(\s*CYAN\s*\)/.test(globe), "atmosphere is not cyan");
+  assert.ok(/atmosphereColor\(\s*ACCENT_DIM\s*\)/.test(globe), "atmosphere does not use the site accent");
   assert.ok(/atmosphereAltitude\(/.test(globe), "atmosphere has no altitude");
 
   // Bola harus terisi cahaya; tanpa light MeshPhongMaterial jadi hitam rata.
@@ -163,9 +166,10 @@ test("daratan dari Natural Earth, bukan kisi heksagon", () => {
   assert.ok(globe.includes(".pointsMerge(true)"), "land dots are not merged into one mesh");
   assert.ok(/\.pointAltitude\(/.test(globe), "land dots have no altitude");
   assert.ok(/\.pointRadius\(/.test(globe), "land dots have no radius");
-  // Palet periwinkle dari referensi video (bukan emerald/slate lagi).
-  assert.ok(globe.includes('"#b9c6ff"'), "periwinkle #b9c6ff missing");
-  assert.ok(globe.includes('"#8f9de8"'), "dim periwinkle #8f9de8 missing");
+  // Periwinkle dari video, TAPI diredam supaya duduk di keluarga warna situs
+  // (terrain slate saturasinya cuma ~25%, jadi titik 100% sat terasa neon).
+  assert.ok(globe.includes('"#b8c2df"'), "muted periwinkle #b8c2df missing");
+  assert.ok(globe.includes('"#929cbb"'), "dim periwinkle #929cbb missing");
 });
 
 test("busur melayang 3D (Bézier tube), bukan lingkaran radar datar", () => {
@@ -185,8 +189,9 @@ test("busur melayang 3D (Bézier tube), bukan lingkaran radar datar", () => {
   assert.ok(globe.includes(".arcAltitudeAutoScale(0)"), "arc altitude is auto-scaled per arc");
   assert.ok(/\.arcCurveResolution\(\d+\)/.test(globe), "arcs have no curve resolution");
 
-  // Cyan dari referensi video, putus-putus yang bergerak.
-  assert.ok(globe.includes('"#4fc3dd"'), "cyan #4fc3dd missing");
+  // Aksen memakai warna tanda tangan situs: lime --color-accent -> emerald.
+  assert.ok(globe.includes('"#b8f050"'), "site accent lime #b8f050 missing");
+  assert.ok(globe.includes('"#10b981"'), "emerald #10b981 missing");
   assert.ok(/\.arcDashAnimateTime\(\d+\)/.test(globe), "arc dashes are not animated");
 
   // Tidak ada lagi lingkaran radar / outline bola.
@@ -239,12 +244,13 @@ test("interaktif: drag, auto-rotate, dan hemat daya", () => {
   assert.ok(/renderer\.dispose\(\)/.test(globe), "renderer is never disposed");
 });
 
-test("tanpa kabut hijau ambient di latar kartu, palet kartu navy", () => {
-  // Kartu globe sekarang satu-satunya panel bernada navy (referensi video),
-  // tapi tetap tidak boleh ada kabut hijau/radial glow di belakang bola.
-  assert.ok(/\.panel-globe/.test(css), "panel-globe style missing");
-  assert.ok(page.includes("panel-globe"), "globe card does not use panel-globe");
-  assert.ok(/globe/.test(css) && /#000118/.test(css), "navy card background missing");
+test("palet selaras: kartu netral, tanpa kabut hijau di latar", () => {
+  // Kartu globe WAJIB netral seperti kartu lain. Sebelumnya dia satu-satunya
+  // panel navy (#000118) dan itu terbaca sebagai blok warna asing di halaman
+  // yang aksen tanda tangannya lime.
+  assert.ok(!/\.panel-globe/.test(css), "navy panel-globe style is back");
+  assert.ok(!page.includes("panel-globe"), "globe card still uses panel-globe");
+  assert.ok(!page.includes("#000118"), "navy card background is back");
   assert.ok(!/\.globe-glow/.test(css), "globe-glow CSS block is still there");
   assert.ok(!/globe-glow/.test(page), "page still applies the globe-glow class");
   assert.ok(
