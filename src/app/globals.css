@@ -150,16 +150,6 @@ body {
   border-radius: var(--radius-cards);
 }
 
-/* Kartu globe "Global Network": satu-satunya kartu bernada navy, mengikuti
-   referensi visual (globe biru-violet perlu latar kebiruan, bukan netral).
-   Warnanya diukur dari frame referensi: badan kartu rgb(0,1,24) dengan tepi
-   sedikit lebih terang. Nilai gelap ini dipilih supaya teks #8a8a94 di dalam
-   kartu tetap lolos kontras AA seperti kartu lain. */
-.panel-globe {
-  background: #000118;
-  border-color: #131c3d;
-}
-
 .tile {
   background: var(--color-raised);
   border: 1px solid var(--color-line);

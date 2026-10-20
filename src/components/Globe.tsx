@@ -64,15 +64,25 @@ const MARKERS: { lat: number; lng: number }[] = [
   { lat: 25.2, lng: 55.3 }, // Dubai
 ];
 
-/* Palet dari referensi video (diukur dari piksel frame, bukan dikira-kira):
-   titik daratan periwinkle #a8b8ff (hue ~235), busur cyan #4fc3dd (hue ~195),
-   badan bola navy sangat gelap, latar kartu #000118. */
-const DOT_NEAR = "#dfe4ff"; // titik paling terang
-const DOT_MID = "#b9c6ff"; // periwinkle utama (warna acuan video)
-const DOT_FAR = "#8f9de8"; // titik redup, memberi variasi opacity
-const CYAN = "#4fc3dd"; // busur + cincin marker
-const CYAN_DIM = "#2f7f96";
-const BODY = 0x04071f; // badan bola navy, hampir hitam
+/* Palet globe: periwinkle dari referensi video, TAPI diredam dan
+   disambungkan ke identitas situs.
+
+   Kenapa tidak persis warna video: titik video saturasinya ~100% dengan
+   hue 231, sedangkan terrain situs (slate #334155) saturasinya cuma 25%.
+   Selisih hue-nya sendiri kecil (16 derajat), tapi saturasi 4x lipat bikin
+   globe terasa "neon" dibanding seluruh palet situs. Jadi saturasi titik
+   diturunkan ke 23-45% pada hue yang sama (225), sehingga masih terbaca
+   periwinkle tapi duduk di keluarga warna yang sama dengan kartu lain.
+
+   Aksennya memakai warna tanda tangan situs: lime #b8f050 (--color-accent)
+   bergradasi ke emerald #10b981 (yang sudah dipakai wave di hero). Dengan
+   begitu kartu ini "mengutip" ALUR di atasnya, bukan jadi modul asing. */
+const DOT_NEAR = "#d8def0"; // titik paling terang, sat 44%
+const DOT_MID = "#b8c2df"; // periwinkle utama (diredam), sat 38%
+const DOT_FAR = "#929cbb"; // titik redup, sat 23%
+const ACCENT = "#b8f050"; // lime = --color-accent situs
+const ACCENT_DIM = "#10b981"; // emerald, sudah dipakai wave hero
+const BODY = 0x0f1014; // badan bola netral, senada --color-surface
 const GLOBE_RADIUS = 100;
 const FOV = 30;
 
@@ -165,7 +175,7 @@ export default function Globe({ className = "" }: { className?: string }) {
     const globe = new ThreeGlobe()
       .showGraticules(false)
       .showAtmosphere(true)
-      .atmosphereColor(CYAN)
+      .atmosphereColor(ACCENT_DIM)
       .atmosphereAltitude(ATMOSPHERE_ALTITUDE)
       .globeCurvatureResolution(2);
 
@@ -225,7 +235,7 @@ export default function Globe({ className = "" }: { className?: string }) {
       .arcStroke(0.8)
       .arcCurveResolution(96)
       .arcCircularResolution(6)
-      .arcColor([CYAN, "#8fe9f7", CYAN])
+      .arcColor([ACCENT, ACCENT_DIM, ACCENT])
       .arcDashLength(0.55)
       .arcDashGap(0.1)
       .arcDashInitialGap((d: object) => ((d as Arc).startLng % 7) / 7)
@@ -240,7 +250,7 @@ export default function Globe({ className = "" }: { className?: string }) {
     const RING_OUTER = 3.6;
     const ringGeometry = new RingGeometry(RING_INNER, RING_OUTER, 40);
     const ringMaterial = new MeshBasicMaterial({
-      color: CYAN,
+      color: ACCENT,
       transparent: true,
       opacity: 1,
       depthWrite: false,
