@@ -136,12 +136,15 @@ precision mediump float;
 
 attribute vec3 aPos;
 attribute float aTint;
+attribute float aSide;
+attribute vec3 aTangent;
 
 uniform float uYaw;
 uniform float uPitch;
 uniform float uAspect;
 uniform float uArcAlpha;
 uniform float uScale;
+uniform float uWidth;
 uniform vec3 uColorA;
 uniform vec3 uColorB;
 
@@ -150,7 +153,30 @@ varying float vAlpha;
 
 void main() {
   ${ROT}
-  gl_Position = vec4(x1 * uScale / uAspect, y1 * uScale, 0.0, 1.0);
+
+  // Busur digambar sebagai pita, bukan gl.LINES: garis WebGL selalu 1
+  // piksel device, jadi saat globe diperbesar busurnya jadi hairline.
+  // Pita punya lebar yang bisa diatur dan tetap nempel di permukaan bola.
+  //
+  // Arah tangensial busur diputar sama seperti posisinya, lalu diproyeksikan
+  // ke layar. Normalnya tegak lurus arah itu, jadi pita melintang busur.
+  float ts = sin(uYaw), tc = cos(uYaw);
+  float tx1 = aTangent.x * tc + aTangent.z * ts;
+  float tz1 = -aTangent.x * ts + aTangent.z * tc;
+  float ps = sin(uPitch), pc = cos(uPitch);
+  float ty1 = aTangent.y * pc - tz1 * ps;
+
+  vec2 p = vec2(x1 * uScale / uAspect, y1 * uScale);
+  vec2 tp = vec2(tx1 * uScale / uAspect, ty1 * uScale);
+
+  vec2 dir = vec2(1.0, 0.0);
+  float len = length(tp);
+  if (len > 1e-5) dir = tp / len;
+  vec2 perp = vec2(-dir.y, dir.x);
+
+  p += perp * aSide * uWidth;
+
+  gl_Position = vec4(p.x, p.y, 0.0, 1.0);
   vColor = mix(uColorA, uColorB, aTint);
 
   // Oklusi bola: untuk proyeksi ortografis, permukaan depan bola pada
@@ -160,6 +186,9 @@ void main() {
   //
   // Titik yang menempel di permukaan (z2 == zFront) harus tetap terlihat
   // penuh; titik di hemisfer belakang (z2 == -zFront) harus hilang total.
+  //
+  // Oklusi dihitung dari garis tengah, bukan dari tepi pita, supaya pita
+  // tidak munculmenusuk siluet bola.
   float r2 = x1 * x1 + y1 * y1;
   float visible = 1.0;
   if (r2 <= 1.0) {
@@ -322,33 +351,63 @@ export default function Globe({ className = "" }: { className?: string }) {
     /* Busur: great-circle yang diangkat di tengah (sin pi t) supaya melayang
        di luar permukaan bola. Digambar putus-putus: jalur rata yang menembus
        bola terbaca sebagai "garis menusuk", ritme putus-putus terbaca sebagai
-       lintasan orbit. */
-    const arcVertices: number[] = [];
+       lintasan orbit.
+
+       Busur digambar sebagai pita (ribbon), bukan gl.LINES: garis WebGL
+       selalu 1 piksel device, jadi begitu globe diperbesar busurnya jadi
+       hairline. Tiap titik pita digeser tegak lurus arah busur, jadi pita
+       tetap membingkar di permukaan bola dan tidak keluar dari bola. */
+    const arcPositions: number[] = [];
+    const arcTangents: number[] = [];
+    const arcSides: number[] = [];
+    const arcTints: number[] = [];
     for (const arc of ARCS) {
       const a = toVec(arc.from[0], arc.from[1]);
       const b = toVec(arc.to[0], arc.to[1]);
       const dot = Math.max(-1, Math.min(1, a[0] * b[0] + a[1] * b[1] + a[2] * b[2]));
       const theta = Math.acos(dot);
       const s = Math.sin(theta) || 1;
+
+      // Dua titik tiap segmen: posisi dan tangent-nya.
+      const pt = (t: number) => {
+        const w0 = Math.sin((1 - t) * theta) / s;
+        const w1 = Math.sin(t * theta) / s;
+        // Busur menempel permukaan bola: bagian belakang disembunyikan
+        // oklusi, jadi separuh yang terlihat mengikuti lekukan bola
+        // alih-alih memotong wajahnya. Lift nyaris nol supaya busur
+        // benar-benar menempel kulit bola.
+        const lift = 1 + Math.sin(Math.PI * t) * 0.02;
+        const pos: Vec3 = [
+          (a[0] * w0 + b[0] * w1) * lift,
+          (a[1] * w0 + b[1] * w1) * lift,
+          (a[2] * w0 + b[2] * w1) * lift,
+        ];
+        // Tangen: turunan great-circle terhadap t.
+        const d0 = Math.cos((1 - t) * theta) / s;
+        const d1 = Math.cos(t * theta) / s;
+        const tangent: Vec3 = [
+          (a[0] * d0 + b[0] * d1) * lift,
+          (a[1] * d0 + b[1] * d1) * lift,
+          (a[2] * d0 + b[2] * d1) * lift,
+        ];
+        return { pos, tangent, t };
+      };
+
       for (let i = 0; i < ARC_STEPS; i += 1) {
         // Ritme putus-putus: dua segmen menyala, satu jeda.
         if (i % 3 === 2) continue;
-        const t0 = i / ARC_STEPS;
-        const t1 = (i + 1) / ARC_STEPS;
-        for (const t of [t0, t1]) {
-          const w0 = Math.sin((1 - t) * theta) / s;
-          const w1 = Math.sin(t * theta) / s;
-          // Busur menempel permukaan bola: bagian belakang disembunyikan
-          // oklusi, jadi separuh yang terlihat mengikuti lekukan bola
-          // alih-alih memotong wajahnya. Lift nyaris nol supaya busur
-          // benar-benar menempel kulit bola.
-          const lift = 1 + Math.sin(Math.PI * t) * 0.02;
-          arcVertices.push(
-            (a[0] * w0 + b[0] * w1) * lift,
-            (a[1] * w0 + b[1] * w1) * lift,
-            (a[2] * w0 + b[2] * w1) * lift,
-            t,
-          );
+        const p0 = pt(i / ARC_STEPS);
+        const p1 = pt((i + 1) / ARC_STEPS);
+        // Dua segitiga: pita dari p0 ke p1, sisi -1 dan +1.
+        const corners: [{ pos: Vec3; tangent: Vec3; t: number }, number][] = [
+          [p0, -1], [p0, 1], [p1, -1],
+          [p1, -1], [p0, 1], [p1, 1],
+        ];
+        for (const [c, side] of corners) {
+          arcPositions.push(c.pos[0], c.pos[1], c.pos[2]);
+          arcTangents.push(c.tangent[0], c.tangent[1], c.tangent[2]);
+          arcSides.push(side);
+          arcTints.push(c.t);
         }
       }
     }
@@ -362,7 +421,10 @@ export default function Globe({ className = "" }: { className?: string }) {
 
     const landBuffer = makeBuffer(landPoints);
     const oceanBuffer = makeBuffer(oceanPoints);
-    const arcBuffer = makeBuffer(arcVertices);
+    const arcBuffer = makeBuffer(arcPositions);
+    const arcTangentBuffer = makeBuffer(arcTangents);
+    const arcSideBuffer = makeBuffer(arcSides);
+    const arcTintBuffer = makeBuffer(arcTints);
     const markerBuffer = makeBuffer([INDONESIA[0], INDONESIA[1], INDONESIA[2]]);
     const nodeBuffer = makeBuffer(ARC_NODES.flat());
 
@@ -380,11 +442,14 @@ export default function Globe({ className = "" }: { className?: string }) {
 
     const aPos = gl.getAttribLocation(arcProg.program, "aPos");
     const aTint = gl.getAttribLocation(arcProg.program, "aTint");
+    const aSide = gl.getAttribLocation(arcProg.program, "aSide");
+    const aTangent = gl.getAttribLocation(arcProg.program, "aTangent");
     const aYaw = gl.getUniformLocation(arcProg.program, "uYaw");
     const aPitch = gl.getUniformLocation(arcProg.program, "uPitch");
     const aAspect = gl.getUniformLocation(arcProg.program, "uAspect");
     const aAlpha = gl.getUniformLocation(arcProg.program, "uArcAlpha");
     const aScale = gl.getUniformLocation(arcProg.program, "uScale");
+    const aWidth = gl.getUniformLocation(arcProg.program, "uWidth");
     const aColorA = gl.getUniformLocation(arcProg.program, "uColorA");
     const aColorB = gl.getUniformLocation(arcProg.program, "uColorB");
 
@@ -439,9 +504,10 @@ export default function Globe({ className = "" }: { className?: string }) {
     const draw = (seconds: number) => {
       gl.clear(gl.COLOR_BUFFER_BIT);
       const aspect = width / height;
-      // Skala bola: sedikit di bawah 0,5 supaya bola muat penuh di kanvas
-      // tanpa ujungnya menyentuh tepi, dan busur di luarnya tetap terlihat.
-      const scale = 0.47;
+      // Skala bola: bola mengisi hampir seluruh kanvas, jadi di kartu
+      // selebar ~950px globe-nya terbaca sebagai elemen utama, bukan
+      // aksen kecil. Sisa ruang dipakai busur yang melayang di luar siluet.
+      const scale = 0.60;
 
       gl.useProgram(pointProg.program);
       gl.uniform1f(pTime, seconds);
@@ -455,14 +521,15 @@ export default function Globe({ className = "" }: { className?: string }) {
       gl.enableVertexAttribArray(pPos);
 
       // Badan bola: titik laut sangat redup.
-      gl.uniform1f(pSize, 1.1);
+      gl.uniform1f(pSize, 1.85);
       gl.uniform1f(pAlpha, 0.20);
       gl.bindBuffer(gl.ARRAY_BUFFER, oceanBuffer);
       gl.vertexAttribPointer(pPos, 3, gl.FLOAT, false, 0, 0);
       gl.drawArrays(gl.POINTS, 0, oceanPoints.length / 3);
 
-      // Benua: slate, terang di sisi depan.
-      gl.uniform1f(pSize, 2.6);
+      // Benua: slate, terang di sisi depan. Ukuran titik ikut skala globe,
+      // supaya kepadatanSampling tetap sama saat globe diperbesar.
+      gl.uniform1f(pSize, 4.4);
       gl.uniform1f(pAlpha, 1);
       gl.bindBuffer(gl.ARRAY_BUFFER, landBuffer);
       gl.vertexAttribPointer(pPos, 3, gl.FLOAT, false, 0, 0);
@@ -476,7 +543,9 @@ export default function Globe({ className = "" }: { className?: string }) {
       gl.uniform1f(mAspect, aspect);
       gl.uniform1f(mDpr, dpr);
       gl.uniform1f(mScale, scale);
-      gl.uniform1f(mSize, 22);
+      // Ukuran marker ikut skala globe (diameter bola 179 -> 228 px), jadi
+      // cincinnya tetap sepadan dengan bola, bukan jadi titik kecil.
+      gl.uniform1f(mSize, 37);
       gl.uniform1f(mPulseOn, 1);
       gl.uniform3fv(mColor, EMERALD);
       gl.bindBuffer(gl.ARRAY_BUFFER, markerBuffer);
@@ -485,7 +554,7 @@ export default function Globe({ className = "" }: { className?: string }) {
       gl.drawArrays(gl.POINTS, 0, 1);
 
       // Node rute: cincin emerald kecil di tiap ujung busur, tanpa denyut.
-      gl.uniform1f(mSize, 13);
+      gl.uniform1f(mSize, 22);
       gl.uniform1f(mPulseOn, 0);
       gl.bindBuffer(gl.ARRAY_BUFFER, nodeBuffer);
       gl.vertexAttribPointer(mPos, 3, gl.FLOAT, false, 0, 0);
@@ -500,12 +569,25 @@ export default function Globe({ className = "" }: { className?: string }) {
       gl.uniform1f(aScale, scale);
       gl.uniform3fv(aColorA, EMERALD);
       gl.uniform3fv(aColorB, LIME);
+      // Lebar pita: 1,6 piksel CSS per sisi, jadi total ~3,2 piksel CSS.
+      // NDC y membentang 2 unit di seluruh tinggi kanvas (height piksel
+      // CSS), jadi 1 piksel CSS = 2 / height unit NDC. Lebar sengaja
+      // tidak dibagi dpr, biar tebalnya sama di layar biasa dan retina.
+      // Kanvas selalu bujur sangkar, jadi arah x punya skala sama.
+      gl.uniform1f(aWidth, (1.6 * 2) / height);
       gl.bindBuffer(gl.ARRAY_BUFFER, arcBuffer);
       gl.enableVertexAttribArray(aPos);
-      gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 16, 0);
+      gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
+      gl.enableVertexAttribArray(aTangent);
+      gl.bindBuffer(gl.ARRAY_BUFFER, arcTangentBuffer);
+      gl.vertexAttribPointer(aTangent, 3, gl.FLOAT, false, 0, 0);
+      gl.enableVertexAttribArray(aSide);
+      gl.bindBuffer(gl.ARRAY_BUFFER, arcSideBuffer);
+      gl.vertexAttribPointer(aSide, 1, gl.FLOAT, false, 0, 0);
       gl.enableVertexAttribArray(aTint);
-      gl.vertexAttribPointer(aTint, 1, gl.FLOAT, false, 16, 12);
-      gl.drawArrays(gl.LINES, 0, arcVertices.length / 4);
+      gl.bindBuffer(gl.ARRAY_BUFFER, arcTintBuffer);
+      gl.vertexAttribPointer(aTint, 1, gl.FLOAT, false, 0, 0);
+      gl.drawArrays(gl.TRIANGLES, 0, arcPositions.length / 3);
     };
 
     resize();
@@ -600,6 +682,9 @@ export default function Globe({ className = "" }: { className?: string }) {
       gl.deleteBuffer(landBuffer);
       gl.deleteBuffer(oceanBuffer);
       gl.deleteBuffer(arcBuffer);
+      gl.deleteBuffer(arcTangentBuffer);
+      gl.deleteBuffer(arcSideBuffer);
+      gl.deleteBuffer(arcTintBuffer);
       gl.deleteBuffer(markerBuffer);
       gl.deleteBuffer(nodeBuffer);
       gl.deleteProgram(pointProg.program);

@@ -25,8 +25,8 @@ test("globe WebGL terpasang sekali di section 03, di bawah kartu ALUR", () => {
   const card = routing.indexOf("<GlobeMount");
   assert.ok(alur > -1 && card > alur, "globe card is not below the ALUR card");
 
-  // Wadah globe proporsional: sisi 220-250px, dipotong rapi.
-  assert.ok(/aspect-square[^"]*max-w-\[240px\]/.test(routing), "globe container is not aspect-square max-w-[240px]");
+  // Wadah globe proporsional: sisi 360-400px, dipotong rapi.
+  assert.ok(/aspect-square[^"]*max-w-\[380px\]/.test(routing), "globe container is not aspect-square max-w-[380px]");
   assert.ok(routing.includes("mx-auto"), "globe container is not centered");
   assert.ok(routing.includes("panel relative mt-3 overflow-hidden p-4 md:p-6"), "card styling differs from ALUR");
 });
@@ -44,7 +44,13 @@ test("globe digambar sebagai WebGL murni, tanpa three.js dan tanpa cobe", () => 
   assert.ok(globe.startsWith('"use client"'), "Globe must be a client component");
   assert.ok(globe.includes('getContext("webgl"'), "globe does not request a WebGL context");
   assert.ok(globe.includes("gl_PointSize"), "globe does not draw point sprites");
-  assert.ok(globe.includes("gl.drawArrays(gl.LINES"), "orbit arcs are not drawn as 3D lines");
+  // Busur digambar sebagai pita (TRIANGLES), bukan gl.LINES: garis WebGL
+  // selalu 1 piksel device, jadi jadi hairline kalau globe diperbesar.
+  assert.ok(globe.includes("gl.drawArrays(gl.TRIANGLES"), "orbit arcs are not drawn as ribbons");
+  assert.ok(globe.includes("aSide"), "arc ribbon has no side attribute");
+  assert.ok(globe.includes("aTangent"), "arc ribbon has no tangent attribute");
+  assert.ok(globe.includes("uniform float uWidth"), "arc ribbon width is not adjustable");
+  assert.ok(!globe.includes("gl.drawArrays(gl.LINES"), "arcs still use 1px device lines");
   assert.ok(!globe.includes('getContext("2d")'), "globe still renders with Canvas 2D");
   assert.ok(!/from\s+["']three["']/.test(globe), "globe imports three");
   assert.ok(!pkg.dependencies.three, "three was added as a dependency");
@@ -63,16 +69,24 @@ test("rotasi, cahaya, redup kedalaman, dan denyut dihitung di shader", () => {
   assert.ok(globe.includes("uTime"), "shader has no time uniform");
 });
 
-test("tanpa outline lingkaran: siluet bola ikut warna kartu", () => {
+test("tanpa outline lingkaran dan tanpa glow hijau di latar", () => {
   assert.ok(!/arc\(cx, cy, r/.test(globe), "globe draws a hard circle outline");
   assert.ok(!globe.includes("createRadialGradient"), "globe still paints a canvas-2D glow ring");
   assert.ok(!globe.includes("ctx."), "globe still uses the 2D context");
-  // Glow atmosfer dipindah ke CSS, jadi tetap lembut dan tipis.
-  assert.ok(/\.globe-glow/.test(css), "globe-glow class missing");
-  const block = css.slice(css.indexOf(".globe-glow::before"), css.indexOf("}", css.indexOf(".globe-glow::before")));
-  assert.ok(block.includes("radial-gradient"), "no radial atmosphere on the globe");
-  assert.ok(/rgba\(16, 185, 129, 0\.15\)/.test(block), "atmosphere is not ~15% opacity");
-  assert.ok(routing.includes("globe-glow"), "globe container does not use the atmosphere class");
+
+  // Tidak ada halo atmosfer di CSS: latar di sekitar bola harus menyatu
+  // utuh dengan warna kartu, tanpa kabut hijau.
+  assert.ok(!/\.globe-glow/.test(css), "globe-glow CSS block is still there");
+  assert.ok(!/globe-glow/.test(page), "page still applies the globe-glow class");
+  // Tidak boleh ada radial gradient hijau di stylesheet mana pun.
+  assert.ok(
+    !/radial-gradient\([^)]*16,\s*185,\s*129/.test(css),
+    "a green radial halo is still painted behind the globe",
+  );
+  assert.ok(
+    !/rgba\(16,\s*185,\s*129/.test(css),
+    "a green glow is still defined in CSS",
+  );
 });
 
 test("benua dari peta 144x72, warna slate, marker Indonesia, orbit emerald/lime", () => {
