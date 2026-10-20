@@ -23,12 +23,14 @@ test("komponen particle wave ada dan dipakai di panel hero", () => {
   assert.ok(hero.includes("-z-10"), "wave layer is not behind the panel content");
 });
 
-test("wave adalah canvas WebGL murni, bukan three.js", () => {
+test("wave tetap canvas WebGL murni tanpa three.js", () => {
   assert.ok(wave.startsWith('"use client"'), "ParticleWave must be a client component");
   assert.ok(wave.includes('getContext("webgl"'), "wave does not request a WebGL context");
   assert.ok(wave.includes("gl_PointSize"), "wave does not draw point sprites");
   assert.ok(!/from\s+["']three["']/.test(wave), "wave imports three");
-  assert.ok(!pkg.dependencies.three, "three was added as a dependency");
+  // three boleh ada di package.json (dipakai globe), tapi wave harus tetap
+  // shader tangan sendiri: dua WebGL context per halaman, bukan tiga.
+  assert.ok(!wave.includes("WebGLRenderer"), "wave uses three's renderer instead of raw WebGL");
   assert.ok(!wave.includes("<img"), "wave should not be an image");
 });
 
