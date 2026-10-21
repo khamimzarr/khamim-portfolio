@@ -13,8 +13,8 @@ const projects = [
   {
     name: "hr-ai-review",
     shot: "/output/hr-ai-review.jpg",
-    alt: "Tampilan hr-ai-review: hero dan kartu ATS Score",
-    desc: "Unggah CV dalam PDF, keluar analisis ala reviewer HR plus skor kecocokan. Backend Apps Script, muka depannya di Vercel.",
+    alt: "Tampilan hr-ai-review: kartu skor 90/100 dengan rincian penilaian",
+    desc: "Unggah CV dalam PDF, keluar skor dan rincian penilaian ala reviewer HR. Backend Apps Script, muka depannya di Vercel.",
     stack: ["JavaScript", "Apps Script", "Vercel"],
     live: "https://hr-ai-review-nine.vercel.app",
     href: "https://github.com/khamimzarr/hr-ai-review",
