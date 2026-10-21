@@ -30,11 +30,11 @@ const mono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://khamimzar.my.id"),
   title: {
-    default: "Khamim Zarkasyi · Karya",
+    default: "Khamim Zarkasyi — Frontend Developer",
     template: "%s · Khamim Zarkasyi",
   },
   description:
-    "Portfolio Khamim Zarkasyi. Empat project Next.js yang sudah live, lengkap dengan tampilannya, kode sumber, dan catatan pengerjaannya.",
+    "Portfolio Khamim Zarkasyi, frontend developer. Empat project live: web tool CV, undangan digital, Markdown, deploy .zip — lengkap kode sumbernya.",
   keywords: [
     "Khamim Zarkasyi",
     "portfolio",
@@ -56,9 +56,9 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    title: "Khamim Zarkasyi · Karya",
+    title: "Khamim Zarkasyi — Frontend Developer",
     description:
-      "Empat project live dan tampilannya, dipajang di satu konsol gelap.",
+      "Empat project live — web tool CV, undangan digital, Markdown, deploy .zip — dipajang di satu konsol gelap.",
     url: "https://khamimzar.my.id",
     siteName: "Khamim Zarkasyi",
     locale: "id_ID",
@@ -67,8 +67,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Khamim Zarkasyi · Karya",
-    description: "Empat project live, lengkap dengan tampilannya.",
+    title: "Khamim Zarkasyi — Frontend Developer",
+    description: "Empat project live: web tool CV, undangan digital, Markdown, deploy .zip.",
     images: ["/og/og-cover.png"],
   },
   robots: {
@@ -106,7 +106,7 @@ const structuredData = {
       "@type": "WebSite",
       "@id": "https://khamimzar.my.id/#website",
       url: "https://khamimzar.my.id",
-      name: "Khamim Zarkasyi · Karya",
+      name: "Khamim Zarkasyi — Frontend Developer",
       inLanguage: "id-ID",
       publisher: { "@id": "https://khamimzar.my.id/#person" },
     },
