@@ -11,6 +11,29 @@ test("meta description muat di hasil pencarian", () => {
   assert.ok(match[1].length >= 80, `description ${match[1].length} karakter, terlalu pendek`);
 });
 
+test("description tidak mengklaim semua project Next.js", () => {
+  const match = layout.match(/description:\s*\n?\s*"([^"]+)"/);
+  assert.ok(match, "meta description tidak ditemukan");
+  const desc = match[1];
+  // Dari empat kartu karya hanya dua yang bertumpuk Next.js; kalimat lama
+  // ("Empat project Next.js") membuat Google mengutip klaim yang salah.
+  assert.ok(!/empat project next\.js/i.test(desc), "description masih menyebut semua project Next.js");
+  assert.ok(/empat project live/i.test(desc), "description harus menyebut jumlah project live");
+  const og = layout.match(/openGraph:\s*{[^}]*description:\s*\n?\s*"([^"]+)"/);
+  assert.ok(og, "og:description tidak ditemukan");
+  assert.ok(!/next\.js/i.test(og[1]), "og:description masih mengklaim Next.js");
+});
+
+test("judul dan manifest tidak menyebut konsep yang beda dari isi halaman", () => {
+  // "· Karya" hanya label section; judul SERP harus menyebut siapa pemiliknya.
+  const title = layout.match(/default:\s*"([^"]+)"/);
+  assert.ok(title, "judul default tidak ditemukan");
+  assert.ok(/frontend developer/i.test(title[1]), `judul "${title[1]}" tidak menyebut peran`);
+  const manifest = readFileSync("src/app/manifest.ts", "utf8");
+  assert.ok(!manifest.includes("Empat project Next.js"), "deskripsi manifest masih klaim lama");
+  assert.ok(!layout.includes("Empat project Next.js"), "layout masih menyimpan kalimat lama");
+});
+
 test("halaman membawa data terstruktur Person dan WebSite", () => {
   assert.ok(layout.includes("application/ld+json"), "JSON-LD tidak dipasang");
   assert.ok(layout.includes('"@type": "Person"'), "schema Person hilang");
